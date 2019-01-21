@@ -23,7 +23,9 @@ public class Recipe {
 
     private List<WebComments> webComments;
 
-    private Steps steps;
+    private List<Pictures> pictures;
+
+    private List<Steps> steps;
 
     public static class RecipeBuilder {
         public void setIngredientsBuider(Ingredients... ingredients) {
@@ -35,6 +37,18 @@ public class Recipe {
         public void setWebCommentsBuilder(WebComments... webComments) {
             for (WebComments webComment : webComments) {
                 this.webComments.add(webComment);
+            }
+        }
+
+        public void setPicturesBuilder(Pictures... pictures) {
+            for (Pictures picture : pictures) {
+                this.pictures.add(picture);
+            }
+        }
+
+        public void setStepsBuilder(Steps... steps) {
+            for (Steps step : steps) {
+                this.steps.add(step);
             }
         }
     }
