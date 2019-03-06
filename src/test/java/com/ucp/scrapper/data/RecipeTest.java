@@ -1,4 +1,4 @@
-package com.ucp.scrapper.Data;
+package com.ucp.scrapper.data;
 
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;

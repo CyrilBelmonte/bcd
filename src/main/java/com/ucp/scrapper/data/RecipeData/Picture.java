@@ -1,13 +1,14 @@
-package com.ucp.scrapper.Data.RecipeData;
+package com.ucp.scrapper.data.RecipeData;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.net.URL;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Step {
-    private String description;
-    private int stepNumber;
+public class Picture {
+    private URL url;
 }

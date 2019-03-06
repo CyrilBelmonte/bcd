@@ -1,4 +1,4 @@
-package com.ucp.scrapper.Data.WebConnection;
+package com.ucp.scrapper.data.WebConnection;
 
 import lombok.Data;
 import org.apache.log4j.Logger;
@@ -9,14 +9,16 @@ import org.jsoup.Jsoup;
 public class WebConnection {
 
     Logger logger = Logger.getLogger("WebConnection");
+
     private String url;
     private Connection connection;
 
-    public WebConnection(String url) throws Exception {
+    public WebConnection(String url) {
         try {
             this.url = url;
             this.connection = Jsoup.connect(url);
             this.connection.followRedirects(true);
+            this.connection.execute();
         } catch (Exception e) {
             logger.error(this.getClass().getName() + " " + e);
         }

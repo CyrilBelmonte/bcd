@@ -1,4 +1,4 @@
-package com.ucp.scrapper.Data.RecipeData;
+package com.ucp.scrapper.data.RecipeData;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ingredient {
-    private int ingQuantities;
+    private float ingQuantities;
     private String units;
     private String name;
     private String url;
