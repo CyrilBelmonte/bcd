@@ -1,6 +1,8 @@
-package com.ucp.scrapper.data.recipedata;
+package com.ucp.scrapper.Data.RecipeData;
 
 
+import com.ucp.scrapper.data.recipedata.Ingredient;
+import com.ucp.scrapper.data.recipedata.Step;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
