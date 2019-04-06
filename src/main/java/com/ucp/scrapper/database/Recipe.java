@@ -1,48 +1,52 @@
-package jdbc;
+package com.ucp.scrapper.database;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Recipe {
 	private String id;
-	private String mark;
-	private Ingredient ingredient;
-	private Comment comment;
-	private Step step;
+	private float mark;
 	private int cookingTime;
 	private int preparationTime;
 	private int recipeTime;
+	private int numberPersons;
+	private String title;
+	private String difficulty;
+	private String economicLevel;
+	private String picture;
 	
+	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
+	private List<Step> steps = new ArrayList<Step>();
+	private List<Comment> comments = new ArrayList<Comment>();
+	
+	private Category category;
 	
 	public Recipe() {
 	}
 
-	public Recipe(String mark, Ingredient ingredient, Comment comment, Step step, int cookingTime,
-			int preparationTime, int recipeTime) {
+	public Recipe(float mark, int cookingTime, int preparationTime, int recipeTime, int numberPersons,
+			String title, String difficulty, String economicLevel, String picture, List<Ingredient> ingredients,
+			List<Step> steps, Category category) {
 		this.mark = mark;
-		this.ingredient = ingredient;
-		this.comment = comment;
-		this.step = step;
 		this.cookingTime = cookingTime;
 		this.preparationTime = preparationTime;
 		this.recipeTime = recipeTime;
+		this.numberPersons = numberPersons;
+		this.title = title;
+		this.difficulty = difficulty;
+		this.economicLevel = economicLevel;
+		this.picture = picture;
+		this.ingredients = ingredients;
+		this.steps = steps;
+		this.category = category;
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public String getMark() {
+	public float getMark() {
 		return mark;
-	}
-
-	public Ingredient getIngredient() {
-		return ingredient;
-	}
-
-	public Comment getComment() {
-		return comment;
-	}
-
-	public Step getStep() {
-		return step;
 	}
 
 	public int getCookingTime() {
@@ -57,24 +61,48 @@ public class Recipe {
 		return recipeTime;
 	}
 
+	public int getNumberPersons() {
+		return numberPersons;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getDifficulty() {
+		return difficulty;
+	}
+
+	public String getEconomicLevel() {
+		return economicLevel;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public Ingredient getIngredients(int index) {
+		return ingredients.get(index);
+	}
+
+	public Step getSteps(int index) {
+		return steps.get(index);
+	}
+
+	public Comment getComments(int index) {
+		return comments.get(index);
+	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setMark(String mark) {
+	public void setMark(float mark) {
 		this.mark = mark;
-	}
-
-	public void setIngredient(Ingredient ingredient) {
-		this.ingredient = ingredient;
-	}
-
-	public void setComment(Comment comment) {
-		this.comment = comment;
-	}
-
-	public void setStep(Step step) {
-		this.step = step;
 	}
 
 	public void setCookingTime(int cookingTime) {
@@ -89,11 +117,59 @@ public class Recipe {
 		this.recipeTime = recipeTime;
 	}
 
-	@Override
-	public String toString() {
-		return "Recipes [id=" + id + ", mark=" + mark + ", ingredient=" + ingredient + ", comment=" + comment
-				+ ", step=" + step + ", cookingTime=" + cookingTime + ", preparationTime=" + preparationTime
-				+ ", recipeTime=" + recipeTime + "]";
+	public void setNumberPersons(int numberPersons) {
+		this.numberPersons = numberPersons;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setDifficulty(String difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public void setEconomicLevel(String economicLevel) {
+		this.economicLevel = economicLevel;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 	
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public void addIngredients(Ingredient ingredient) {
+		ingredients.add(ingredient);
+	}
+
+	public void addSteps(Step step) {
+		steps.add(step);
+	}
+
+	public void addComments(Comment comment) {
+		comments.add(comment);
+	}
+	
+	public void removeIngredients(int index) {
+		ingredients.remove(index);
+	}
+
+	public void removeSteps(int index) {
+		steps.remove(index);
+	}
+
+	public void removeComments(int index) {
+		comments.remove(index);
+	}
+
+	@Override
+	public String toString() {
+		return "Recipe [id=" + id + ", mark=" + mark + ", cookingTime=" + cookingTime + ", preparationTime="
+				+ preparationTime + ", recipeTime=" + recipeTime + ", numberPersons=" + numberPersons + ", title="
+				+ title + ", difficulty=" + difficulty + ", economicLevel=" + economicLevel + ", picture=" + picture
+				+ ", ingredients=" + ingredients + ", steps=" + steps + ", comments=" + comments + "]";
+	}	
 }

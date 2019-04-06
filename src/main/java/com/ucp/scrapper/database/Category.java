@@ -1,13 +1,15 @@
-package jdbc;
+package com.ucp.scrapper.database;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Category {
 	private String id;
 	private String description;
-	private Recipe recipe;
+	private List<Recipe> recipes = new ArrayList<Recipe>();
 	
-	public Category(String description, Recipe recipe) {
+	public Category(String description) {
 		this.description = description;
-		this.recipe = recipe;
 	}
 	public String getId() {
 		return id;
@@ -15,8 +17,8 @@ public class Category {
 	public String getDescription() {
 		return description;
 	}
-	public Recipe getRecipe() {
-		return recipe;
+	public Recipe getRecipe(int index) {
+		return recipes.get(index);
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -24,12 +26,15 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
+	public void addRecipe(Recipe recipe) {
+		recipes.add(recipe);
+	}
+	public void removeRecipe(int index) {
+		recipes.remove(index);
 	}
 	@Override
 	public String toString() {
-		return "Categories [id=" + id + ", description=" + description + ", recipe=" + recipe + "]";
+		return "Categories [id=" + id + ", description=" + description + ", recipe=" + recipes + "]";
 	}
 	
 }

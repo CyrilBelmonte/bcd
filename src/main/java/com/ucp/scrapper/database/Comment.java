@@ -1,4 +1,4 @@
-package jdbc;
+package com.ucp.scrapper.database;
 
 import java.sql.Date;
 
