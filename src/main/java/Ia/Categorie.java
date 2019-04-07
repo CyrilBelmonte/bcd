@@ -1,6 +1,6 @@
 package Ia;
 
-import com.ucp.scrapper.Data.Recipe;
+import com.ucp.scrapper.database.Recipe;
 
 import java.util.LinkedList;
 

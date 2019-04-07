@@ -2,6 +2,8 @@ package Ia;
 
 import java.util.LinkedList;
 import com.ucp.scrapper.Data.*;
+import com.ucp.scrapper.database.Ingredient;
+import com.ucp.scrapper.database.Recipe;
 
 import static java.lang.Math.*;
 
@@ -14,17 +16,27 @@ import static java.lang.Math.*;
 public class Kohonen {
     private LinkedList<Neuron> kohonen;
     private LinkedList<EntryNeuron> Entry;
-    private LinkedList<Categorie> cluster;
+    private LinkedList<Categorie> cluster ;
     private LinkedList<Recipe> recipes;
     private static int  dvp=7;
     private static int  dvn=9;
     private static double epsilon = 0.5;
     private static double ALPHA = 0.5;
     private static double BETA = 0.5;
-
-    public Kohonen(LinkedList<Neuron> kohonen, LinkedList<Recipe> recipes) {
-        this.kohonen = kohonen;
+    private static double NEURONSIZE = 20;
+    public Kohonen(LinkedList<Ingredient> ingredients, LinkedList<Recipe> recipes) {
         this.recipes = recipes;
+        cluster = new LinkedList<Categorie>();
+        kohonen = new LinkedList<Neuron>();
+        TextAnalysis analysis=new TextAnalysis(Entry);
+        Neuron neuron = new Neuron();
+        Categorie categorie=new Categorie();
+        for(int index =0 ; index < NEURONSIZE ; index++ ){
+            kohonen.add(neuron);
+            cluster.add(categorie);
+        }
+        InitWeight(ingredients);
+        Entry=analysis.Analyse(recipes);
     }
 
 
@@ -32,13 +44,13 @@ public class Kohonen {
      * initialisation of Weight
      * @version 1.0.0.0 : initialisation random
      */
-    public void InitWeight(){
+    public void InitWeight(LinkedList<Ingredient> ingredients){
         int index=0;
         //initialisation weight for each Neuron create
         for(Neuron neuron : kohonen) {
-            for(int index2=0;index2 < kohonen.get(index).getWeight().size() ; index2++){
+            for(int index2=0;index2<ingredients.size() ;index2++) {
                 double val= random();
-                neuron.getWeight().set(index2,val);
+                neuron.getWeight().add(val);
             }
         }
     }
