@@ -161,6 +161,8 @@ public class Recipe {
 		steps.remove(index);
 	}
 
+	public int SizeSteps() {  return steps.size(); }
+
 	public void removeComments(int index) {
 		comments.remove(index);
 	}

@@ -26,7 +26,7 @@ public class TextAnalysis {
         for(int index=0 ; index < recipes.size() ; index ++){
             String text="";
             /*group all step in one text*/
-            for(int index2=0;index2 < recipes.get(index).sizeSteps();index2++) {
+            for(int index2=0;index2 < recipes.get(index).SizeSteps();index2++) {
                 text += recipes.get(index).getSteps(index2).getInstructions();
             }
             String textsplit[] = text.split(" ");
