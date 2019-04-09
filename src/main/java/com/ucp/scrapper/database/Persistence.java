@@ -254,7 +254,7 @@ public class Persistence {
 			System.err.println(se.getMessage());
 		}
 	}
-	
+	/*
 	public static LinkedList<Ingredient> readIngredients() {
 		String countQuery = "SELECT count(*) FROM Ingredient";
 		 
@@ -270,8 +270,8 @@ public class Persistence {
 		}
 		
 		return ingredients;
-	}
-	
+	}*/
+	/*
 	private static Ingredient getIngredient(int index){
 		 
 		String selectQuery = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
@@ -281,4 +281,6 @@ public class Persistence {
 			
 		return ingredient;
 	}
+	*/
+
 }

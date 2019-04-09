@@ -1,3 +1,4 @@
+/*
 package src.main.java.com.ucp.scrapper.database;
 
 import java.sql.ResultSet;
@@ -19,3 +20,4 @@ public class IngredientRowMapper implements RowMapper {
 	}
 		
 }
+*/

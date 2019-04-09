@@ -1,8 +1,8 @@
 package com.ucp.scrapper.test;
-
+/*
 import com.ucp.scrapper.engine.Parser;
-
-
+*/
+/*
 public class Test {
     public static void main(String[] args) {
         int nbr = 100;
@@ -17,3 +17,4 @@ public class Test {
         }
     }
 }
+*/
