@@ -25,6 +25,7 @@ public class Neuron {
 
 
     public Neuron() {
+        Weight=new LinkedList<Double>();
     }
 
     public double getaction() {
@@ -32,7 +33,7 @@ public class Neuron {
     }
 
     public void setaction(double action) {
-        action = action;
+        this.action = action;
     }
 
     public double getPotential() {

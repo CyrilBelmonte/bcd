@@ -9,7 +9,9 @@ import java.util.LinkedList;
  */
 public class Categorie {
     public LinkedList<Recipe> recipes;
-
+     public Categorie() {
+        recipes=new LinkedList<Recipe>();
+    }
     public LinkedList<Recipe> getRecipes() {
         return recipes;
     }

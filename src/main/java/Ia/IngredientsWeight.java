@@ -4,8 +4,8 @@ public class IngredientsWeight {
     private double Weight;
     private String Name;
 
-    public IngredientsWeight(double weight, String name) {
-        Weight = weight;
+    public IngredientsWeight(String name) {
+        Weight = 0;
         Name = name;
     }
 

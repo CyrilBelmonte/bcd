@@ -1,5 +1,6 @@
 package Ia;
 
+import com.ucp.scrapper.database.Ingredient;
 import com.ucp.scrapper.database.Recipe;
 
 import java.util.LinkedList;
@@ -11,9 +12,17 @@ import java.util.LinkedList;
  */
 public class TextAnalysis {
 
-    LinkedList<EntryNeuron> entry;
-    TextAnalysis(LinkedList<EntryNeuron> entry){
-        this.entry=entry;
+    LinkedList<EntryNeuron> entry = new LinkedList<EntryNeuron>();
+    TextAnalysis(LinkedList<Ingredient> ingredients,LinkedList<Recipe> recipes){
+        LinkedList<IngredientsWeight> iwlist = new LinkedList<IngredientsWeight>();
+        for(Ingredient ing : ingredients){
+            IngredientsWeight iw = new IngredientsWeight(ing.getName());
+            iwlist.add(iw);
+        }
+        EntryNeuron en = new EntryNeuron(iwlist);
+        for(int index=0; index < recipes.size() ;index++){
+            entry.add(en);
+        }
     }
 
     /**
@@ -22,6 +31,8 @@ public class TextAnalysis {
      * @param recipes : list of Recipes
      * @return all Recipes with each
      */
+
+
     LinkedList<EntryNeuron> Analyse(LinkedList<Recipe> recipes){
         for(int index=0 ; index < recipes.size() ; index ++){
             String text="";
@@ -32,7 +43,7 @@ public class TextAnalysis {
             String textsplit[] = text.split(" ");
             int count = 0;
             int counttotal=0;
-            /*count the number of  */
+            /*count the number of word  */
             for(int index3 = 0; index3 < entry.get(index).getData().size() ;index3++ ) {
                 for (int index4 = 0; index4 < textsplit.length; index4++) {
                     if (entry.get(index).getData().get(index3).getName().equals(textsplit[index4]))

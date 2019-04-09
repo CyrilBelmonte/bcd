@@ -1,7 +1,6 @@
 package Ia;
 
 import java.util.LinkedList;
-import com.ucp.scrapper.Data.*;
 import com.ucp.scrapper.database.Ingredient;
 import com.ucp.scrapper.database.Recipe;
 
@@ -28,13 +27,11 @@ public class Kohonen {
         this.recipes = recipes;
         cluster = new LinkedList<Categorie>();
         kohonen = new LinkedList<Neuron>();
-        TextAnalysis analysis=new TextAnalysis(Entry);
-        Neuron neuron = new Neuron();
-        Categorie categorie=new Categorie();
-        for(int index =0 ; index < NEURONSIZE ; index++ ){
-            kohonen.add(neuron);
-            cluster.add(categorie);
-        }
+        Entry = new LinkedList<EntryNeuron>();
+        TextAnalysis analysis=new TextAnalysis(ingredients,recipes);
+
+
+
         InitWeight(ingredients);
         Entry=analysis.Analyse(recipes);
     }
@@ -45,15 +42,19 @@ public class Kohonen {
      * @version 1.0.0.0 : initialisation random
      */
     public void InitWeight(LinkedList<Ingredient> ingredients){
-        int index=0;
-        //initialisation weight for each Neuron create
-        for(Neuron neuron : kohonen) {
-            for(int index2=0;index2<ingredients.size() ;index2++) {
+        for(int index =0 ; index < NEURONSIZE ; index++ ){
+            Neuron neuron = new Neuron();
+            Categorie categorie=new Categorie();
+            for(Ingredient ing :ingredients) {
                 double val= random();
                 neuron.getWeight().add(val);
             }
+            kohonen.add(neuron);
+            cluster.add(categorie);
         }
     }
+
+
 
     double nu(int value) {
         if(value > 0 && abs(value) <= dvp){
@@ -78,9 +79,10 @@ public class Kohonen {
         int winner = 0;
         double BestActivity=0;
         for(int index=0 ; index<kohonen.size() ;index++ ) {
-            if(kohonen.get(index).getaction() > BestActivity)
-                BestActivity=kohonen.get(index).getaction();
+            if(kohonen.get(index).getaction() > BestActivity) {
+                BestActivity = kohonen.get(index).getaction();
                 winner = index;
+            }
         }
         return winner;
     }
@@ -93,17 +95,18 @@ public class Kohonen {
             }
             distance = sqrt(distance);
             neuron.setPotential(distance);
+            neuron.setaction((1.0/(1+distance)));
         }
     }
 
     /**
      * modification of the weight
      */
-    public void Learning(int winner){
+    public void Learning(int winner,int entry){
         for(int index =0;index < kohonen.size() ; index++){
             for(int index2=0;index2 < kohonen.get(index).getWeight().size() ; index2++){
-                    Double learning= (epsilon*Entry.get(index).getData().get(index2).getWeight()*1.0)*nu(winner-index);
-                    kohonen.get(index).getWeight().set(index2,kohonen.get(index).getWeight().get(index)+learning);
+                    Double learning= (epsilon*Entry.get(entry).getData().get(index2).getWeight()*1.0)*nu(winner-index);
+                    kohonen.get(index).getWeight().set(index2,kohonen.get(index).getWeight().get(index2)+learning);
             }
         }
 
@@ -118,7 +121,7 @@ public class Kohonen {
         for(int index=0; index < Entry.size() ; index ++ ){
             Action(Entry.get(index));
             winner = WinnerDetermined();
-            Learning(winner);
+            Learning(winner,index);
             cluster.get(winner).getRecipes().add(recipes.get(index));
         }
     }
