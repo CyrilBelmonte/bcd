@@ -1,12 +1,15 @@
+/*
 package Ia;
 
 import com.ucp.scrapper.database.Recipe;
 
 import java.util.LinkedList;
 
+*/
 /**
  * categorie of cook Recipe
- */
+ *//*
+
 public class Categorie {
     public LinkedList<Recipe> recipes;
      public Categorie() {
@@ -20,3 +23,4 @@ public class Categorie {
         this.recipes = recipes;
     }
 }
+*/

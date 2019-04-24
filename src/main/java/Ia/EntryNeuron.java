@@ -1,3 +1,4 @@
+/*
 package Ia;
 
 import java.util.LinkedList;
@@ -26,3 +27,4 @@ public class EntryNeuron {
         this.data = data;
     }
 }
+*/

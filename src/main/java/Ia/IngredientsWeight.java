@@ -1,3 +1,4 @@
+/*
 package Ia;
 
 public class IngredientsWeight {
@@ -28,3 +29,4 @@ public class IngredientsWeight {
 
 
 }
+*/

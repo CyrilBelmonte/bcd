@@ -1,3 +1,4 @@
+/*
 package Ia;
 
 import java.util.LinkedList;
@@ -6,12 +7,14 @@ import com.ucp.scrapper.database.Recipe;
 
 import static java.lang.Math.*;
 
+*/
 /**
  * @author Archambault Vincent
  * @version 1.0.0.0;
  *
  * Kohonen card code
- */
+ *//*
+
 public class Kohonen {
     private LinkedList<Neuron> kohonen;
     private LinkedList<EntryNeuron> Entry;
@@ -37,10 +40,12 @@ public class Kohonen {
     }
 
 
-    /**
+    */
+/**
      * initialisation of Weight
      * @version 1.0.0.0 : initialisation random
-     */
+     *//*
+
     public void InitWeight(LinkedList<Ingredient> ingredients){
         for(int index =0 ; index < NEURONSIZE ; index++ ){
             Neuron neuron = new Neuron();
@@ -72,9 +77,11 @@ public class Kohonen {
     }
 
 
-    /**
+    */
+/**
      *
-     */
+     *//*
+
     public int WinnerDetermined(){
         int winner = 0;
         double BestActivity=0;
@@ -99,9 +106,11 @@ public class Kohonen {
         }
     }
 
-    /**
+    */
+/**
      * modification of the weight
-     */
+     *//*
+
     public void Learning(int winner,int entry){
         for(int index =0;index < kohonen.size() ; index++){
             for(int index2=0;index2 < kohonen.get(index).getWeight().size() ; index2++){
@@ -113,9 +122,11 @@ public class Kohonen {
 
     }
 
-    /**
+    */
+/**
      * Create Categorie after the learning
-     */
+     *//*
+
     public void Clustering(){
         int winner=0;
         for(int index=0; index < Entry.size() ; index ++ ){
@@ -150,3 +161,4 @@ public class Kohonen {
         this.cluster = cluster;
     }
 }
+*/

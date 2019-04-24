@@ -1,7 +1,5 @@
 package Ia;
 
-import com.ucp.scrapper.database.Ingredient;
-
 import java.util.LinkedList;
 
 /**
