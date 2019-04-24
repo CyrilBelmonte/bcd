@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="bcd">
+    <output-path>$PROJECT_DIR$/out/artifacts/bcd</output-path>
+    <root id="root" />
+  </artifact>
+</component>

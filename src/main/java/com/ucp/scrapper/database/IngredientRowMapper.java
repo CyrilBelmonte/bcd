@@ -1,5 +1,9 @@
+<<<<<<<Updated upstream
 /*
 package src.main.java.com.ucp.scrapper.database;
+=======
+package com.ucp.scrapper.database;
+>>>>>>> Stashed changes
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
