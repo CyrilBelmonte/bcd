@@ -1,4 +1,4 @@
-package Ia;
+package com.ucp.ia;
 
 import java.util.LinkedList;
 
