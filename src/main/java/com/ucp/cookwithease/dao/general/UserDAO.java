@@ -20,7 +20,7 @@ public abstract class UserDAO {
     public abstract User find(String pseudo, String password);
 
     // Insert
-    public abstract boolean insert(User user, String password);
+    public abstract boolean insert(User user);
 
     // Delete
     public abstract boolean delete(int id);

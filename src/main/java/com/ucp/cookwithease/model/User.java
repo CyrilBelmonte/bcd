@@ -12,7 +12,12 @@ import java.util.LinkedList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+    // Used by the database
     private int id;
+
+    // Not loaded (only for update)
+    private String password = null;
+
     private String firstName;
     private String lastName;
     private String pseudo;

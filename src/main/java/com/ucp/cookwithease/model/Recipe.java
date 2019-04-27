@@ -11,7 +11,9 @@ import java.util.LinkedList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recipe {
+    // Used by the database
     private int id;
+
     private String name;
     private int duration;
     private int persons;
@@ -23,4 +25,5 @@ public class Recipe {
 
     private LinkedList<Ingredient> ingredients = new LinkedList<>();
     private LinkedList<Step> steps = new LinkedList<>();
+    private LinkedList<Comment> comments = new LinkedList<>();
 }

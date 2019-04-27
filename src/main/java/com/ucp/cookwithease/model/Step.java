@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Step {
-    private Recipe recipe;
-
+    // Used by the database
     private int id;
+    private int recipeID;
+
     private int position;
     private String description;
 }

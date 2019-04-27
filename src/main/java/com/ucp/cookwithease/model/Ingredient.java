@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ingredient {
-    private Recipe recipe;
-
+    // Used by the database
     private int id;
+    private int recipeID;
+
     private String name;
     private double quantity;
 }

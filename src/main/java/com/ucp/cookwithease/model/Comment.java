@@ -11,7 +11,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
-    private Recipe recipe;
+    // Used by the database
+    private int userID;
+    private int recipeID;
 
     private String description;
     private int rating;

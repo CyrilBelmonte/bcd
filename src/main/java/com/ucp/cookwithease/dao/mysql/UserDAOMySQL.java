@@ -21,7 +21,6 @@ public class UserDAOMySQL extends UserDAO {
     @Override
     public User find(int id) {
         String query = "SELECT * FROM user WHERE id = ?";
-
         User user = null;
 
         try {
@@ -29,24 +28,7 @@ public class UserDAOMySQL extends UserDAO {
             statement.setInt(1, id);
 
             ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                String firstName = result.getString("firstName");
-                String lastName = result.getString("lastName");
-                String pseudo = result.getString("pseudo");
-                String email = result.getString("email");
-                Date inscriptionDate = new Date(result.getDate("inscriptionDate").getTime());
-
-                user = new User();
-
-                user.setId(id);
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setPseudo(pseudo);
-                user.setEmail(email);
-                user.setInscriptionDate(inscriptionDate);
-            }
-
+            user = getUserFromRSet(result);
             statement.close();
 
         } catch (SQLException e) {
@@ -60,7 +42,6 @@ public class UserDAOMySQL extends UserDAO {
     @Override
     public User find(String pseudo) {
         String query = "SELECT * FROM user WHERE pseudo = ?";
-
         User user = null;
 
         try {
@@ -68,24 +49,7 @@ public class UserDAOMySQL extends UserDAO {
             statement.setString(1, pseudo);
 
             ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                int id = result.getInt("id");
-                String firstName = result.getString("firstName");
-                String lastName = result.getString("lastName");
-                String email = result.getString("email");
-                Date inscriptionDate = new Date(result.getDate("inscriptionDate").getTime());
-
-                user = new User();
-
-                user.setId(id);
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setPseudo(pseudo);
-                user.setEmail(email);
-                user.setInscriptionDate(inscriptionDate);
-            }
-
+            user = getUserFromRSet(result);
             statement.close();
 
         } catch (SQLException e) {
@@ -99,7 +63,6 @@ public class UserDAOMySQL extends UserDAO {
     @Override
     public User find(String pseudo, String password) {
         String query = "SELECT * FROM user WHERE pseudo = ? AND password = ?";
-
         User user = null;
 
         try {
@@ -108,24 +71,7 @@ public class UserDAOMySQL extends UserDAO {
             statement.setString(2, password);
 
             ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                int id = result.getInt("id");
-                String firstName = result.getString("firstName");
-                String lastName = result.getString("lastName");
-                String email = result.getString("email");
-                Date inscriptionDate = new Date(result.getDate("inscriptionDate").getTime());
-
-                user = new User();
-
-                user.setId(id);
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setPseudo(pseudo);
-                user.setEmail(email);
-                user.setInscriptionDate(inscriptionDate);
-            }
-
+            user = getUserFromRSet(result);
             statement.close();
 
         } catch (SQLException e) {
@@ -137,7 +83,7 @@ public class UserDAOMySQL extends UserDAO {
     }
 
     @Override
-    public boolean insert(User user, String password) {
+    public boolean insert(User user) {
         String query =
             "INSERT INTO user" +
             "(firstName, lastName, pseudo, email, password, inscriptionDate)" +
@@ -153,7 +99,7 @@ public class UserDAOMySQL extends UserDAO {
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getPseudo());
             statement.setString(4, user.getEmail());
-            statement.setString(5, password);
+            statement.setString(5, user.getPassword());
             statement.setDate(6, inscriptionDate);
             statement.executeUpdate();
 
@@ -187,5 +133,35 @@ public class UserDAOMySQL extends UserDAO {
     @Override
     public boolean update(User user) {
         throw new UnsupportedOperationException();
+    }
+
+    private User getUserFromRSet(ResultSet resultSet) {
+        User user = null;
+
+        try {
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                String pseudo = resultSet.getString("pseudo");
+                String email = resultSet.getString("email");
+                Date inscriptionDate = new Date(resultSet.getDate("inscriptionDate").getTime());
+
+                user = new User();
+
+                user.setId(id);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setPseudo(pseudo);
+                user.setEmail(email);
+                user.setInscriptionDate(inscriptionDate);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] getUserFromRSet : " + e.getMessage());
+
+        }
+
+        return user;
     }
 }

@@ -25,7 +25,7 @@
                     <input class="form-control" type="text" name="pseudo" placeholder="Nom d'utilisateur">
                     <input class="form-control" type="password" name="password" placeholder="Mot de passe">
                     <button class="btn btn-login" type="submit" name="connection">Connexion</button>
-                    <a class="link" href="<c:url value="/register"/>">S'inscire&nbsp;&rarr;</a>
+                    <a class="link" href="<c:url value="/register"/>">S'inscrire&nbsp;&rarr;</a>
                 </form>
             </div>
 
