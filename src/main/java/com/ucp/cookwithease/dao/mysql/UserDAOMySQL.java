@@ -148,7 +148,6 @@ public class UserDAOMySQL extends UserDAO {
                 Date inscriptionDate = new Date(resultSet.getDate("inscriptionDate").getTime());
 
                 user = new User();
-
                 user.setId(id);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);

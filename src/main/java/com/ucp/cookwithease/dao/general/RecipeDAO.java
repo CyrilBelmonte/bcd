@@ -13,7 +13,7 @@ public abstract class RecipeDAO {
     }
 
     // Select
-    public abstract Recipe find(int recipeID);
+    public abstract Recipe find(int id);
 
     // Insert
     public abstract boolean insert(Recipe recipe);

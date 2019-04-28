@@ -15,4 +15,9 @@ public class Step {
 
     private int position;
     private String description;
+
+    @Override
+    public String toString() {
+        return "    " + position + ". " + description;
+    }
 }

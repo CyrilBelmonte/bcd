@@ -32,4 +32,15 @@ public class Tools {
 
         return hashedMessage;
     }
+
+    public static String repeat(String pattern, int repeat) {
+        int i;
+        StringBuilder result = new StringBuilder();
+
+        for (i = 0; i < repeat; i++) {
+            result.append(pattern);
+        }
+
+        return result.toString();
+    }
 }

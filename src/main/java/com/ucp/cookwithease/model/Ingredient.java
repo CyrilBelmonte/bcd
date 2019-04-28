@@ -14,5 +14,11 @@ public class Ingredient {
     private int recipeID;
 
     private String name;
-    private double quantity;
+    private float quantity;
+    private String unit;
+
+    @Override
+    public String toString() {
+        return "    - " + name + " (" + quantity + (unit != null ? " " + unit : "") + ")";
+    }
 }

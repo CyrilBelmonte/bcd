@@ -1,8 +1,6 @@
 package com.ucp.cookwithease.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -13,6 +11,7 @@ import java.util.LinkedList;
 @AllArgsConstructor
 public class User {
     // Used by the database
+    @Setter(AccessLevel.NONE)
     private int id;
 
     // Not loaded (only for update)
@@ -27,4 +26,25 @@ public class User {
     private LinkedList<Recipe> bookmarks = new LinkedList<>();
     private LinkedList<User> friends = new LinkedList<>();
     private LinkedList<Comment> comments = new LinkedList<>();
+
+    public void setId(int id) {
+        this.id = id;
+
+        for (Comment comment : comments) {
+            comment.setRecipeID(id);
+        }
+    }
+
+    public void addBookmark(Recipe recipe) {
+        bookmarks.addLast(recipe);
+    }
+
+    public void addFriend(User friend) {
+        friends.addLast(friend);
+    }
+
+    public void addComment(Comment comment) {
+        comment.setUserID(id);
+        comments.addLast(comment);
+    }
 }

@@ -50,8 +50,9 @@ public class CommentDAOMySQL extends CommentDAO {
 
             int updatedTuples = statement.executeUpdate();
 
-            if (updatedTuples > 0)
+            if (updatedTuples > 0) {
                 hasSucceeded = true;
+            }
 
             statement.close();
 

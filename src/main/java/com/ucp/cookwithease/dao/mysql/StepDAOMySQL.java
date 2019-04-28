@@ -15,7 +15,43 @@ public class StepDAOMySQL extends StepDAO {
 
     @Override
     public LinkedList<Step> findAll(int recipeID) {
-        throw new UnsupportedOperationException();
+        String query = "SELECT * FROM step WHERE recipeID = ?";
+
+        int id;
+        int position;
+        String description;
+
+        Step step;
+        LinkedList<Step> steps = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, recipeID);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                id = result.getInt("id");
+                position = result.getInt("position");
+                description = result.getString("description");
+
+                step = new Step();
+                step.setId(id);
+                step.setPosition(position);
+                step.setDescription(description);
+                step.setRecipeID(recipeID);
+
+                steps.addLast(step);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+
+        }
+
+        return steps;
     }
 
     @Override
