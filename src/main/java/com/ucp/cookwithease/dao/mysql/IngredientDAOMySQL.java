@@ -17,11 +17,6 @@ public class IngredientDAOMySQL extends IngredientDAO {
     public LinkedList<Ingredient> findAll(int recipeID) {
         String query = "SELECT * FROM ingredient WHERE recipeID = ?";
 
-        int id;
-        String name;
-        float quantity;
-        String unit;
-
         Ingredient ingredient;
         LinkedList<Ingredient> ingredients = new LinkedList<>();
 
@@ -32,17 +27,12 @@ public class IngredientDAOMySQL extends IngredientDAO {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                id = result.getInt("id");
-                name = result.getString("name");
-                quantity = result.getInt("quantity");
-                unit = result.getString("unit");
-
-                ingredient = new Ingredient();
-                ingredient.setId(id);
-                ingredient.setName(name);
-                ingredient.setQuantity(quantity);
-                ingredient.setUnit(unit);
-                ingredient.setRecipeID(recipeID);
+                ingredient = new Ingredient(
+                    result.getInt("id"),
+                    recipeID,
+                    result.getString("name"),
+                    result.getFloat("quantity"),
+                    result.getString("unit"));
 
                 ingredients.addLast(ingredient);
             }
@@ -51,7 +41,6 @@ public class IngredientDAOMySQL extends IngredientDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return ingredients;
@@ -90,7 +79,6 @@ public class IngredientDAOMySQL extends IngredientDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return hasSucceeded;

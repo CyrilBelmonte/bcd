@@ -3,6 +3,7 @@ package com.ucp.cookwithease.dao.general;
 import com.ucp.cookwithease.model.Recipe;
 
 import java.sql.Connection;
+import java.util.LinkedList;
 
 
 public abstract class RecipeDAO {
@@ -13,6 +14,7 @@ public abstract class RecipeDAO {
     }
 
     // Select
+    public abstract LinkedList<Recipe> findAll();
     public abstract Recipe find(int id);
 
     // Insert

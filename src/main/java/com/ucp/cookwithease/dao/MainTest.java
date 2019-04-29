@@ -33,6 +33,13 @@ public class MainTest {
         System.out.println(DAOFactory.getCommentDAO().insert(comment));
 
 
+        LinkedList <Comment> userComments = DAOFactory.getCommentDAO().findAllByUser(1);
+        System.out.println(userComments);
+
+        LinkedList <Comment> recipeComments = DAOFactory.getCommentDAO().findAllByRecipe(1);
+        System.out.println(recipeComments);
+
+
         ///////////////////////////////////////////////////////////////////
 
         Recipe cremeChantilly = new Recipe();
@@ -79,9 +86,19 @@ public class MainTest {
 
         ///////////////////////////////////////////////////////////////////
 
+        Recipe cremeChantillyFromDB = DAOFactory.getRecipeDAO().find(cremeChantilly.getId());
 
-        Recipe recipe = DAOFactory.getRecipeDAO().find(cremeChantilly.getId());
+        System.out.println(cremeChantillyFromDB);
 
-        System.out.println(recipe);
+
+        ///////////////////////////////////////////////////////////////////
+
+        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll();
+
+        System.out.println("**************** ALL RECIPES ****************");
+
+        for (Recipe recipe : recipes) {
+            System.out.println(recipe);
+        }
     }
 }

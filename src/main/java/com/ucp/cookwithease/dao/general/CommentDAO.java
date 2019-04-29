@@ -16,9 +16,10 @@ public abstract class CommentDAO {
     }
 
     // Select
-    public abstract LinkedList<Comment> findAll(int recipeID);
-    public abstract LinkedList<Comment> findAll(Recipe recipe);
-    public abstract LinkedList<Comment> findAll(User user);
+    public abstract LinkedList<Comment> findAllByRecipe(int recipeID);
+    public abstract LinkedList<Comment> findAllByRecipe(Recipe recipe);
+    public abstract LinkedList<Comment> findAllByUser(int userID);
+    public abstract LinkedList<Comment> findAllByUser(User user);
 
     // Insert
     public abstract boolean insert(Comment comment);

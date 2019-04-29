@@ -34,10 +34,9 @@ public class Tools {
     }
 
     public static String repeat(String pattern, int repeat) {
-        int i;
         StringBuilder result = new StringBuilder();
 
-        for (i = 0; i < repeat; i++) {
+        for (int i = 0; i < repeat; i++) {
             result.append(pattern);
         }
 

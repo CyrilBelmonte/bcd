@@ -1,9 +1,7 @@
 package com.ucp.cookwithease.dao.mysql;
 
 import com.ucp.cookwithease.dao.general.CommentDAO;
-import com.ucp.cookwithease.model.Comment;
-import com.ucp.cookwithease.model.Recipe;
-import com.ucp.cookwithease.model.User;
+import com.ucp.cookwithease.model.*;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -15,18 +13,23 @@ public class CommentDAOMySQL extends CommentDAO {
     }
 
     @Override
-    public LinkedList<Comment> findAll(int recipeID) {
-        throw new UnsupportedOperationException();
+    public LinkedList<Comment> findAllByRecipe(int recipeID) {
+        return findAll("SELECT * FROM comment WHERE recipeID = ?", recipeID);
     }
 
     @Override
-    public LinkedList<Comment> findAll(Recipe recipe) {
-        return findAll(recipe.getId());
+    public LinkedList<Comment> findAllByRecipe(Recipe recipe) {
+        return findAllByRecipe(recipe.getId());
     }
 
     @Override
-    public LinkedList<Comment> findAll(User user) {
-        throw new UnsupportedOperationException();
+    public LinkedList<Comment> findAllByUser(int userID) {
+        return findAll("SELECT * FROM comment WHERE userID = ?", userID);
+    }
+
+    @Override
+    public LinkedList<Comment> findAllByUser(User user) {
+        return findAllByUser(user.getId());
     }
 
     @Override
@@ -39,7 +42,8 @@ public class CommentDAOMySQL extends CommentDAO {
         boolean hasSucceeded = false;
 
         try {
-            java.sql.Date publicationDate = new java.sql.Date(comment.getPublicationDate().getTime());
+            java.sql.Date publicationDate = new java.sql.Date(
+                comment.getPublicationDate().getTime());
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getUserID());
@@ -47,7 +51,6 @@ public class CommentDAOMySQL extends CommentDAO {
             statement.setString(3, comment.getDescription());
             statement.setInt(4, comment.getRating());
             statement.setDate(5, publicationDate);
-
             int updatedTuples = statement.executeUpdate();
 
             if (updatedTuples > 0) {
@@ -58,9 +61,58 @@ public class CommentDAOMySQL extends CommentDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return hasSucceeded;
+    }
+
+    private LinkedList<Comment> findAll(String query, int id) {
+        Comment comment;
+        LinkedList<Comment> comments = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+
+            do {
+                comment = getCommentFromRSet(result);
+
+                if (comment != null) {
+                    comments.addLast(comment);
+                }
+
+            } while (comment != null);
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return comments;
+    }
+
+    private Comment getCommentFromRSet(ResultSet resultSet) {
+        Comment comment = null;
+
+        try {
+            if (resultSet.next()) {
+                java.util.Date publicationDate = new java.util.Date(
+                    resultSet.getDate("publicationDate").getTime());
+
+                comment = new Comment(
+                    resultSet.getInt("userID"),
+                    resultSet.getInt("recipeID"),
+                    resultSet.getString("description"),
+                    resultSet.getInt("rating"),
+                    publicationDate);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] getCommentFromRSet : " + e.getMessage());
+        }
+
+        return comment;
     }
 }

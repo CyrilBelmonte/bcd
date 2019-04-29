@@ -17,10 +17,6 @@ public class StepDAOMySQL extends StepDAO {
     public LinkedList<Step> findAll(int recipeID) {
         String query = "SELECT * FROM step WHERE recipeID = ?";
 
-        int id;
-        int position;
-        String description;
-
         Step step;
         LinkedList<Step> steps = new LinkedList<>();
 
@@ -31,15 +27,11 @@ public class StepDAOMySQL extends StepDAO {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                id = result.getInt("id");
-                position = result.getInt("position");
-                description = result.getString("description");
-
-                step = new Step();
-                step.setId(id);
-                step.setPosition(position);
-                step.setDescription(description);
-                step.setRecipeID(recipeID);
+                step = new Step(
+                    result.getInt("id"),
+                    recipeID,
+                    result.getInt("position"),
+                    result.getString("description"));
 
                 steps.addLast(step);
             }
@@ -48,7 +40,6 @@ public class StepDAOMySQL extends StepDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return steps;
@@ -86,7 +77,6 @@ public class StepDAOMySQL extends StepDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return hasSucceeded;

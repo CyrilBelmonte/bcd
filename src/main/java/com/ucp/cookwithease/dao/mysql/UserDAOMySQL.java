@@ -33,7 +33,6 @@ public class UserDAOMySQL extends UserDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return user;
@@ -54,7 +53,6 @@ public class UserDAOMySQL extends UserDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return user;
@@ -76,7 +74,6 @@ public class UserDAOMySQL extends UserDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return user;
@@ -114,20 +111,9 @@ public class UserDAOMySQL extends UserDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
         }
 
         return hasSucceeded;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(User user) {
-        return delete(user.getId());
     }
 
     @Override
@@ -158,7 +144,6 @@ public class UserDAOMySQL extends UserDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] getUserFromRSet : " + e.getMessage());
-
         }
 
         return user;

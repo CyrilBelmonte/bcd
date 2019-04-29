@@ -22,10 +22,6 @@ public abstract class UserDAO {
     // Insert
     public abstract boolean insert(User user);
 
-    // Delete
-    public abstract boolean delete(int id);
-    public abstract boolean delete(User user);
-
     // Update
     public abstract boolean update(User user);
 }

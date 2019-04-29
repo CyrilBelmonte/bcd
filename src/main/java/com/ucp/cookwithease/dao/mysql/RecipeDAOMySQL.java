@@ -16,12 +16,37 @@ public class RecipeDAOMySQL extends RecipeDAO {
     }
 
     @Override
+    public LinkedList<Recipe> findAll() {
+        String query = "SELECT * FROM recipe";
+        Recipe recipe;
+        LinkedList<Recipe> recipes = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            do {
+                recipe = getRecipeFromRSet(result);
+
+                if (recipe != null) {
+                    recipes.addLast(recipe);
+                }
+
+            } while (recipe != null);
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return recipes;
+    }
+
+    @Override
     public Recipe find(int id) {
         String query = "SELECT * FROM recipe WHERE id = ?";
-
         Recipe recipe = null;
-        LinkedList<Ingredient> ingredients;
-        LinkedList<Step> steps;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -33,15 +58,6 @@ public class RecipeDAOMySQL extends RecipeDAO {
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
-        }
-
-        if (recipe != null) {
-            ingredients = DAOFactory.getIngredientDAO().findAll(recipe);
-            steps = DAOFactory.getStepDAO().findAll(recipe);
-
-            recipe.setIngredients(ingredients);
-            recipe.setSteps(steps);
         }
 
         return recipe;
@@ -78,22 +94,22 @@ public class RecipeDAOMySQL extends RecipeDAO {
 
             if (result.next()) {
                 recipe.setId(result.getInt(1));
+
                 hasSucceeded = true;
+
+                for (Ingredient ingredient : ingredients) {
+                    hasSucceeded = hasSucceeded && ingredientDAO.insert(ingredient);
+                }
+
+                for (Step step : steps) {
+                    hasSucceeded = hasSucceeded && stepDAO.insert(step);
+                }
             }
 
             statement.close();
 
         } catch (SQLException e) {
             System.err.println("[ERROR] Query exception : " + e.getMessage());
-
-        }
-
-        for (Ingredient ingredient : ingredients) {
-            hasSucceeded = hasSucceeded && ingredientDAO.insert(ingredient);
-        }
-
-        for (Step step : steps) {
-            hasSucceeded = hasSucceeded && stepDAO.insert(step);
         }
 
         return hasSucceeded;
@@ -104,31 +120,25 @@ public class RecipeDAOMySQL extends RecipeDAO {
 
         try {
             if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                int duration = resultSet.getInt("duration");
-                int persons = resultSet.getInt("persons");
-                DishType type = DishType.valueOf(resultSet.getString("type"));
-                Level cost = Level.valueOf(resultSet.getString("cost"));
-                Level difficulty = Level.valueOf(resultSet.getString("difficulty"));
-                float rating = resultSet.getFloat("rating");
-                String picture = resultSet.getString("picture");
+                int recipeID = resultSet.getInt("id");
 
-                recipe = new Recipe();
-                recipe.setId(id);
-                recipe.setName(name);
-                recipe.setDuration(duration);
-                recipe.setPersons(persons);
-                recipe.setType(type);
-                recipe.setCost(cost);
-                recipe.setDifficulty(difficulty);
-                recipe.setRating(rating);
-                recipe.setPicture(picture);
+                recipe = new Recipe(
+                    recipeID,
+                    resultSet.getString("name"),
+                    resultSet.getInt("duration"),
+                    resultSet.getInt("persons"),
+                    DishType.valueOf(resultSet.getString("type")),
+                    Level.valueOf(resultSet.getString("cost")),
+                    Level.valueOf(resultSet.getString("difficulty")),
+                    resultSet.getFloat("rating"),
+                    resultSet.getString("picture"),
+                    DAOFactory.getIngredientDAO().findAll(recipeID),
+                    DAOFactory.getStepDAO().findAll(recipeID),
+                    new LinkedList<Comment>());
             }
 
         } catch (SQLException e) {
             System.err.println("[ERROR] getRecipeFromRSet : " + e.getMessage());
-
         }
 
         return recipe;
