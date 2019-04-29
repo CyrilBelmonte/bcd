@@ -25,14 +25,9 @@ public class RecipeDAOMySQL extends RecipeDAO {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery();
 
-            do {
-                recipe = getRecipeFromRSet(result);
-
-                if (recipe != null) {
-                    recipes.addLast(recipe);
-                }
-
-            } while (recipe != null);
+            while ((recipe = getRecipeFromRSet(result)) != null) {
+                recipes.addLast(recipe);
+            }
 
             statement.close();
 

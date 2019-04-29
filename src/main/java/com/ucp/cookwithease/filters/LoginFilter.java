@@ -43,14 +43,16 @@ public class LoginFilter implements Filter {
 
         boolean isExcluded = false;
 
-        for (String page : excludedPages)
+        for (String page : excludedPages) {
             isExcluded = isExcluded || path.startsWith(page);
+        }
 
-        if (!isExcluded)
+        if (!isExcluded) {
             response.sendRedirect(request.getContextPath() + References.VIEW_LOGIN);
 
-        else
+        } else {
             chain.doFilter(request, response);
+        }
     }
 
     @Override

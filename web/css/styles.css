@@ -74,6 +74,11 @@ label {
   height: 1.15rem;
 }
 
+.alert-warning {
+  font-size: .9rem;
+  color: #e2b13c;
+}
+
 /* Inputs
  * Reset the placeholder style */
 .form-control::placeholder {

@@ -13,7 +13,7 @@ public class BookmarksServlet extends HttpServlet {
             throws ServletException, IOException {
 
         this.getServletContext().getRequestDispatcher(
-                References.INTERNAL_VIEW_BOOKMARKS).forward(request, response);
+            References.INTERNAL_VIEW_BOOKMARKS).forward(request, response);
     }
 
     @Override

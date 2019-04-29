@@ -22,9 +22,16 @@
             <div id="login-box">
                 <form action="<c:url value="/login"/>" method="post">
                     <h2>Connexion</h2>
-                    <input class="form-control" type="text" name="pseudo" placeholder="Nom d'utilisateur">
+                    <input class="form-control" type="text" name="pseudo" value="<c:out value="${requestedUser.pseudo}" />" placeholder="Nom d'utilisateur">
                     <input class="form-control" type="password" name="password" placeholder="Mot de passe">
                     <button class="btn btn-login" type="submit" name="connection">Connexion</button>
+
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-warning">
+                            <c:out value="${error.description}" />
+                        </div>
+                    </c:if>
+
                     <a class="link" href="<c:url value="/register"/>">S'inscrire&nbsp;&rarr;</a>
                 </form>
             </div>

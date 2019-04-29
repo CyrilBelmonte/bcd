@@ -20,9 +20,10 @@ public abstract class Form {
 
         if (value != null &&
             value.length() > 0 &&
-            value.length() <= maxLength)
+            value.length() <= maxLength) {
 
             return value;
+        }
 
         return null;
     }

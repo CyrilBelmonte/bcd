@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.servlets;
 
+import com.ucp.cookwithease.forms.FieldError;
 import com.ucp.cookwithease.forms.LoginForm;
 import com.ucp.cookwithease.model.User;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.LinkedList;
 
 
 public class LoginServlet extends HttpServlet {
@@ -18,12 +20,13 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("userSession") != null)
+        if (session.getAttribute("userSession") != null) {
             response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
 
-        else
+        } else {
             this.getServletContext().getRequestDispatcher(
-                    References.INTERNAL_VIEW_LOGIN).forward(request, response);
+                References.INTERNAL_VIEW_LOGIN).forward(request, response);
+        }
     }
 
     @Override
@@ -33,16 +36,20 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         LoginForm form = new LoginForm();
-        User user = form.getUser(request);
+        LinkedList<FieldError> errors = form.getErrors();
+        User user = form.loginUser(request);
 
         if (!form.hasErrors()) {
             session.setAttribute("userSession", user);
-            response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
-        }
 
-        else {
+            response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
+
+        } else {
+            request.setAttribute("requestedUser", user);
+            request.setAttribute("error", errors.getFirst());
+
             this.getServletContext().getRequestDispatcher(
-                    References.INTERNAL_VIEW_LOGIN).forward(request, response);
+                References.INTERNAL_VIEW_LOGIN).forward(request, response);
         }
     }
 }

@@ -13,7 +13,7 @@ public class FriendsServlet extends HttpServlet {
             throws ServletException, IOException {
 
         this.getServletContext().getRequestDispatcher(
-                References.INTERNAL_VIEW_FRIENDS).forward(request, response);
+             References.INTERNAL_VIEW_FRIENDS).forward(request, response);
     }
 
     @Override

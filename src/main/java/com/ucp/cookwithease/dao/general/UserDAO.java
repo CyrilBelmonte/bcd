@@ -24,4 +24,5 @@ public abstract class UserDAO {
 
     // Update
     public abstract boolean update(User user);
+    public abstract boolean updatePassword(User user);
 }

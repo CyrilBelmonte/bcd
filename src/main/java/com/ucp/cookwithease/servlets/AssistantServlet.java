@@ -13,7 +13,7 @@ public class AssistantServlet extends HttpServlet {
             throws ServletException, IOException {
 
         this.getServletContext().getRequestDispatcher(
-                References.INTERNAL_VIEW_ASSISTANT).forward(request, response);
+            References.INTERNAL_VIEW_ASSISTANT).forward(request, response);
     }
 
     @Override

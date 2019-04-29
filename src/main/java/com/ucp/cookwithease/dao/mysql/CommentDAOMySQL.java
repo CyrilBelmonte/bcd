@@ -75,14 +75,9 @@ public class CommentDAOMySQL extends CommentDAO {
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
 
-            do {
-                comment = getCommentFromRSet(result);
-
-                if (comment != null) {
-                    comments.addLast(comment);
-                }
-
-            } while (comment != null);
+            while ((comment = getCommentFromRSet(result)) != null) {
+                comments.addLast(comment);
+            }
 
             statement.close();
 

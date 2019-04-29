@@ -19,7 +19,17 @@ public class MainTest {
         user.setInscriptionDate(new Date());
 
         System.out.println(DAOFactory.getUserDAO().insert(user));
-        System.out.println(user.getId());
+
+        user.setFirstName("John Junior");
+        // user.setLastName("Doe");
+        // user.setEmail("john.doe@u-cergy.fr");
+
+        System.out.println(DAOFactory.getUserDAO().update(user));
+
+        user.setPassword(Tools.sha256("azerty"));
+
+        System.out.println(DAOFactory.getUserDAO().updatePassword(user));
+        System.out.println(DAOFactory.getUserDAO().find("jdoe"));
 
 
         Comment comment = new Comment();

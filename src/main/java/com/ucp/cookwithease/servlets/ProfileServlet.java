@@ -13,7 +13,7 @@ public class ProfileServlet extends HttpServlet {
             throws ServletException, IOException {
 
         this.getServletContext().getRequestDispatcher(
-                References.INTERNAL_VIEW_PROFILE).forward(request, response);
+            References.INTERNAL_VIEW_PROFILE).forward(request, response);
     }
 
     @Override

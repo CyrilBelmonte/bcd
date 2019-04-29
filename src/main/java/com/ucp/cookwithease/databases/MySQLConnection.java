@@ -17,6 +17,7 @@ public class MySQLConnection {
             String user = MySQLConfiguration.USER;
             String password = MySQLConfiguration.PASSWORD;
             String options = MySQLConfiguration.OPTIONS;
+
             String url = "jdbc:mysql://" + host + "/" + base + options;
 
             try {
@@ -25,7 +26,6 @@ public class MySQLConnection {
 
             } catch (SQLException | ClassNotFoundException e) {
                 System.err.println("[ERROR] Unable to connect to the database : " + e.getMessage());
-
             }
         }
 

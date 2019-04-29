@@ -13,7 +13,7 @@ public class DiscoverServlet extends HttpServlet {
             throws ServletException, IOException {
 
         this.getServletContext().getRequestDispatcher(
-                References.INTERNAL_VIEW_DISCOVER).forward(request, response);
+            References.INTERNAL_VIEW_DISCOVER).forward(request, response);
     }
 
     @Override

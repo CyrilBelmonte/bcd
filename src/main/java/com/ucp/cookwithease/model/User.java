@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.model;
 
+import com.ucp.cookwithease.tools.Tools;
 import lombok.*;
 
 import java.util.Date;
@@ -46,5 +47,13 @@ public class User {
     public void addComment(Comment comment) {
         comment.setUserID(id);
         comments.addLast(comment);
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + "\n" +
+            Tools.repeat("-", firstName.length() + lastName.length() + 1) + "\n" +
+            "  Pseudo: " + pseudo + " | Email: " + email + "\n" +
+            "  Inscription: " + inscriptionDate;
     }
 }

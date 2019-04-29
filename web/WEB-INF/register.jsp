@@ -22,13 +22,19 @@
             <div id="login-box">
                 <form action="<c:url value="/register"/>" method="post">
                     <h2>Inscription</h2>
-                    <input class="form-control" type="text" name="first-name" placeholder="Prénom">
-                    <input class="form-control" type="text" name="last-name" placeholder="Nom">
-                    <input class="form-control" type="text" name="pseudo" placeholder="Nom d'utilisateur / pseudo">
-                    <input class="form-control" type="text" name="email" placeholder="Adresse email">
+                    <input class="form-control" type="text" name="first-name" value="<c:out value="${requestedUser.firstName}" />" placeholder="Prénom">
+                    <input class="form-control" type="text" name="last-name" value="<c:out value="${requestedUser.lastName}" />" placeholder="Nom">
+                    <input class="form-control" type="text" name="pseudo" value="<c:out value="${requestedUser.pseudo}" />" placeholder="Nom d'utilisateur / pseudo">
+                    <input class="form-control" type="text" name="email" value="<c:out value="${requestedUser.email}" />" placeholder="Adresse email">
                     <input class="form-control" type="password" name="password" placeholder="Mot de passe">
                     <input class="form-control" type="password" name="password-confirmation" placeholder="Confirmation du mot de passe">
                     <button class="btn btn-login" type="submit" name="register">Commencer</button>
+
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-warning">
+                            <c:out value="${error.description}" />
+                        </div>
+                    </c:if>
                 </form>
             </div>
 

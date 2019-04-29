@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.model;
 
+import com.ucp.cookwithease.tools.Tools;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,9 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "    - " + name + " (" + quantity + (unit != null ? " " + unit : "") + ")";
+        String unitDescription = (unit != null) ? " " + unit : "";
+        String quantityDescription = (quantity > 0) ? "(" + quantity + unitDescription + ")" : "";
+
+        return "    - " + Tools.capitalize(name) + " " + quantityDescription;
     }
 }

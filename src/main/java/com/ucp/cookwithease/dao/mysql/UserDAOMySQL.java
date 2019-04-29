@@ -15,7 +15,25 @@ public class UserDAOMySQL extends UserDAO {
 
     @Override
     public LinkedList<User> findAll() {
-        throw new UnsupportedOperationException();
+        String query = "SELECT * FROM user";
+        User user;
+        LinkedList<User> users = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            while ((user = getUserFromRSet(result)) != null) {
+                users.addLast(user);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return users;
     }
 
     @Override
@@ -118,7 +136,54 @@ public class UserDAOMySQL extends UserDAO {
 
     @Override
     public boolean update(User user) {
-        throw new UnsupportedOperationException();
+        String query = "UPDATE user SET firstName = ?, lastName = ?, email = ? WHERE id = ?";
+
+        boolean hasSucceeded = false;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getEmail());
+            statement.setInt(4, user.getId());
+            int updatedTuples = statement.executeUpdate();
+
+            if (updatedTuples > 0) {
+                hasSucceeded = true;
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return hasSucceeded;
+    }
+
+    @Override
+    public boolean updatePassword(User user) {
+        String query = "UPDATE user SET password = ? WHERE id = ?";
+
+        boolean hasSucceeded = false;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, user.getPassword());
+            statement.setInt(2, user.getId());
+            int updatedTuples = statement.executeUpdate();
+
+            if (updatedTuples > 0) {
+                hasSucceeded = true;
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return hasSucceeded;
     }
 
     private User getUserFromRSet(ResultSet resultSet) {
@@ -134,6 +199,7 @@ public class UserDAOMySQL extends UserDAO {
                 Date inscriptionDate = new Date(resultSet.getDate("inscriptionDate").getTime());
 
                 user = new User();
+
                 user.setId(id);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
