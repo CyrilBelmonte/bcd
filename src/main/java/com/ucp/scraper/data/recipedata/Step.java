@@ -1,4 +1,4 @@
-package com.ucp.scrapper.data.recipedata;
+package com.ucp.scraper.data.recipedata;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

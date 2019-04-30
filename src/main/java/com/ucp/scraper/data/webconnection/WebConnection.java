@@ -1,4 +1,4 @@
-package com.ucp.scrapper.data.webconnection;
+package com.ucp.scraper.data.webconnection;
 
 import lombok.Data;
 import org.apache.log4j.Logger;

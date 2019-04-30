@@ -1,4 +1,4 @@
-package com.ucp.scrapper.engine;
+package com.ucp.scraper.engine;
 
 
 import com.ucp.cookwithease.dao.DAOFactory;

@@ -1,6 +1,6 @@
-package com.ucp.scrapper.engine;
+package com.ucp.scraper.engine;
 
-import com.ucp.scrapper.data.webconnection.WebConnection;
+import com.ucp.scraper.data.webconnection.WebConnection;
 import lombok.Data;
 import org.jsoup.nodes.Document;
 

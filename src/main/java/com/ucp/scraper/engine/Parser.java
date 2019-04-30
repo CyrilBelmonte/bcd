@@ -1,12 +1,11 @@
-package com.ucp.scrapper.engine;
+package com.ucp.scraper.engine;
 
-import com.ucp.scrapper.data.recipedata.Ingredient;
-import com.ucp.scrapper.data.recipedata.Recipe;
-import com.ucp.scrapper.data.recipedata.Step;
+import com.ucp.scraper.data.recipedata.Ingredient;
+import com.ucp.scraper.data.recipedata.Recipe;
+import com.ucp.scraper.data.recipedata.Step;
 
-import com.ucp.scrapper.data.webconnection.Marmiton;
+import com.ucp.scraper.data.webconnection.Marmiton;
 
-import lombok.Builder;
 import lombok.Data;
 
 import org.jsoup.nodes.Document;
