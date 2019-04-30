@@ -1,19 +1,20 @@
-/*
-package Ia;
+
+package com.ucp.ia;
+
+import com.ucp.cookwithease.model.*;
 
 import java.util.LinkedList;
-import com.ucp.scrapper.database.Ingredient;
-import com.ucp.scrapper.database.Recipe;
+
 
 import static java.lang.Math.*;
 
-*/
+
 /**
  * @author Archambault Vincent
  * @version 1.0.0.0;
  *
  * Kohonen card code
- *//*
+ */
 
 public class Kohonen {
     private LinkedList<Neuron> kohonen;
@@ -28,9 +29,9 @@ public class Kohonen {
     private static double NEURONSIZE = 20;
     public Kohonen(LinkedList<Ingredient> ingredients, LinkedList<Recipe> recipes) {
         this.recipes = recipes;
-        cluster = new LinkedList<Categorie>();
-        kohonen = new LinkedList<Neuron>();
-        Entry = new LinkedList<EntryNeuron>();
+        cluster = new LinkedList<>();
+        kohonen = new LinkedList<>();
+        Entry = new LinkedList<>();
         TextAnalysis analysis=new TextAnalysis(ingredients,recipes);
 
 
@@ -40,11 +41,11 @@ public class Kohonen {
     }
 
 
-    */
+
 /**
      * initialisation of Weight
      * @version 1.0.0.0 : initialisation random
-     *//*
+     */
 
     public void InitWeight(LinkedList<Ingredient> ingredients){
         for(int index =0 ; index < NEURONSIZE ; index++ ){
@@ -75,12 +76,9 @@ public class Kohonen {
             return 0;
         }
     }
-
-
-    */
 /**
      *
-     *//*
+     */
 
     public int WinnerDetermined(){
         int winner = 0;
@@ -106,10 +104,10 @@ public class Kohonen {
         }
     }
 
-    */
+
 /**
      * modification of the weight
-     *//*
+     */
 
     public void Learning(int winner,int entry){
         for(int index =0;index < kohonen.size() ; index++){
@@ -122,10 +120,10 @@ public class Kohonen {
 
     }
 
-    */
+
 /**
      * Create Categorie after the learning
-     *//*
+     */
 
     public void Clustering(){
         int winner=0;
@@ -161,4 +159,4 @@ public class Kohonen {
         this.cluster = cluster;
     }
 }
-*/
+

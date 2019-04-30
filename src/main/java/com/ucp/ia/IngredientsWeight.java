@@ -1,5 +1,8 @@
-/*
-package Ia;
+
+package com.ucp.ia;
+
+import com.ucp.cookwithease.model.*;
+
 
 public class IngredientsWeight {
     private double Weight;
@@ -29,4 +32,4 @@ public class IngredientsWeight {
 
 
 }
-*/
+

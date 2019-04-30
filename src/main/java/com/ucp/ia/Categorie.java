@@ -1,19 +1,19 @@
-/*
-package Ia;
 
-import com.ucp.scrapper.database.Recipe;
+package com.ucp.ia;
+
+import com.ucp.cookwithease.model.*;
 
 import java.util.LinkedList;
 
-*/
+
 /**
  * categorie of cook Recipe
- *//*
+ */
 
 public class Categorie {
     public LinkedList<Recipe> recipes;
      public Categorie() {
-        recipes=new LinkedList<Recipe>();
+        recipes=new LinkedList<>();
     }
     public LinkedList<Recipe> getRecipes() {
         return recipes;
@@ -23,4 +23,4 @@ public class Categorie {
         this.recipes = recipes;
     }
 }
-*/
+

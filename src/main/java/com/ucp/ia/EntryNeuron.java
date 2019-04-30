@@ -1,5 +1,8 @@
-/*
-package Ia;
+
+package com.ucp.ia;
+
+import com.ucp.cookwithease.model.*;
+
 
 import java.util.LinkedList;
 
@@ -27,4 +30,4 @@ public class EntryNeuron {
         this.data = data;
     }
 }
-*/
+

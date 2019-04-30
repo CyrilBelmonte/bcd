@@ -23,7 +23,7 @@ public class Neuron {
 
 
     public Neuron() {
-        Weight=new LinkedList<Double>();
+        Weight=new LinkedList<>();
     }
 
     public double getaction() {
