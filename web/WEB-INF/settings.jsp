@@ -30,13 +30,19 @@
                     <h2 class="icon" data-feather="user"></h2>
 
                     <label for="first-name">Prénom</label>
-                    <input id="first-name" class="form-control" type="text" name="first-name">
+                    <input id="first-name" class="form-control" type="text" name="first-name" value="<c:out value="${userSession.firstName}" />">
 
                     <label for="last-name">Nom</label>
-                    <input id="last-name" class="form-control" type="text" name="last-name">
+                    <input id="last-name" class="form-control" type="text" name="last-name" value="<c:out value="${userSession.lastName}" />">
 
                     <label for="email">Adresse email</label>
-                    <input id="email" class="form-control" type="text" name="email">
+                    <input id="email" class="form-control" type="text" name="email" value="<c:out value="${userSession.email}" />">
+
+                    <c:if test="${(not empty error) && (formName == 'user-settings')}">
+                        <div class="alert alert-warning">
+                            <c:out value="${error.description}" />
+                        </div>
+                    </c:if>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-apply" type="submit" name="apply-user-settings">Appliquer</button>
@@ -55,6 +61,12 @@
 
                     <label for="password-confirmation">Confirmation</label>
                     <input id="password-confirmation" class="form-control" type="password" name="password-confirmation">
+
+                    <c:if test="${(not empty error) && (formName == 'password')}">
+                        <div class="alert alert-warning">
+                            <c:out value="${error.description}" />
+                        </div>
+                    </c:if>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-apply" type="submit" name="apply-password">Appliquer</button>
