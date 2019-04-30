@@ -1,4 +1,4 @@
-package com.ucp.scrapper.data.recipedata;
+package com.ucp.scrapper.Data.RecipeData;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +23,8 @@ public class Recipe {
     private String title;
     private String picture;
 
-    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-    private ArrayList<Step> steps = new ArrayList<Step>();
+    private ArrayList<com.ucp.scrapper.data.recipedata.Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<com.ucp.scrapper.data.recipedata.Step> steps = new ArrayList<>();
 
     private String tags;
 
