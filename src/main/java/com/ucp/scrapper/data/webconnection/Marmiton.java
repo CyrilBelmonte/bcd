@@ -33,8 +33,12 @@ public class Marmiton {
 
     private String picturesPathSelector;
 
+    private String tagsPathSelector;
+
     public Marmiton() {
         this.ingredientPathSelector = "ul.recipe-ingredients__list li";
+
+        this.tagsPathSelector = "#content > div:nth-child(2) > div > ul";
 
         this.stepPathSelector = " ol.recipe-preparation__list li";
 
@@ -52,7 +56,6 @@ public class Marmiton {
         this.titlePathSelector = "#content > div:nth-child(2) > h1";
 
         this.picturesPathSelector = "#af-diapo-desktop-0_img";
-
 
     }
 }

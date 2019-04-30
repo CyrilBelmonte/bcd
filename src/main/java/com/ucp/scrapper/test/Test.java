@@ -1,20 +1,10 @@
 package com.ucp.scrapper.test;
-/*
-import com.ucp.scrapper.engine.Parser;
-*/
-/*
+
+import com.ucp.scrapper.engine.ScrapToBd;
 public class Test {
     public static void main(String[] args) {
-        int nbr = 100;
-        System.out.println("##################################################################################################################################################################\n");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        for (int i = 0; i < nbr; i++) {
-            String url = "https://marmiton.org/recettes/recette-hasard.aspx";
-            Parser parser = new Parser(url);
-            System.out.println(parser.getRecipe());
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        }
+        ScrapToBd scrapToBd = new ScrapToBd();
+        int test = 100;
+        scrapToBd.execute(test);
     }
 }
-*/

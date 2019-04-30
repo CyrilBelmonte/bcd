@@ -1,10 +1,14 @@
 package com.ucp.scrapper.engine;
-/*
+
 import com.ucp.scrapper.data.recipedata.Ingredient;
 import com.ucp.scrapper.data.recipedata.Recipe;
 import com.ucp.scrapper.data.recipedata.Step;
+
 import com.ucp.scrapper.data.webconnection.Marmiton;
+
+import lombok.Builder;
 import lombok.Data;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -26,11 +30,19 @@ public class Parser {
 
             this.documentWeb = scrapper.getDocumentWeb();
 
-            this.recipe = new Recipe(getRecipeTimeFromWeb(), getCookingTimeFromWeb(), getPreparationTime(), getNumberPersonFromWeb(), getMarkFromWeb(), getEconomicLevelFromWeb(), getDifficultyLevelFromWeb(), getTitleFromWeb(), getPictureFromWeb(), getIngredientFromWeb(), getStepFromWeb());
+            this.recipe = new Recipe(getRecipeTimeFromWeb(), getCookingTimeFromWeb(), getPreparationTime(), getNumberPersonFromWeb(), getMarkFromWeb(), getEconomicLevelFromWeb(), getDifficultyLevelFromWeb(), getTitleFromWeb(), getPictureFromWeb(), getIngredientFromWeb(), getStepFromWeb(), getType());
 
         } catch (Exception e) {
             System.err.println("Parser : " + e);
         }
+    }
+
+    private String getType() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Element element : this.documentWeb.select(marmiton.getTagsPathSelector())) {
+            stringBuilder.append(element.getElementsByClass("mrtn-tag").get(0).ownText() + " ");
+        }
+        return stringBuilder.toString();
     }
 
     private int getRecipeTimeFromWeb() {
@@ -118,7 +130,7 @@ public class Parser {
         for (Element element : this.documentWeb.select(marmiton.getIngredientPathSelector())) {
             Ingredient ingredient = new Ingredient();
             Tools tools = new Tools();
-            ingredient.setName(tools.ingredient(element.getElementsByClass("ingredient").get(0).ownText()));
+            ingredient.setName(tools.ingredient(element.getElementsByClass("name_singular").attr("data-name-singular")));
             if (element.getElementsByClass("recipe-ingredient-qt").get(0).ownText().equals("")) {
                 ingredient.setIngQuantities(1);
             } else {
@@ -146,4 +158,3 @@ public class Parser {
 
 
 }
-*/

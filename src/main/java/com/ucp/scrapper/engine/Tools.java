@@ -1,6 +1,10 @@
 package com.ucp.scrapper.engine;
 
+
+import com.ucp.cookwithease.model.Level;
+
 public class Tools {
+
 
     public int parseTime(String timeInStr) {
         if (timeInStr.contains("min")) {
@@ -46,6 +50,6 @@ public class Tools {
         else if (chaine.contains("kg "))
             return "kg";
         else
-            return "unite";
+            return null;
     }
 }
