@@ -34,14 +34,14 @@ CREATE TABLE User (
 -- Recipe tables
 CREATE TABLE Recipe (
   id                INTEGER NOT NULL AUTO_INCREMENT,
-  name              VARCHAR(50),
+  name              VARCHAR(100),
   duration          INTEGER,
   persons           INTEGER,
   type              ENUM('STARTER', 'MAIN_COURSE', 'DESSERT', 'OTHER'),
   cost              ENUM('LOW', 'AVERAGE', 'HIGH'),
   difficulty        ENUM('LOW', 'AVERAGE', 'HIGH'),
   rating            FLOAT,
-  picture           VARCHAR(100),
+  picture           VARCHAR(200),
 
   PRIMARY KEY (id)
 );
