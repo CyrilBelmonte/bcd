@@ -52,6 +52,28 @@ public class IngredientDAOMySQL extends IngredientDAO {
     }
 
     @Override
+    public LinkedList<String> getAllNames() {
+        String query = "SELECT DISTINCT name FROM ingredient";
+        LinkedList<String> ingredients = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                ingredients.addLast(result.getString("name"));
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return ingredients;
+    }
+
+    @Override
     public boolean insert(Ingredient ingredient) {
         String query =
             "INSERT INTO ingredient" +

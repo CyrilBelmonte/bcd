@@ -17,6 +17,7 @@ public abstract class IngredientDAO {
     // Select
     public abstract LinkedList<Ingredient> findAll(int recipeID);
     public abstract LinkedList<Ingredient> findAll(Recipe recipe);
+    public abstract LinkedList<String> getAllNames();
 
     // Insert
     public abstract boolean insert(Ingredient ingredient);
