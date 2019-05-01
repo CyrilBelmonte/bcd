@@ -37,7 +37,7 @@ CREATE TABLE Recipe (
   name              VARCHAR(100),
   duration          INTEGER,
   persons           INTEGER,
-  type              ENUM('STARTER', 'MAIN_COURSE', 'DESSERT', 'OTHER'),
+  type              ENUM('APPETIZER', 'STARTER', 'MAIN_COURSE', 'DESSERT', 'OTHER'),
   cost              ENUM('LOW', 'AVERAGE', 'HIGH'),
   difficulty        ENUM('LOW', 'AVERAGE', 'HIGH'),
   rating            FLOAT,
