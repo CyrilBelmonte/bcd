@@ -1,4 +1,4 @@
-package com.ucp.cookwithease.databases;
+package com.ucp.cookwithease.dao.connections;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

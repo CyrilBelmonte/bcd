@@ -39,6 +39,80 @@ public class RecipeDAOMySQL extends RecipeDAO {
     }
 
     @Override
+    public LinkedList<Recipe> findAll(int maxResults) {
+        String query = "SELECT * FROM recipe LIMIT ?";
+        Recipe recipe;
+        LinkedList<Recipe> recipes = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, maxResults);
+
+            ResultSet result = statement.executeQuery();
+
+            while ((recipe = getRecipeFromRSet(result)) != null) {
+                recipes.addLast(recipe);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return recipes;
+    }
+
+    @Override
+    public LinkedList<Recipe> findAll(LinkedList<Integer> recipesID) {
+        String query = "SELECT * FROM recipe WHERE id IN (???) ORDER BY FIELD (id, ???)";
+
+        Recipe recipe;
+        LinkedList<Recipe> recipes = new LinkedList<>();
+
+        int recipesLength = recipesID.size();
+
+        if (recipesLength == 0) {
+            return recipes;
+        }
+
+
+        StringBuffer stringBuffer = new StringBuffer();
+        String separator = "";
+
+        for (int id : recipesID) {
+            stringBuffer.append(separator);
+            stringBuffer.append("?");
+            separator = ", ";
+        }
+
+        query = query.replace("???", stringBuffer);
+
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            for (int i = 0; i < recipesLength; i++) {
+                statement.setInt(i + 1, recipesID.get(i));
+                statement.setInt(recipesLength + i + 1, recipesID.get(i));
+            }
+
+            ResultSet result = statement.executeQuery();
+
+            while ((recipe = getRecipeFromRSet(result)) != null) {
+                recipes.addLast(recipe);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return recipes;
+    }
+
+    @Override
     public Recipe find(int id) {
         String query = "SELECT * FROM recipe WHERE id = ?";
         Recipe recipe = null;

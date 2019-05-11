@@ -15,6 +15,8 @@ public abstract class RecipeDAO {
 
     // Select
     public abstract LinkedList<Recipe> findAll();
+    public abstract LinkedList<Recipe> findAll(int maxResults);
+    public abstract LinkedList<Recipe> findAll(LinkedList<Integer> recipesID);
     public abstract Recipe find(int id);
 
     // Insert
