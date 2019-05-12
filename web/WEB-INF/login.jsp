@@ -22,7 +22,7 @@
             <div id="login-box">
                 <form action="<c:url value="/login"/>" method="post">
                     <h2>Connexion</h2>
-                    <input class="form-control" type="text" name="pseudo" value="<c:out value="${requestedUser.pseudo}" />" placeholder="Nom d'utilisateur">
+                    <input class="form-control" type="text" name="pseudo" value="<c:out value="${param.pseudo}" />" placeholder="Nom d'utilisateur">
                     <input class="form-control" type="password" name="password" placeholder="Mot de passe">
                     <button class="btn btn-login" type="submit" name="connection">Connexion</button>
 

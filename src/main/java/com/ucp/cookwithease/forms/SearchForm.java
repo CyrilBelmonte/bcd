@@ -12,6 +12,16 @@ public class SearchForm extends Form {
     private static final int SEARCH_LENGTH = 100;
     private static final int SEARCH_MAX_RESULTS = 45;
 
+    public LinkedList<Recipe> searchAll() {
+        return searchFromKeywords(null);
+    }
+
+    public LinkedList<Recipe> search(HttpServletRequest request) {
+        String keywords = getValueFrom(request, SEARCH_FIELD, SEARCH_LENGTH);
+
+        return searchFromKeywords(keywords);
+    }
+
     public LinkedList<Recipe> searchFromKeywords(String keywords) {
         LinkedList<Integer> recipesID;
         LinkedList<Recipe> recipes;
@@ -29,15 +39,5 @@ public class SearchForm extends Form {
         }
 
         return recipes;
-    }
-
-    public LinkedList<Recipe> search(HttpServletRequest request) {
-        String keywords = getValueFrom(request, SEARCH_FIELD, SEARCH_LENGTH);
-
-        return searchFromKeywords(keywords);
-    }
-
-    public LinkedList<Recipe> searchAll() {
-        return searchFromKeywords(null);
     }
 }

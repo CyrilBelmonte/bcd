@@ -1,7 +1,7 @@
 package com.ucp.cookwithease.dao.lucene;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.fr.FrenchAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -23,10 +23,6 @@ public class LuceneIndexer {
     }
 
     private boolean openIndex(OpenMode mode) {
-        Directory directory;
-        Analyzer analyzer;
-        IndexWriterConfig indexConfiguration;
-
         if (!Files.isDirectory(indexPath)) {
             try {
                 Files.createDirectories(indexPath);
@@ -45,9 +41,10 @@ public class LuceneIndexer {
         }
 
         try {
-            directory = FSDirectory.open(indexPath);
-            analyzer = new StandardAnalyzer();
-            indexConfiguration = new IndexWriterConfig(analyzer);
+            Directory directory = FSDirectory.open(indexPath);
+            Analyzer analyzer = new FrenchAnalyzer();
+            IndexWriterConfig indexConfiguration = new IndexWriterConfig(analyzer);
+
             indexConfiguration.setOpenMode(mode);
 
             writer = new IndexWriter(directory, indexConfiguration);

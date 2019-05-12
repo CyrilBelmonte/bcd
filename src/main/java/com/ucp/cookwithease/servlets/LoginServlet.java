@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
 
         } else {
-            request.setAttribute("requestedUser", user);
             request.setAttribute("error", errors.getFirst());
 
             this.getServletContext().getRequestDispatcher(

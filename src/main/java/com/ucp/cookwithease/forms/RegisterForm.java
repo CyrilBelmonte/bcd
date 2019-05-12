@@ -30,13 +30,6 @@ public class RegisterForm extends Form {
         String password = getValueFrom(request, PASSWORD_FIELD, PASSWORD_LENGTH);
         String passwordConfirmation = getValueFrom(request, PASSWORD_CONFIRM_FIELD, PASSWORD_CONFIRM_LENGTH);
 
-        User user = new User();
-
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPseudo(pseudo);
-        user.setEmail(email);
-
         if (firstName == null) {
             this.addError(FIRST_NAME_FIELD, "Un prénom valide est requis.");
         }
@@ -62,18 +55,25 @@ public class RegisterForm extends Form {
         }
 
         if (this.hasErrors()) {
-            return user;
+            return null;
         }
 
-        boolean isAValidPseudo = DAOFactory.getUserDAO().find(pseudo) != null;
+        boolean alreadyUsedPseudo = DAOFactory.getUserDAO().find(pseudo) != null;
 
-        if (isAValidPseudo) {
+        if (alreadyUsedPseudo) {
             this.addError("global", "Le nom d'utilisateur est déjà utilisé.");
-            return user;
+            return null;
         }
 
+        User user = new User();
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPseudo(pseudo);
+        user.setEmail(email);
         user.setPassword(Tools.sha256(password));
         user.setInscriptionDate(new Date());
+
         DAOFactory.getUserDAO().insert(user);
 
         return user;

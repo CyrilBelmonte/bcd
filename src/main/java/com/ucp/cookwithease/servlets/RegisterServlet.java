@@ -2,7 +2,6 @@ package com.ucp.cookwithease.servlets;
 
 import com.ucp.cookwithease.forms.FieldError;
 import com.ucp.cookwithease.forms.RegisterForm;
-import com.ucp.cookwithease.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,13 +34,12 @@ public class RegisterServlet extends HttpServlet {
 
         RegisterForm form = new RegisterForm();
         LinkedList<FieldError> errors = form.getErrors();
-        User user = form.registerUser(request);
+        form.registerUser(request);
 
         if (!form.hasErrors()) {
             response.sendRedirect(request.getContextPath() + References.VIEW_LOGIN);
 
         } else {
-            request.setAttribute("requestedUser", user);
             request.setAttribute("error", errors.getFirst());
 
             this.getServletContext().getRequestDispatcher(

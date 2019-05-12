@@ -32,7 +32,7 @@ public class User {
         this.id = id;
 
         for (Comment comment : comments) {
-            comment.setRecipeID(id);
+            comment.setUserID(id);
         }
     }
 

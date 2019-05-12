@@ -17,9 +17,6 @@ public class LoginForm extends Form {
         String pseudo = getValueFrom(request, PSEUDO_FIELD, PSEUDO_LENGTH);
         String password = getValueFrom(request, PASSWORD_FIELD, PASSWORD_LENGTH);
 
-        User requestedUser = new User();
-        requestedUser.setPseudo(pseudo);
-
         if (pseudo == null) {
             this.addError(PSEUDO_FIELD, "Un nom d'utilisateur valide est requis.");
         }
@@ -29,14 +26,14 @@ public class LoginForm extends Form {
         }
 
         if (this.hasErrors()) {
-            return requestedUser;
+            return null;
         }
 
         User user = DAOFactory.getUserDAO().find(pseudo, Tools.sha256(password));
 
         if (user == null) {
             this.addError("global", "L'utilisateur ou le mot de passe est incorrect.");
-            return requestedUser;
+            return null;
         }
 
         return user;

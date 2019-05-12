@@ -61,11 +61,12 @@ public class LuceneIndex implements Index {
     public LinkedList<Integer> findRecipesId(String keywords, int maxResults) {
         String[] fields = {"name", "type", "ingredients"};
 
+        int recipeID;
         LinkedList<Integer> recipesID = new LinkedList<>();
         LinkedList<Document> documents = luceneSearcher.search(keywords, maxResults, fields);
 
         for (Document document : documents) {
-            int recipeID = Integer.parseInt(document.get("id"));
+            recipeID = Integer.parseInt(document.get("id"));
             recipesID.addLast(recipeID);
         }
 

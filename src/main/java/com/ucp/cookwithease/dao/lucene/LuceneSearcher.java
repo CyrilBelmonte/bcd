@@ -1,7 +1,7 @@
 package com.ucp.cookwithease.dao.lucene;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.fr.FrenchAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -39,6 +39,7 @@ public class LuceneSearcher {
         try {
             Directory directory = FSDirectory.open(indexPath);
             IndexReader reader = DirectoryReader.open(directory);
+
             searcher = new IndexSearcher(reader);
 
             return true;
@@ -57,6 +58,7 @@ public class LuceneSearcher {
     }
 
     public LinkedList<Document> search(String keywords, int maxResults, String... fields) {
+        Document document;
         LinkedList<Document> documents = new LinkedList<>();
 
         if (keywords.isEmpty()) {
@@ -64,14 +66,14 @@ public class LuceneSearcher {
         }
 
         try {
-            Analyzer analyzer = new StandardAnalyzer();
+            Analyzer analyzer = new FrenchAnalyzer();
             MultiFieldQueryParser queryParser = new MultiFieldQueryParser(fields, analyzer);
 
             Query parsedQuery = queryParser.parse(keywords);
             ScoreDoc[] results = getSearcher().search(parsedQuery, maxResults).scoreDocs;
 
             for (ScoreDoc result : results) {
-                Document document = searcher.doc(result.doc);
+                document = searcher.doc(result.doc);
                 documents.addLast(document);
             }
 

@@ -17,25 +17,7 @@ public class RecipeDAOMySQL extends RecipeDAO {
 
     @Override
     public LinkedList<Recipe> findAll() {
-        String query = "SELECT * FROM recipe";
-        Recipe recipe;
-        LinkedList<Recipe> recipes = new LinkedList<>();
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet result = statement.executeQuery();
-
-            while ((recipe = getRecipeFromRSet(result)) != null) {
-                recipes.addLast(recipe);
-            }
-
-            statement.close();
-
-        } catch (SQLException e) {
-            System.err.println("[ERROR] Query exception : " + e.getMessage());
-        }
-
-        return recipes;
+        return findAll(1000000000);
     }
 
     @Override
@@ -76,7 +58,6 @@ public class RecipeDAOMySQL extends RecipeDAO {
             return recipes;
         }
 
-
         StringBuffer stringBuffer = new StringBuffer();
         String separator = "";
 
@@ -87,7 +68,6 @@ public class RecipeDAOMySQL extends RecipeDAO {
         }
 
         query = query.replace("???", stringBuffer);
-
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
