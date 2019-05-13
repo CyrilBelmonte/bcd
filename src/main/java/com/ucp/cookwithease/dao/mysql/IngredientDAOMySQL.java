@@ -1,6 +1,7 @@
 package com.ucp.cookwithease.dao.mysql;
 
 import com.ucp.cookwithease.dao.general.IngredientDAO;
+import com.ucp.cookwithease.model.DishType;
 import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
 
@@ -52,7 +53,7 @@ public class IngredientDAOMySQL extends IngredientDAO {
     }
 
     @Override
-    public LinkedList<String> getAllNames() {
+    public LinkedList<String> getAllIngredients() {
         String query = "SELECT DISTINCT name FROM ingredient";
         LinkedList<String> ingredients = new LinkedList<>();
 
@@ -71,6 +72,45 @@ public class IngredientDAOMySQL extends IngredientDAO {
         }
 
         return ingredients;
+    }
+
+    @Override
+    public LinkedList<String> getAllIngredients(DishType type) {
+        String query = "SELECT DISTINCT name FROM ingredient WHERE type = ?";
+        LinkedList<String> ingredients = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, type.toString());
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                ingredients.addLast(result.getString("name"));
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return ingredients;
+    }
+
+    @Override
+    public LinkedList<String> getAllStartersIngredients() {
+        return getAllIngredients(DishType.STARTER);
+    }
+
+    @Override
+    public LinkedList<String> getAllMainCoursesIngredients() {
+        return getAllIngredients(DishType.MAIN_COURSE);
+    }
+
+    @Override
+    public LinkedList<String> getAllDessertsIngredients() {
+        return getAllIngredients(DishType.DESSERT);
     }
 
     @Override
