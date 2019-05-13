@@ -164,6 +164,31 @@ public class RecipeDAOMySQL extends RecipeDAO {
         return hasSucceeded;
     }
 
+    @Override
+    public boolean updateRating(int recipeID) {
+        String query = "UPDATE recipe SET rating = (SELECT AVG(rating) FROM comment WHERE recipeID = ?) WHERE id = ?";
+
+        boolean hasSucceeded = false;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, recipeID);
+            statement.setInt(2, recipeID);
+            int updatedTuples = statement.executeUpdate();
+
+            if (updatedTuples > 0) {
+                hasSucceeded = true;
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return hasSucceeded;
+    }
+
     private Recipe getRecipeFromRSet(ResultSet resultSet) {
         Recipe recipe = null;
 
@@ -183,7 +208,7 @@ public class RecipeDAOMySQL extends RecipeDAO {
                     resultSet.getString("picture"),
                     DAOFactory.getIngredientDAO().findAll(recipeID),
                     DAOFactory.getStepDAO().findAll(recipeID),
-                    new LinkedList<Comment>());
+                    DAOFactory.getCommentDAO().findAllByRecipe(recipeID));
             }
 
         } catch (SQLException e) {

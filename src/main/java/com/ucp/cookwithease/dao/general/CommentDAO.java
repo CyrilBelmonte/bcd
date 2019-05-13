@@ -20,6 +20,7 @@ public abstract class CommentDAO {
     public abstract LinkedList<Comment> findAllByRecipe(Recipe recipe);
     public abstract LinkedList<Comment> findAllByUser(int userID);
     public abstract LinkedList<Comment> findAllByUser(User user);
+    public abstract Comment find(int userID, int recipeID);
 
     // Insert
     public abstract boolean insert(Comment comment);

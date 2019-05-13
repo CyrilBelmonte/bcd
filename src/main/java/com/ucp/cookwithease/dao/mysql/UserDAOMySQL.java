@@ -1,6 +1,8 @@
 package com.ucp.cookwithease.dao.mysql;
 
+import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.dao.general.UserDAO;
+import com.ucp.cookwithease.model.Comment;
 import com.ucp.cookwithease.model.User;
 
 import java.sql.*;
@@ -95,6 +97,29 @@ public class UserDAOMySQL extends UserDAO {
         }
 
         return user;
+    }
+
+    @Override
+    public String getPseudoFromId(int id) {
+        String query = "SELECT pseudo FROM user WHERE id = ?";
+        String pseudo = null;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                pseudo = result.getString("pseudo");
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return pseudo;
     }
 
     @Override
@@ -197,6 +222,7 @@ public class UserDAOMySQL extends UserDAO {
                 String pseudo = resultSet.getString("pseudo");
                 String email = resultSet.getString("email");
                 Date inscriptionDate = new Date(resultSet.getDate("inscriptionDate").getTime());
+                LinkedList<Comment> comments = DAOFactory.getCommentDAO().findAllByUser(id);
 
                 user = new User();
 
@@ -206,6 +232,7 @@ public class UserDAOMySQL extends UserDAO {
                 user.setPseudo(pseudo);
                 user.setEmail(email);
                 user.setInscriptionDate(inscriptionDate);
+                user.setComments(comments);
             }
 
         } catch (SQLException e) {

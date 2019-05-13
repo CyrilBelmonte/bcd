@@ -15,6 +15,9 @@ public class Comment {
     private int userID;
     private int recipeID;
 
+    // Used by the website (recipe page)
+    private String pseudo;
+
     private String description;
     private int rating;
     private Date publicationDate;

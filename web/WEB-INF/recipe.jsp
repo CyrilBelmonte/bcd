@@ -7,13 +7,14 @@
 --%>
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <%@ include file="includes/head.jsp" %>
 
-    <title>Velouté de champignons - Cook with ease</title>
+    <title><c:out value="${recipe.name}" /> - Cook with ease</title>
 </head>
 <body>
 <header>
@@ -24,14 +25,40 @@
 
 <section id="recipe-header">
     <div class="container">
-        <img class="recipe-picture" src="img/samples/soupe.jpg" alt="Illustration de recette">
-        <h2>Velouté de champignons</h2>
+        <img class="recipe-picture" src="<c:out value="${recipe.picture}" />" alt="Illustration de recette">
+        <h2><c:out value="${recipe.name}" /></h2>
         <div class="card card-body recipe-information">
-            <p class="score"><span class="icon" data-feather="star"></span><strong>4.9</strong></p>
-            <p><span class="icon" data-feather="clock"></span>50m</p>
-            <p><span class="icon" data-feather="user"></span>3 personnes</p>
-            <p class="d-none d-md-flex"><span class="icon" data-feather="bar-chart-2"></span>Facile</p>
-            <p class="d-none d-md-flex"><span class="icon" data-feather="dollar-sign"></span>Cher</p>
+            <p class="score"><span class="icon" data-feather="star"></span><strong><c:out value="${recipe.rating}" /></strong></p>
+            <p><span class="icon" data-feather="clock"></span><c:out value="${recipe.duration}" />m</p>
+            <p><span class="icon" data-feather="user"></span><c:out value="${recipe.persons}" /> personnes</p>
+            <p class="d-none d-md-flex">
+                <span class="icon" data-feather="bar-chart-2"></span>
+                <c:choose>
+                    <c:when test="${recipe.difficulty == 'LOW'}">
+                        Facile
+                    </c:when>
+                    <c:when test="${recipe.difficulty == 'AVERAGE'}">
+                        Moyen
+                    </c:when>
+                    <c:when test="${recipe.difficulty == 'HIGH'}">
+                        Difficile
+                    </c:when>
+                </c:choose>
+            </p>
+            <p class="d-none d-md-flex">
+                <span class="icon" data-feather="dollar-sign"></span>
+                <c:choose>
+                    <c:when test="${recipe.cost == 'LOW'}">
+                        Bon marché
+                    </c:when>
+                    <c:when test="${recipe.cost == 'AVERAGE'}">
+                        Coût moyen
+                    </c:when>
+                    <c:when test="${recipe.cost == 'HIGH'}">
+                        Cher
+                    </c:when>
+                </c:choose>
+            </p>
         </div>
     </div>
 </section>
@@ -41,13 +68,27 @@
         <div class="row">
             <div class="col-12 col-md-4 recipe-ingredients mb-5 mb-md-0">
                 <h3>Ingrédients</h3>
-                <p><span class="icon" data-feather="hash"></span>3 cuillères à soupe de beurre</p>
+                <c:forEach items="${recipe.ingredients}" var="ingredient">
+                    <p>
+                        <span class="icon" data-feather="hash"></span>
+                        <c:if test="${ingredient.quantity > 0}">
+                            <fmt:formatNumber value="${ingredient.quantity}" />
+                            <c:out value=" - " />
+                        </c:if>
+                        <c:if test="${not empty ingredient.unit}">
+                            <c:out value="${ingredient.unit} - " />
+                        </c:if>
+                        <c:out value="${ingredient.name}" />
+                    </p>
+                </c:forEach>
             </div>
 
             <div class="col-12 col-md-7 offset-md-1 recipe-steps">
                 <h3>Let's get started!</h3>
-                <h4>Étape 1</h4>
-                <p>Faire fondre dans une casserole 3 cuillères à soupe de beurre.</p>
+                <c:forEach items="${recipe.steps}" var="step">
+                    <h4>Étape <c:out value="${step.position}" /></h4>
+                    <p><c:out value="${step.description}" /></p>
+                </c:forEach>
 
                 <form action="<c:url value="/recipe"/>" method="post">
                     <button class="btn btn-bookmark" type="submit" name="add-bookmark">
@@ -84,25 +125,33 @@
                     <p><span class="icon" data-feather="message-circle"></span>Commentez et notez cette recette</p>
                 </a>
                 <div id="comment-collapse" class="comment-box collapse">
-                    <textarea class="form-control" rows="3"></textarea>
+                    <textarea class="form-control" rows="3" name="comment"><c:out value="${param.comment}" /></textarea>
                     <div class="rating">
                         <div id="recipe-rating"></div>
                         <input id="rating-input" type="hidden" name="rating" value="3">
-                        <button class="btn btn-comment" type="submit" name="comment"><span class="icon" data-feather="edit-3"></span>Commenter</button>
+                        <button class="btn btn-comment" type="submit" name="add-comment" value="<c:out value="${param.id}" />"><span class="icon" data-feather="edit-3"></span>Commenter</button>
                     </div>
                 </div>
+                <c:if test="${(not empty error) && (formName == 'comment')}">
+                    <div class="alert alert-warning">
+                        <c:out value="${error.description}" />
+                    </div>
+                </c:if>
             </form>
         </div>
 
-        <div class="card card-body recipe-comment">
-            <div class="comment-header">
-                <a class="comment-pseudo" href="<c:url value="/profile"><c:param name="id" value="100" /></c:url>">Marie L.</a>
-                <p class="comment-date">10/02/2019</p>
-                <p class="comment-score"><span class="icon" data-feather="star"></span>5</p>
+        <c:forEach items="${recipe.comments}" var="comment">
+            <div class="card card-body recipe-comment">
+                <div class="comment-header">
+                    <a class="comment-pseudo" href="<c:url value="/profile"><c:param name="id" value="${comment.userID}" /></c:url>">
+                        <c:out value="${comment.pseudo}" />
+                    </a>
+                    <p class="comment-date"><fmt:formatDate value="${comment.publicationDate}" /></p>
+                    <p class="comment-score"><span class="icon" data-feather="star"></span><c:out value="${comment.rating}" /></p>
+                </div>
+                <p><c:out value="${comment.description}" /></p>
             </div>
-            <p>Excellente recette. Je suis très contente du résultat.</p>
-        </div>
-
+        </c:forEach>
     </div>
 </section>
 

@@ -37,16 +37,17 @@ public class User {
     }
 
     public void addBookmark(Recipe recipe) {
-        bookmarks.addLast(recipe);
+        bookmarks.addFirst(recipe);
     }
 
     public void addFriend(User friend) {
-        friends.addLast(friend);
+        friends.addFirst(friend);
     }
 
     public void addComment(Comment comment) {
         comment.setUserID(id);
-        comments.addLast(comment);
+        comment.setPseudo(pseudo);
+        comments.addFirst(comment);
     }
 
     @Override

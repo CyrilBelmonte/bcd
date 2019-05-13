@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.dao.mysql;
 
+import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.dao.general.CommentDAO;
 import com.ucp.cookwithease.model.*;
 
@@ -33,6 +34,27 @@ public class CommentDAOMySQL extends CommentDAO {
     }
 
     @Override
+    public Comment find(int userID, int recipeID) {
+        String query = "SELECT * FROM comment WHERE userID = ? AND recipeID = ?";
+        Comment comment = null;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userID);
+            statement.setInt(2, recipeID);
+
+            ResultSet result = statement.executeQuery();
+            comment = getCommentFromRSet(result);
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return comment;
+    }
+
+    @Override
     public boolean insert(Comment comment) {
         String query =
             "INSERT INTO comment" +
@@ -54,6 +76,7 @@ public class CommentDAOMySQL extends CommentDAO {
             int updatedTuples = statement.executeUpdate();
 
             if (updatedTuples > 0) {
+                DAOFactory.getRecipeDAO().updateRating(comment.getRecipeID());
                 hasSucceeded = true;
             }
 
@@ -99,6 +122,7 @@ public class CommentDAOMySQL extends CommentDAO {
                 comment = new Comment(
                     resultSet.getInt("userID"),
                     resultSet.getInt("recipeID"),
+                    "Unknown",
                     resultSet.getString("description"),
                     resultSet.getInt("rating"),
                     publicationDate);

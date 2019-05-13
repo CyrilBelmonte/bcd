@@ -55,7 +55,7 @@ public class Recipe {
 
     public void addComment(Comment comment) {
         comment.setRecipeID(id);
-        comments.addLast(comment);
+        comments.addFirst(comment);
     }
 
     @Override

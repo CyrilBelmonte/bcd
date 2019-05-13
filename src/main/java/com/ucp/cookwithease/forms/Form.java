@@ -16,16 +16,32 @@ public abstract class Form {
     }
 
     protected String getValueFrom(HttpServletRequest request, String fieldName, int maxLength) {
-        String value = request.getParameter(fieldName);
+        String inputValue = request.getParameter(fieldName);
 
-        if (value != null &&
-            value.length() > 0 &&
-            value.length() <= maxLength) {
+        if (inputValue != null &&
+            inputValue.length() > 0 &&
+            inputValue.length() <= maxLength) {
 
-            return value;
+            return inputValue;
         }
 
         return null;
+    }
+
+    protected int getIntValueFrom(HttpServletRequest request, String fieldName, int maxValue) {
+        String inputValue = request.getParameter(fieldName);
+
+        try {
+            int result = Integer.parseInt(inputValue);
+
+            if (result <= maxValue) {
+                return result;
+            }
+        } catch (NumberFormatException e) {
+            // Nothing
+        }
+
+        return 0;
     }
 
     protected void addError(String field, String message) {

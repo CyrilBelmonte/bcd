@@ -21,4 +21,7 @@ public abstract class RecipeDAO {
 
     // Insert
     public abstract boolean insert(Recipe recipe);
+
+    // Update
+    public abstract boolean updateRating(int recipeID);
 }
