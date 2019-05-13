@@ -46,6 +46,46 @@ public class RecipeDAOMySQL extends RecipeDAO {
     }
 
     @Override
+    public LinkedList<Recipe> findAll(DishType type) {
+        String query = "SELECT * FROM recipe WHERE type = ?";
+        Recipe recipe;
+        LinkedList<Recipe> recipes = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, type.toString());
+
+            ResultSet result = statement.executeQuery();
+
+            while ((recipe = getRecipeFromRSet(result)) != null) {
+                recipes.addLast(recipe);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return recipes;
+    }
+
+    @Override
+    public LinkedList<Recipe> findAllStarters() {
+        return findAll(DishType.STARTER);
+    }
+
+    @Override
+    public LinkedList<Recipe> findAllMainCourses() {
+        return findAll(DishType.MAIN_COURSE);
+    }
+
+    @Override
+    public LinkedList<Recipe> findAllDesserts() {
+        return findAll(DishType.DESSERT);
+    }
+
+    @Override
     public LinkedList<Recipe> findAll(LinkedList<Integer> recipesID) {
         String query = "SELECT * FROM recipe WHERE id IN (???) ORDER BY FIELD (id, ???)";
 

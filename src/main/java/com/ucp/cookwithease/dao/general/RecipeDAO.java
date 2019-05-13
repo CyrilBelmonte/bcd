@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.dao.general;
 
+import com.ucp.cookwithease.model.DishType;
 import com.ucp.cookwithease.model.Recipe;
 
 import java.sql.Connection;
@@ -16,6 +17,12 @@ public abstract class RecipeDAO {
     // Select
     public abstract LinkedList<Recipe> findAll();
     public abstract LinkedList<Recipe> findAll(int maxResults);
+
+    public abstract LinkedList<Recipe> findAll(DishType type);
+    public abstract LinkedList<Recipe> findAllStarters();
+    public abstract LinkedList<Recipe> findAllMainCourses();
+    public abstract LinkedList<Recipe> findAllDesserts();
+
     public abstract LinkedList<Recipe> findAll(LinkedList<Integer> recipesID);
     public abstract Recipe find(int id);
 
