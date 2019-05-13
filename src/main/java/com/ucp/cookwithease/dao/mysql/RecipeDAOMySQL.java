@@ -208,7 +208,7 @@ public class RecipeDAOMySQL extends RecipeDAO {
                     resultSet.getString("picture"),
                     DAOFactory.getIngredientDAO().findAll(recipeID),
                     DAOFactory.getStepDAO().findAll(recipeID),
-                    DAOFactory.getCommentDAO().findAllByRecipe(recipeID));
+                    DAOFactory.getCommentDAO().findAllFromRecipe(recipeID));
             }
 
         } catch (SQLException e) {

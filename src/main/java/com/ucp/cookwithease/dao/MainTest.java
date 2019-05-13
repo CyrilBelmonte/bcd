@@ -43,10 +43,10 @@ public class MainTest {
         System.out.println(DAOFactory.getCommentDAO().insert(comment));
 
 
-        LinkedList <Comment> userComments = DAOFactory.getCommentDAO().findAllByUser(1);
+        LinkedList <Comment> userComments = DAOFactory.getCommentDAO().findAllFromUser(1);
         System.out.println(userComments);
 
-        LinkedList <Comment> recipeComments = DAOFactory.getCommentDAO().findAllByRecipe(1);
+        LinkedList <Comment> recipeComments = DAOFactory.getCommentDAO().findAllFromRecipe(1);
         System.out.println(recipeComments);
 
 

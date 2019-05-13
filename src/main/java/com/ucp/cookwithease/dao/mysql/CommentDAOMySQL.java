@@ -14,23 +14,23 @@ public class CommentDAOMySQL extends CommentDAO {
     }
 
     @Override
-    public LinkedList<Comment> findAllByRecipe(int recipeID) {
-        return findAll("SELECT * FROM comment WHERE recipeID = ?", recipeID);
+    public LinkedList<Comment> findAllFromRecipe(int recipeID) {
+        return findAll("SELECT * FROM comment WHERE recipeID = ? ORDER BY publicationDate DESC", recipeID);
     }
 
     @Override
-    public LinkedList<Comment> findAllByRecipe(Recipe recipe) {
-        return findAllByRecipe(recipe.getId());
+    public LinkedList<Comment> findAllFromRecipe(Recipe recipe) {
+        return findAllFromRecipe(recipe.getId());
     }
 
     @Override
-    public LinkedList<Comment> findAllByUser(int userID) {
-        return findAll("SELECT * FROM comment WHERE userID = ?", userID);
+    public LinkedList<Comment> findAllFromUser(int userID) {
+        return findAll("SELECT * FROM comment WHERE userID = ? ORDER BY publicationDate DESC", userID);
     }
 
     @Override
-    public LinkedList<Comment> findAllByUser(User user) {
-        return findAllByUser(user.getId());
+    public LinkedList<Comment> findAllFromUser(User user) {
+        return findAllFromUser(user.getId());
     }
 
     @Override

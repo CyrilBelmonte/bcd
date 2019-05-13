@@ -46,7 +46,6 @@ public class RecipeServlet extends HttpServlet {
 
         } else if (request.getParameter("add-comment") != null) {
             form.addComment(request);
-
             request.setAttribute("formName", "comment");
 
             if (form.hasErrors()) {

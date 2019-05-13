@@ -222,7 +222,7 @@ public class UserDAOMySQL extends UserDAO {
                 String pseudo = resultSet.getString("pseudo");
                 String email = resultSet.getString("email");
                 Date inscriptionDate = new Date(resultSet.getDate("inscriptionDate").getTime());
-                LinkedList<Comment> comments = DAOFactory.getCommentDAO().findAllByUser(id);
+                LinkedList<Comment> comments = DAOFactory.getCommentDAO().findAllFromUser(id);
 
                 user = new User();
 
