@@ -153,6 +153,30 @@ public class RecipeDAOMySQL extends RecipeDAO {
     }
 
     @Override
+    public String getNameFromId(int id) {
+        String query = "SELECT name FROM recipe WHERE id = ?";
+        String name = null;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                name = result.getString("name");
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return name;
+    }
+
+    @Override
     public boolean insert(Recipe recipe) {
         String query =
             "INSERT INTO recipe" +

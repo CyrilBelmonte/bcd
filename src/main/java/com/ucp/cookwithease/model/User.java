@@ -50,6 +50,18 @@ public class User {
         comments.addFirst(comment);
     }
 
+    public int getBookmarksCount() {
+        return bookmarks.size();
+    }
+
+    public int getFriendsCount() {
+        return friends.size();
+    }
+
+    public int getCommentsCount() {
+        return comments.size();
+    }
+
     @Override
     public String toString() {
         return firstName + " " + lastName + "\n" +

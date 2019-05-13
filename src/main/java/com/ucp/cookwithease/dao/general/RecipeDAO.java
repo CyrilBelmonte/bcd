@@ -26,6 +26,8 @@ public abstract class RecipeDAO {
     public abstract LinkedList<Recipe> findAll(LinkedList<Integer> recipesID);
     public abstract Recipe find(int id);
 
+    public abstract String getNameFromId(int id);
+
     // Insert
     public abstract boolean insert(Recipe recipe);
 

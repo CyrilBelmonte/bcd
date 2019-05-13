@@ -107,6 +107,7 @@ public class UserDAOMySQL extends UserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
+
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {

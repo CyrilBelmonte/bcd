@@ -122,7 +122,7 @@ public class CommentDAOMySQL extends CommentDAO {
                 comment = new Comment(
                     resultSet.getInt("userID"),
                     resultSet.getInt("recipeID"),
-                    "Unknown",
+                    "Unknown", "Unknown",
                     resultSet.getString("description"),
                     resultSet.getInt("rating"),
                     publicationDate);

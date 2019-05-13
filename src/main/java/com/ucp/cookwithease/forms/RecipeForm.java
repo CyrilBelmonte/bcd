@@ -52,7 +52,7 @@ public class RecipeForm extends Form {
     }
 
     public boolean addBookmark(HttpServletRequest request) {
-        return true;
+        return false;
     }
 
     public boolean addComment(HttpServletRequest request) {

@@ -44,6 +44,8 @@ public class RecipeServlet extends HttpServlet {
             form.addBookmark(request);
             request.setAttribute("formName", "bookmark");
 
+            response.sendRedirect(request.getContextPath() + References.VIEW_BOOKMARKS);
+
         } else if (request.getParameter("add-comment") != null) {
             form.addComment(request);
             request.setAttribute("formName", "comment");
@@ -51,8 +53,8 @@ public class RecipeServlet extends HttpServlet {
             if (form.hasErrors()) {
                 request.setAttribute("error", errors.getFirst());
             }
-        }
 
-        response.sendRedirect(request.getContextPath() + References.VIEW_RECIPE + "?id=" + form.getRecipeID());
+            response.sendRedirect(request.getContextPath() + References.VIEW_RECIPE + "?id=" + form.getRecipeID());
+        }
     }
 }

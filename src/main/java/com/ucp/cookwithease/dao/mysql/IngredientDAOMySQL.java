@@ -76,7 +76,7 @@ public class IngredientDAOMySQL extends IngredientDAO {
 
     @Override
     public LinkedList<String> getAllIngredients(DishType type) {
-        String query = "SELECT DISTINCT name FROM ingredient WHERE type = ?";
+        String query = "SELECT DISTINCT name FROM ingredient i, recipe r WHERE i.recipeID = r.id AND type = ?";
         LinkedList<String> ingredients = new LinkedList<>();
 
         try {
