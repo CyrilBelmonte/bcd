@@ -28,7 +28,7 @@
         <img class="recipe-picture" src="<c:out value="${recipe.picture}" />" alt="Illustration de recette">
         <h2><c:out value="${recipe.name}" /></h2>
         <div class="card card-body recipe-information">
-            <p class="score"><span class="icon" data-feather="star"></span><strong><c:out value="${recipe.rating}" /></strong></p>
+            <p class="score"><span class="icon" data-feather="star"></span><strong><fmt:formatNumber value="${recipe.rating}" maxFractionDigits="1" /></strong></p>
             <p><span class="icon" data-feather="clock"></span><c:out value="${recipe.duration}" />m</p>
             <p><span class="icon" data-feather="user"></span><c:out value="${recipe.persons}" /> personnes</p>
             <p class="d-none d-md-flex">
