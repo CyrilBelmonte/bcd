@@ -7,6 +7,7 @@
 --%>
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -62,7 +63,7 @@
                         <img class="card-img-top" src="<c:out value="${recipe.picture}" />" alt="Illustration de recette">
                         <div class="card-body">
                             <h3 class="card-title"><c:out value="${recipe.name}" /></h3>
-                            <p class="score"><span class="icon" data-feather="star"></span> <strong><c:out value="${recipe.rating}" /></strong> sur 5</p>
+                            <p class="score"><span class="icon" data-feather="star"></span> <strong><fmt:formatNumber value="${recipe.rating}" maxFractionDigits="1" /></strong> sur 5</p>
                         </div>
                         <div class="card-footer">
                             <p><span class="icon" data-feather="clock"></span><c:out value="${recipe.duration}" />m</p>
