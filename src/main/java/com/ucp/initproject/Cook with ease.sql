@@ -82,6 +82,7 @@ CREATE TABLE Comment (
 
 
 -- Other tables
+/*
 CREATE TABLE Bookmark (
   userID            INTEGER NOT NULL,
   recipeID          INTEGER NOT NULL,
@@ -99,3 +100,4 @@ CREATE TABLE Friend (
   FOREIGN KEY (userID) REFERENCES User (id),
   FOREIGN KEY (friendID) REFERENCES User (id)
 );
+*/
