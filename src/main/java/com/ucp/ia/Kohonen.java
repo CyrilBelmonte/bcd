@@ -3,9 +3,6 @@ package com.ucp.ia;
 
 import com.ucp.cookwithease.model.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.LinkedList;
 
 
@@ -26,10 +23,11 @@ public class Kohonen {
     private LinkedList<Recipe> recipes;
     private static int  dvp=7;
     private static int  dvn=9;
-    private static double epsilon = 0.5;
-    private static double ALPHA = 0.5;
-    private static double BETA = 0.5;
+    private static double epsilon = 0.9;
+    private static double ALPHA = 0.125;
+    private static double BETA = 0.125;
     private static double NEURONSIZE = 50;
+    private static int LEARNINGSIZE = 50;
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes) {
         this.recipes = recipes;
         cluster = new LinkedList<>();
@@ -61,21 +59,7 @@ public class Kohonen {
             kohonen.add(neuron);
             cluster.add(categorie);
         }
-        try {
-            BufferedWriter   writer = new BufferedWriter(new FileWriter("./Entry.csv"));
 
-        for(int index2=0 ; index2 < NEURONSIZE ; index2++ ){
-            String disp = "";
-            for(int index3=0 ; index3  < kohonen.get(0).getWeight().size() ; index3++){
-                disp = disp + ";" +  kohonen.get(index2).getWeight().get(index3);
-            }
-            System.out.println(disp);
-
-        }
-        writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -84,7 +68,7 @@ public class Kohonen {
         if(value > 0 && abs(value) <= dvp){
             return 1-(ALPHA*value) ;
         }
-        else if(abs(value) == dvn){
+        else if(abs(value) > dvp && abs(value) <= dvn){
             return -BETA*(value-dvp);
         }
         else if(value == 0) {
@@ -107,7 +91,6 @@ public class Kohonen {
                 winner = index;
             }
         }
-
         return winner;
     }
 
@@ -131,8 +114,14 @@ public class Kohonen {
     public void Learning(int winner,int entry){
         for(int index =0;index < kohonen.size() ; index++){
             for(int index2=0;index2 < kohonen.get(index).getWeight().size() ; index2++){
-                    Double learning= (epsilon*Entry.get(entry).getData().get(index2).getWeight()*1.0)*nu(winner-index);
+                    Double learning= (epsilon*(Entry.get(entry).getData().get(index2).getWeight()*1.0- kohonen.get(index).getWeight().get(index2))*nu(winner-index));
                     kohonen.get(index).getWeight().set(index2,kohonen.get(index).getWeight().get(index2)+learning);
+                    if( kohonen.get(index).getWeight().get(index2) < 0)
+                        kohonen.get(index).getWeight().set(index2,0.0);
+                if( kohonen.get(index).getWeight().get(index2) > 1)
+                    kohonen.get(index).getWeight().set(index2,1.0);
+
+
             }
         }
 
@@ -149,31 +138,15 @@ public class Kohonen {
 
 
 
-        for(int indextest=0; indextest < 200 ; indextest++) {
+        for(int indextest=0; indextest < LEARNINGSIZE ; indextest++) {
             for (int index = 0; index < Entry.size(); index++) {
                 Action(Entry.get(index));
                 winner = WinnerDetermined();
                 Learning(winner, index);
             }
-            System.out.println("APPRENTISSAGE NB "+(indextest+1));
+         //   System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
 
-        try {
-            BufferedWriter   writer = new BufferedWriter(new FileWriter("./Result.csv"));
-
-        for(int indexdisp2=0 ; indexdisp2 < NEURONSIZE ; indexdisp2++ ){
-            String disp = "";
-            for(int indexdisp3=0 ; indexdisp3  < kohonen.get(0).getWeight().size() ; indexdisp3++){
-                disp = disp + ";" +  kohonen.get(indexdisp2).getWeight().get(indexdisp3);
-            }
-            System.out.println(disp);
-            writer.write(disp);
-        }
-
-        writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for(int index3=0; index3 < Entry.size() ; index3 ++ ){
             Action(Entry.get(index3));
             winner = WinnerDetermined();
