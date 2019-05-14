@@ -1,41 +1,35 @@
 package com.ucp.cookwithease.forms;
 
-import com.ucp.cookwithease.dao.DAOFactory;
-import com.ucp.cookwithease.model.User;
-import com.ucp.cookwithease.tools.Tools;
-
 import javax.servlet.http.HttpServletRequest;
 
 
 public class LoginForm extends Form {
     private static final String PSEUDO_FIELD = "pseudo";
-    private static final int PSEUDO_LENGTH = 20;
     private static final String PASSWORD_FIELD = "password";
+    private static final int PSEUDO_LENGTH = 20;
     private static final int PASSWORD_LENGTH = 100;
 
-    public User loginUser(HttpServletRequest request) {
-        String pseudo = getValueFrom(request, PSEUDO_FIELD, PSEUDO_LENGTH);
-        String password = getValueFrom(request, PASSWORD_FIELD, PASSWORD_LENGTH);
+    public LoginForm(HttpServletRequest request) {
+        super(request);
+    }
+
+    public String getPseudo() {
+        String pseudo = getValueFrom(getRequest(), PSEUDO_FIELD, PSEUDO_LENGTH);
 
         if (pseudo == null) {
             this.addError(PSEUDO_FIELD, "Un nom d'utilisateur valide est requis.");
         }
 
+        return pseudo;
+    }
+
+    public String getPassword() {
+        String password = getValueFrom(getRequest(), PASSWORD_FIELD, PASSWORD_LENGTH);
+
         if (password == null) {
             this.addError(PASSWORD_FIELD, "Un mot de passe valide est requis.");
         }
 
-        if (this.hasErrors()) {
-            return null;
-        }
-
-        User user = DAOFactory.getUserDAO().find(pseudo, Tools.sha256(password));
-
-        if (user == null) {
-            this.addError("global", "L'utilisateur ou le mot de passe est incorrect.");
-            return null;
-        }
-
-        return user;
+        return password;
     }
 }

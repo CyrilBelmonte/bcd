@@ -1,16 +1,12 @@
 package com.ucp.cookwithease.servlets;
 
-import com.ucp.cookwithease.forms.FieldError;
-import com.ucp.cookwithease.forms.RecipeForm;
-import com.ucp.cookwithease.forms.SettingsForm;
-import com.ucp.cookwithease.model.Recipe;
+import com.ucp.cookwithease.engine.RecipePage;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedList;
 
 
 public class RecipeServlet extends HttpServlet {
@@ -18,16 +14,13 @@ public class RecipeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RecipeForm form = new RecipeForm();
+        RecipePage page = new RecipePage(request);
+        boolean isLoaded = page.loadRecipe();
 
-        Recipe recipe = form.getRecipe(request);
-
-        if (form.hasErrors()) {
+        if (!isLoaded) {
             response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
 
         } else {
-            request.setAttribute("recipe", recipe);
-
             this.getServletContext().getRequestDispatcher(
                 References.INTERNAL_VIEW_RECIPE).forward(request, response);
         }
@@ -37,24 +30,26 @@ public class RecipeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RecipeForm form = new RecipeForm();
-        LinkedList<FieldError> errors = form.getErrors();
+        RecipePage page = new RecipePage(request);
+        boolean hasSucceeded;
 
         if (request.getParameter("add-bookmark") != null) {
-            form.addBookmark(request);
+            page.addBookmark();
+
             request.setAttribute("formName", "bookmark");
 
             response.sendRedirect(request.getContextPath() + References.VIEW_BOOKMARKS);
 
         } else if (request.getParameter("add-comment") != null) {
-            form.addComment(request);
+            hasSucceeded = page.addComment();
+
             request.setAttribute("formName", "comment");
 
-            if (form.hasErrors()) {
-                request.setAttribute("error", errors.getFirst());
+            if (!hasSucceeded) {
+                request.setAttribute("error", page.getFormErrors().getFirst());
             }
 
-            response.sendRedirect(request.getContextPath() + References.VIEW_RECIPE + "?id=" + form.getRecipeID());
+            response.sendRedirect(request.getContextPath() + References.VIEW_RECIPE + "?id=" + page.getRecipeID());
         }
     }
 }

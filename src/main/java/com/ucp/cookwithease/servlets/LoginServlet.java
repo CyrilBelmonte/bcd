@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.servlets;
 
+import com.ucp.cookwithease.engine.LoginPage;
 import com.ucp.cookwithease.forms.FieldError;
 import com.ucp.cookwithease.forms.LoginForm;
 import com.ucp.cookwithease.model.User;
@@ -33,19 +34,14 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
+        LoginPage page = new LoginPage(request);
+        boolean isConnected = page.connectUser();
 
-        LoginForm form = new LoginForm();
-        LinkedList<FieldError> errors = form.getErrors();
-        User user = form.loginUser(request);
-
-        if (!form.hasErrors()) {
-            session.setAttribute("userSession", user);
-
+        if (isConnected) {
             response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
 
         } else {
-            request.setAttribute("error", errors.getFirst());
+            request.setAttribute("error", page.getFormErrors().getFirst());
 
             this.getServletContext().getRequestDispatcher(
                 References.INTERNAL_VIEW_LOGIN).forward(request, response);

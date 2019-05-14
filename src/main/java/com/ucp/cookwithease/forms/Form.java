@@ -5,7 +5,17 @@ import java.util.LinkedList;
 
 
 public abstract class Form {
-    private LinkedList<FieldError> errors = new LinkedList<>();
+    private HttpServletRequest request;
+    private LinkedList<FieldError> errors;
+
+    public Form(HttpServletRequest request) {
+        this.request = request;
+        this.errors = new LinkedList<>();
+    }
+
+    protected HttpServletRequest getRequest() {
+        return request;
+    }
 
     public LinkedList<FieldError> getErrors() {
         return errors;
@@ -13,6 +23,14 @@ public abstract class Form {
 
     public boolean hasErrors() {
         return !errors.isEmpty();
+    }
+
+    public void addGlobalError(String message) {
+        addError("global", message);
+    }
+
+    protected void addError(String field, String message) {
+        errors.addLast(new FieldError(field, message));
     }
 
     protected String getValueFrom(HttpServletRequest request, String fieldName, int maxLength) {
@@ -42,9 +60,5 @@ public abstract class Form {
         }
 
         return 0;
-    }
-
-    protected void addError(String field, String message) {
-        errors.addLast(new FieldError(field, message));
     }
 }

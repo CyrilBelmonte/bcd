@@ -1,14 +1,12 @@
 package com.ucp.cookwithease.servlets;
 
-import com.ucp.cookwithease.forms.FieldError;
-import com.ucp.cookwithease.forms.SettingsForm;
+import com.ucp.cookwithease.engine.SettingsPage;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedList;
 
 
 public class SettingsServlet extends HttpServlet {
@@ -24,20 +22,22 @@ public class SettingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        SettingsForm form = new SettingsForm();
-        LinkedList<FieldError> errors = form.getErrors();
+        SettingsPage page = new SettingsPage(request);
+        boolean hasSucceeded = false;
 
         if (request.getParameter("apply-user-settings") != null) {
-            form.updateUser(request);
+            hasSucceeded = page.updateUser();
+
             request.setAttribute("formName", "user-settings");
 
         } else if (request.getParameter("apply-password") != null) {
-            form.updateUserPassword(request);
+            hasSucceeded = page.updateUserPassword();
+
             request.setAttribute("formName", "password");
         }
 
-        if (form.hasErrors()) {
-            request.setAttribute("error", errors.getFirst());
+        if (!hasSucceeded) {
+            request.setAttribute("error", page.getFormErrors().getFirst());
         }
 
         this.getServletContext().getRequestDispatcher(

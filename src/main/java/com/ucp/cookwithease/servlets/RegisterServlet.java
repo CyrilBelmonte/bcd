@@ -1,5 +1,6 @@
 package com.ucp.cookwithease.servlets;
 
+import com.ucp.cookwithease.engine.RegisterPage;
 import com.ucp.cookwithease.forms.FieldError;
 import com.ucp.cookwithease.forms.RegisterForm;
 
@@ -32,15 +33,14 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RegisterForm form = new RegisterForm();
-        LinkedList<FieldError> errors = form.getErrors();
-        form.registerUser(request);
+        RegisterPage page = new RegisterPage(request);
+        boolean isRegistered = page.registerUser();
 
-        if (!form.hasErrors()) {
+        if (isRegistered) {
             response.sendRedirect(request.getContextPath() + References.VIEW_LOGIN);
 
         } else {
-            request.setAttribute("error", errors.getFirst());
+            request.setAttribute("error", page.getFormErrors().getFirst());
 
             this.getServletContext().getRequestDispatcher(
                 References.INTERNAL_VIEW_REGISTER).forward(request, response);

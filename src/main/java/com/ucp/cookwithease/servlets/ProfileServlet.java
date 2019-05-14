@@ -1,5 +1,7 @@
 package com.ucp.cookwithease.servlets;
 
+import com.ucp.cookwithease.engine.ProfilePage;
+import com.ucp.cookwithease.engine.RecipePage;
 import com.ucp.cookwithease.forms.ProfileForm;
 import com.ucp.cookwithease.forms.RecipeForm;
 import com.ucp.cookwithease.model.Recipe;
@@ -17,16 +19,13 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ProfileForm form = new ProfileForm();
+        ProfilePage page = new ProfilePage(request);
+        boolean isLoaded = page.loadProfile();
 
-        User profile = form.getProfile(request);
-
-        if (form.hasErrors()) {
+        if (!isLoaded) {
             response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
 
         } else {
-            request.setAttribute("profile", profile);
-
             this.getServletContext().getRequestDispatcher(
                 References.INTERNAL_VIEW_PROFILE).forward(request, response);
         }
@@ -36,9 +35,9 @@ public class ProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ProfileForm form = new ProfileForm();
-        form.follow(request);
+        ProfilePage page = new ProfilePage(request);
+        page.follow();
 
-        response.sendRedirect(request.getContextPath() + References.VIEW_BOOKMARKS);
+        response.sendRedirect(request.getContextPath() + References.VIEW_FRIENDS);
     }
 }

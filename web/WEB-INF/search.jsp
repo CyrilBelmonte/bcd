@@ -60,7 +60,7 @@
                                 <span class="badge difficulty-hard">• Difficile</span>
                             </c:when>
                         </c:choose>
-                        <img class="card-img-top" src="<c:out value="${recipe.picture}" />" alt="Illustration de recette">
+                        <img class="card-img-top" src="<c:out value="${recipe.picture}" />">
                         <div class="card-body">
                             <h3 class="card-title"><c:out value="${recipe.name}" /></h3>
                             <p class="score"><span class="icon" data-feather="star"></span> <strong><fmt:formatNumber value="${recipe.rating}" maxFractionDigits="1" /></strong> sur 5</p>
