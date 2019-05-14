@@ -3,6 +3,9 @@ package com.ucp.ia;
 
 import com.ucp.cookwithease.model.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 
 
@@ -26,8 +29,8 @@ public class Kohonen {
     private static double epsilon = 0.5;
     private static double ALPHA = 0.5;
     private static double BETA = 0.5;
-    private static double NEURONSIZE = 20;
-    public Kohonen(LinkedList<Ingredient> ingredients, LinkedList<Recipe> recipes) {
+    private static double NEURONSIZE = 50;
+    public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes) {
         this.recipes = recipes;
         cluster = new LinkedList<>();
         kohonen = new LinkedList<>();
@@ -47,16 +50,31 @@ public class Kohonen {
      * @version 1.0.0.0 : initialisation random
      */
 
-    public void InitWeight(LinkedList<Ingredient> ingredients){
+    public void InitWeight(LinkedList<String> ingredients){
         for(int index =0 ; index < NEURONSIZE ; index++ ){
             Neuron neuron = new Neuron();
             Categorie categorie=new Categorie();
-            for(Ingredient ing :ingredients) {
+            for(String ing :ingredients) {
                 double val= random();
                 neuron.getWeight().add(val);
             }
             kohonen.add(neuron);
             cluster.add(categorie);
+        }
+        try {
+            BufferedWriter   writer = new BufferedWriter(new FileWriter("./Entry.csv"));
+
+        for(int index2=0 ; index2 < NEURONSIZE ; index2++ ){
+            String disp = "";
+            for(int index3=0 ; index3  < kohonen.get(0).getWeight().size() ; index3++){
+                disp = disp + ";" +  kohonen.get(index2).getWeight().get(index3);
+            }
+            System.out.println(disp);
+
+        }
+        writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -89,6 +107,7 @@ public class Kohonen {
                 winner = index;
             }
         }
+
         return winner;
     }
 
@@ -127,12 +146,40 @@ public class Kohonen {
 
     public void Clustering(){
         int winner=0;
-        for(int index=0; index < Entry.size() ; index ++ ){
-            Action(Entry.get(index));
-            winner = WinnerDetermined();
-            Learning(winner,index);
-            cluster.get(winner).getRecipes().add(recipes.get(index));
+
+
+
+        for(int indextest=0; indextest < 200 ; indextest++) {
+            for (int index = 0; index < Entry.size(); index++) {
+                Action(Entry.get(index));
+                winner = WinnerDetermined();
+                Learning(winner, index);
+            }
+            System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
+
+        try {
+            BufferedWriter   writer = new BufferedWriter(new FileWriter("./Result.csv"));
+
+        for(int indexdisp2=0 ; indexdisp2 < NEURONSIZE ; indexdisp2++ ){
+            String disp = "";
+            for(int indexdisp3=0 ; indexdisp3  < kohonen.get(0).getWeight().size() ; indexdisp3++){
+                disp = disp + ";" +  kohonen.get(indexdisp2).getWeight().get(indexdisp3);
+            }
+            System.out.println(disp);
+            writer.write(disp);
+        }
+
+        writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int index3=0; index3 < Entry.size() ; index3 ++ ){
+            Action(Entry.get(index3));
+            winner = WinnerDetermined();
+            cluster.get(winner).getRecipes().add(recipes.get(index3));
+        }
+
     }
 
     public LinkedList<Neuron> getKohonen() {
