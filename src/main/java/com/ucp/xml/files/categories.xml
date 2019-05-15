@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<categories>
+    <category id_c="1" type="plat">
+        <near_categories>
+            <near_catergories id_c="2" distance="3"/>
+            <catVoisine id_c="3" distance="3"/>
+        </near_categories>
+        <reciepes>
+            <reciepe id_r="1" distance="1"/>
+            <reciepe id_r="2" distance="2"/>
+            <reciepe id_r="3" distance="3"/>
+        </reciepes>
+    </category>
+    <category id_c="2" type="dessert">
+        <catVoisines>
+            <catVoisine id_c="1" distance="3"/>
+            <catVoisine id_c="3" distance="3"/>
+        </catVoisines>
+        <reciepes>
+            <reciepe id_r="4" distance="5"/>
+            <reciepe id_r="5" distance="3"/>
+            <reciepe id_r="6" distance="2"/>
+        </reciepes>
+    </category>
+    <category id_c="3" type="entree">
+        <catVoisines>
+            <catVoisine id_c="2" distance="3"/>
+            <catVoisine id_c="1" distance="3"/>
+        </catVoisines>
+        <reciepes>
+            <reciepe id_r="7" distance="5"/>
+            <reciepe id_r="8" distance="3"/>
+            <reciepe id_r="9" distance="2"/>
+        </reciepes>
+    </category>
+</categories>

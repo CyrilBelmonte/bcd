@@ -100,12 +100,13 @@
             <version>7.7.1</version>
         </dependency>
 
-        <!-- neo4j driver -->
+        <!-- xml driver -->
         <dependency>
             <groupId>org.neo4j.driver</groupId>
             <artifactId>neo4j-java-driver</artifactId>
             <version>1.7.2</version>
         </dependency>
+
     </dependencies>
 
     <build>
