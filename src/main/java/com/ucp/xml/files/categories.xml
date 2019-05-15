@@ -2,8 +2,8 @@
 <categories>
     <category id_c="1" type="plat">
         <near_categories>
-            <near_catergories id_c="2" distance="3"/>
-            <catVoisine id_c="3" distance="3"/>
+            <near_catergory id_c="2" distance="3"/>
+            <near_catergory id_c="3" distance="3"/>
         </near_categories>
         <reciepes>
             <reciepe id_r="1" distance="1"/>
@@ -12,10 +12,10 @@
         </reciepes>
     </category>
     <category id_c="2" type="dessert">
-        <catVoisines>
-            <catVoisine id_c="1" distance="3"/>
-            <catVoisine id_c="3" distance="3"/>
-        </catVoisines>
+        <near_catergories>
+            <near_catergory id_c="1" distance="3"/>
+            <near_catergory id_c="3" distance="3"/>
+        </near_catergories>
         <reciepes>
             <reciepe id_r="4" distance="5"/>
             <reciepe id_r="5" distance="3"/>
@@ -23,10 +23,10 @@
         </reciepes>
     </category>
     <category id_c="3" type="entree">
-        <catVoisines>
-            <catVoisine id_c="2" distance="3"/>
-            <catVoisine id_c="1" distance="3"/>
-        </catVoisines>
+        <near_catergories>
+            <near_catergory id_c="2" distance="3"/>
+            <near_catergory id_c="1" distance="3"/>
+        </near_catergories>
         <reciepes>
             <reciepe id_r="7" distance="5"/>
             <reciepe id_r="8" distance="3"/>
