@@ -36,7 +36,7 @@ public class CsvCatergoryDao implements CategorieDao {
         HashMap<Integer,Float> recDist = new HashMap<Integer, Float>();
 
         String str ="" ;
-        categorie.setIdOfCat( tab[0]);
+        categorie.setIdOfCat(tab[0]);
         categorie.setTypeOfCat(tab[1]);
 
         for (int index = 2 ; index < NBR_CATEGORIE+2 ;index++){

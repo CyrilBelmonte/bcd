@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -45,7 +46,7 @@ public class CsvXML {
                 attr_id.setValue(category.getIdOfCat());
 
                 Attr attr_type = document.createAttribute("type");
-                attr_type.setValue(category.getIdOfCat());
+                attr_type.setValue(category.getTypeOfCat());
 
                 categoryElement.setAttributeNode(attr_id);
                 categoryElement.setAttributeNode(attr_type);
@@ -61,7 +62,7 @@ public class CsvXML {
                     Attr attr_id_c = document.createAttribute("id_c");
                     attr_id_c.setValue(""+e.getKey());
 
-                    Attr attr_dist_c = document.createAttribute("id_c");
+                    Attr attr_dist_c = document.createAttribute("dist_c");
                     attr_dist_c.setValue(""+e.getValue());
 
                     near_categoryElement.setAttributeNode(attr_id_c);
@@ -79,7 +80,7 @@ public class CsvXML {
                     Attr attr_id_r = document.createAttribute("id_r");
                     attr_id_r.setValue(""+e.getKey());
 
-                    Attr attr_dist_r = document.createAttribute("id_r");
+                    Attr attr_dist_r = document.createAttribute("dist_r");
                     attr_dist_r.setValue(""+e.getValue());
 
                     recipeElement.setAttributeNode(attr_id_r);
@@ -91,8 +92,9 @@ public class CsvXML {
             DOMSource source = new DOMSource(document);
             StreamResult result = new StreamResult(new File("src/main/resources/test.xml"));
 
+            transformer.setOutputProperty(OutputKeys.INDENT,"yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source,result);
-
 
         }catch (Exception e){
             e.printStackTrace();

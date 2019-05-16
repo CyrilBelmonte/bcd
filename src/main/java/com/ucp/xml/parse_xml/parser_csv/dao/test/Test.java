@@ -22,9 +22,6 @@ public class Test {
 
         categoriesList = categorieDao.findAllCategorie();
 
-        System.out.println(categoriesList.size());
-
-
         for(int index = 0 ; index<categoriesList.size();index++){
             System.out.println("Index = "+index+" Category id : "+categoriesList.get(index).getIdOfCat()+" type : "+categoriesList.get(index).getTypeOfCat()+" cat voisine : "+categoriesList.get(index).getCatDist()+" reciepe(s) : "+categoriesList.get(index).getRecDist()+"\n");
         }
