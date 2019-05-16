@@ -2,25 +2,60 @@ package com.ucp.recipecleaner;
 
 import com.ucp.cookwithease.dao.DAOFactory;
 
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 
 public class RecipeCleaner {
-    private String buildRegex(String pattern, LinkedList<String> terms) {
-        StringBuilder regexBuilder = new StringBuilder();
-        String pipe = "";
+    private Pattern adjectivesPattern;
+    private Pattern stopWordsPattern;
+    private Pattern unwantedWordsPattern;
+    private Pattern unwantedNamesPattern;
+    private Pattern ingredientsPattern;
+    private Pattern shortWordsPattern;
+    private Pattern parenthesesPattern;
+    private Pattern punctuationPattern;
+    private Pattern accentsPattern;
+    private Pattern whiteSpacesPattern;
+    private Pattern whiteSpacesBEPattern;
 
-        for (String term : terms) {
-            regexBuilder.append(pipe);
-            regexBuilder.append(term);
-            pipe = "|";
-        }
-
-        return pattern.replace("{TERMS}", regexBuilder);
+    public RecipeCleaner() {
+        initAdjectivesPattern();
+        initStopWordsPattern();
+        initUnwantedWordsPattern();
+        initUnwantedNamesPattern();
+        initIngredientsPattern();
+        initShortWordsPattern();
+        initParenthesesPattern();
+        initPunctuationPattern();
+        initAccentsPattern();
+        initWhiteSpacesPattern();
     }
 
-    public String deleteAdjectivesFromString(String sentence) {
+    private Pattern buildPattern(String regex) {
+        return buildPattern(regex, null);
+    }
+
+    private Pattern buildPattern(String regex, LinkedList<String> terms) {
+        if (terms != null) {
+            StringBuilder regexBuilder = new StringBuilder();
+            String pipe = "";
+
+            for (String term : terms) {
+                regexBuilder.append(pipe);
+                regexBuilder.append(term);
+                pipe = "|";
+            }
+
+            regex = regex.replace("{TERMS}", regexBuilder);
+        }
+
+        return Pattern.compile(regex);
+    }
+
+    private void initAdjectivesPattern() {
         LinkedList<String> excludedAdjectives = new LinkedList<>(Arrays.asList(
             "petit[e]?[s]?", "grand[e]?[s]?", "gros(?:se)?[s]?", "bon(?:ne)?[s]?",
             "fin[e]?[s]?", "beau[x]?", "belle[s]?", "mini(?:mum)?[s]?", "maxi(?:mum)?[s]?",
@@ -33,34 +68,30 @@ public class RecipeCleaner {
             "garni[e]?[s]?", "gourmand[e]?[s]?"
         ));
 
-        String pattern = "(^|\\b)({TERMS})(\\b|$)";
+        String regex = "(^|\\b)({TERMS})(\\b|$)";
 
-        String regex = buildRegex(pattern, excludedAdjectives);
-
-        return sentence.toLowerCase().replaceAll(regex, " ");
+        adjectivesPattern = buildPattern(regex, excludedAdjectives);
     }
 
-    public String deleteStopWordsFromString(String sentence) {
+    private void initStopWordsPattern() {
         LinkedList<String> excludedStopWords = new LinkedList<>(Arrays.asList(
             "au[x]?", "avec", "ce[s]?", "dans", "de[s]?", "du", "elle[s]?", "en", "et",
             "eux", "il[s]?", "je", "la", "leur[s]?", "le[s]?", "lui", "mais", "ma", "même",
             "me[s]?", "moi", "mon", "ne", "nos", "notre", "nous", "on[t]?", "ou", "par",
             "pas", "pour", "que", "qui", "sa", "se[s]?", "son", "sur", "ta", "te[s]?",
-            "toi", "ton", "tu", "un[e]?", "vos", "votre", "vous", "ça", "sans",
+            "toi", "ton", "tu", "un[e]?", "vos", "votre", "vous", "ça", "sans", "&",
             "étant", "suis", "es[t]?", "sommes", "êtes", "sont", "soi[ts]?", "ayant",
             "eu[e]?[s]?", "ai", "as", "avons", "avez", "ceci", "cela", "cet",
             "cette", "ici", "quel(?:le)?[s]?", "tou(?:s|t[es]?)", "comme", "très", "peu",
             "trop", "ultra", "extra", "moins", "plus", "pourtant", "fait[e]?[s]?"
         ));
 
-        String pattern = "(^|\\b)({TERMS})(\\b|$)";
+        String regex = "(^|\\b)({TERMS})(\\b|$)";
 
-        String regex = buildRegex(pattern, excludedStopWords);
-
-        return sentence.toLowerCase().replaceAll(regex, " ");
+        stopWordsPattern = buildPattern(regex, excludedStopWords);
     }
 
-    public String deleteUnwantedWordsFromString(String sentence) {
+    private void initUnwantedWordsPattern() {
         LinkedList<String> excludedWords = new LinkedList<>(Arrays.asList(
             "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix",
             "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche", "jour",
@@ -75,90 +106,132 @@ public class RecipeCleaner {
             "partage[s]?", "pièce[s]?", "pépite[s]?", "rit", "roi[s]?", "rondelle[s]?", "rose[s]?",
             "saint[s]?", "saveur[s]?", "souhait[s]?", "sphère[s]?", "spirale[s]?", "sucré[e]?[s]?",
             "surprise[s]?", "tartiner", "tasse[s]?", "tendresse[s]?", "tigré[s]?", "tricolore[s]?",
-            "wok[s]?", "zébré[s]?", "écoliers[s]?", "gourmandise[s]?", "dessert[s]?"
+            "wok[s]?", "zébré[s]?", "écoliers[s]?", "gourmandise[s]?", "apéro", "dessert[s]?"
         ));
 
-        String pattern = "(^|\\b)({TERMS})(\\b|$)";
+        String regex = "(^|\\b)({TERMS})(\\b|$)";
 
-        String regex = buildRegex(pattern, excludedWords);
-
-        return sentence.toLowerCase().replaceAll(regex, " ");
+        unwantedWordsPattern = buildPattern(regex, excludedWords);
     }
 
-    public String deleteUnwantedNamesFromString(String sentence) {
+    private void initUnwantedNamesPattern() {
         LinkedList<String> excludedNames = new LinkedList<>(Arrays.asList(
             "jacqueline", "jeanne", "brigitte", "marielle", "mike", "mag", "nadine", "lili",
             "hélène", "sophie"
         ));
 
-        String pattern = "(^|\\b)({TERMS})(\\b|$)";
+        String regex = "(^|\\b)({TERMS})(\\b|$)";
 
-        String regex = buildRegex(pattern, excludedNames);
+        unwantedNamesPattern = buildPattern(regex, excludedNames);
+    }
 
-        return sentence.toLowerCase().replaceAll(regex, " ");
+    public void initIngredientsPattern() {
+        LinkedList<String> excludedIngredients = DAOFactory.getIngredientDAO().getAllIngredients();
+
+        String regex = "(^|\\b)({TERMS})(\\b|$)";
+
+        ingredientsPattern = buildPattern(regex, excludedIngredients);
+    }
+
+    private void initShortWordsPattern() {
+        String regex = "(^|\\b)(.{1,2})(\\b|$)";
+
+        shortWordsPattern = buildPattern(regex);
+    }
+
+    private void initParenthesesPattern() {
+        String regex = "[(\\[].*?[)\\]]";
+
+        parenthesesPattern = buildPattern(regex);
+    }
+
+    private void initPunctuationPattern() {
+        String regex = "[-.,;:!?*\"'’«»()\\[\\]/]";
+
+        punctuationPattern = buildPattern(regex);
+    }
+
+    private void initAccentsPattern() {
+        String regex = "[\\p{M}]";
+
+        accentsPattern = buildPattern(regex);
+    }
+
+    private void initWhiteSpacesPattern() {
+        String regex = "\\s+";
+        String regexBE = "(^\\s+|\\s+$)";
+
+        whiteSpacesPattern = buildPattern(regex);
+        whiteSpacesBEPattern = buildPattern(regexBE);
+    }
+
+    private String deleteAdjectivesFromString(String sentence) {
+        return adjectivesPattern.matcher(sentence).replaceAll(" ");
+    }
+
+    private String deleteStopWordsFromString(String sentence) {
+        return stopWordsPattern.matcher(sentence).replaceAll(" ");
+    }
+
+    private String deleteUnwantedWordsFromString(String sentence) {
+        return unwantedWordsPattern.matcher(sentence).replaceAll(" ");
+    }
+
+    private String deleteUnwantedNamesFromString(String sentence) {
+        return unwantedNamesPattern.matcher(sentence).replaceAll(" ");
     }
 
     public String deleteIngredientsFromString(String sentence) {
-        LinkedList<String> excludedIngredients = DAOFactory.getIngredientDAO().getAllIngredients();
-
-        String pattern = "(^|\\b)({TERMS})(\\b|$)";
-
-        String regex = buildRegex(pattern, excludedIngredients);
-
-        return sentence.toLowerCase().replaceAll(regex, " ");
+        return ingredientsPattern.matcher(sentence).replaceAll(" ");
     }
 
-    public String deleteShortWordsFromString(String sentence) {
-        String regex = "(^|\\s+)(.{1,2})(\\s+|$)";
-
-        return sentence.replaceAll(regex, " ");
+    private String deleteShortWordsFromString(String sentence) {
+        return shortWordsPattern.matcher(sentence).replaceAll(" ");
     }
 
-    public String deleteParenthesesFromString(String sentence) {
-        String regex = "[(\\[].*?[)\\]]";
-
-        return sentence.replaceAll(regex, " ");
+    private String deleteParenthesesFromString(String sentence) {
+        return parenthesesPattern.matcher(sentence).replaceAll(" ");
     }
 
-    public String deletePunctuationFromString(String sentence) {
-        String regex = "[-.,;:!?*\"'’«»()\\[\\]/]";
-
-        return sentence.replaceAll(regex, " ");
+    private String deletePunctuationFromString(String sentence) {
+        return punctuationPattern.matcher(sentence).replaceAll(" ");
     }
 
-    public String reduceWhiteSpacesFromString(String sentence) {
-        String regex = "\\s+";
-        String beginEndRegex = "(^\\s+|\\s+$)";
+    private String deleteAccentsFromString(String sentence) {
+        sentence = Normalizer.normalize(sentence, Normalizer.Form.NFD);
 
-        return sentence.replaceAll(regex, " ")
-                       .replaceAll(beginEndRegex, "");
+        return accentsPattern.matcher(sentence).replaceAll("");
     }
 
+    private String reduceWhiteSpacesFromString(String sentence) {
+        return whiteSpacesBEPattern.matcher(
+           whiteSpacesPattern.matcher(sentence).replaceAll(" ")
+        ).replaceAll("");
+    }
 
-    public String[] getStandardizedRecipeName(String recipeName) {
-        String standardizedRecipeName = reduceWhiteSpacesFromString(
-           deleteUnwantedNamesFromString(
-              deleteUnwantedWordsFromString(
-                 deleteIngredientsFromString(
-                    deleteAdjectivesFromString(
-                       deleteShortWordsFromString(
-                          deleteStopWordsFromString(
-                             deletePunctuationFromString(
-                                deleteParenthesesFromString(recipeName)))))))));
+    public LinkedList<String> getCleanedRecipeName(String recipeName) {
+        recipeName = recipeName.toLowerCase();
 
-        String[] words = standardizedRecipeName.split(" ");
+        String standardizedRecipeName =
+            reduceWhiteSpacesFromString(
+            deleteUnwantedNamesFromString(
+            deleteUnwantedWordsFromString(
+            deleteAccentsFromString(
+            deleteIngredientsFromString(
+            deleteAdjectivesFromString(
+            deleteShortWordsFromString(
+            deleteStopWordsFromString(
+            deletePunctuationFromString(
+            deleteParenthesesFromString(recipeName)
+        )))))))));
 
-        /*
-        System.out.println(standardizedRecipeName);
-
-        System.err.println("------------");
-        for (String word : words) {
-            System.err.println("| " + word);
+        if (standardizedRecipeName.isEmpty()) {
+            return new LinkedList<>();
         }
 
-        System.err.println("------------");
-        */
+        LinkedList<String> results = new LinkedList<>(
+           Arrays.asList(standardizedRecipeName.split(" ")));
 
-        return words;
+        return results;
     }
 }
