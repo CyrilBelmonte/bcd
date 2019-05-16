@@ -14,6 +14,10 @@ public class CleanerDemo {
         LinkedList<String> dessertsIngredients = AIEntries.getAllDessertsIngredients();
 
 
+        System.out.println(AITools.contains("Tarte au rôti! ", "roti"));
+
+
+        /*
         System.err.println("*** STARTERS NAME ***");
 
         for (String starterName : startersName) {
@@ -69,5 +73,6 @@ public class CleanerDemo {
             System.out.flush();
             Thread.sleep(10);
         }
+        */
     }
 }
