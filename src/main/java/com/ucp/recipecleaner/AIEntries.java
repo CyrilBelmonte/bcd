@@ -3,10 +3,7 @@ package com.ucp.recipecleaner;
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.model.Recipe;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 
 public class AIEntries {
@@ -55,6 +52,19 @@ public class AIEntries {
         return results;
     }
 
+    private static LinkedList<String> deleteUnwantedWordsFromList(LinkedList<String> words) {
+        LinkedList<String> excludedWords = new LinkedList<>(Arrays.asList(
+            "sel", "poivre", "sucre", "sucre en poudre", "beurre", "farine", "eau", "lait",
+            "huile", "huile d'olive"
+        ));
+
+        for (String excludedWord : excludedWords) {
+            words.remove(excludedWord);
+        }
+
+        return words;
+    }
+
     public static LinkedList<String> getPartsOfStartersName() {
         LinkedList<Recipe> starters = DAOFactory.getRecipeDAO().findAllStarters();
 
@@ -74,14 +84,20 @@ public class AIEntries {
     }
 
     public static LinkedList<String> getAllStartersIngredients() {
-        return DAOFactory.getIngredientDAO().getAllStartersIngredients(2);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllStartersIngredients(2);
+
+        return deleteUnwantedWordsFromList(ingredients);
     }
 
     public static LinkedList<String> getAllMainCoursesIngredients() {
-        return DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(2);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(2);
+
+        return deleteUnwantedWordsFromList(ingredients);
     }
 
     public static LinkedList<String> getAllDessertsIngredients() {
-        return DAOFactory.getIngredientDAO().getAllDessertsIngredients(2);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllDessertsIngredients(2);
+
+        return deleteUnwantedWordsFromList(ingredients);
     }
 }
