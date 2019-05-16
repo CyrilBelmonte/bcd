@@ -75,13 +75,20 @@ public class IngredientDAOMySQL extends IngredientDAO {
     }
 
     @Override
-    public LinkedList<String> getAllIngredients(DishType type) {
-        String query = "SELECT DISTINCT i.name FROM ingredient i, recipe r WHERE i.recipeID = r.id AND type = ?";
+    public LinkedList<String> getAllIngredients(DishType type, int minOccurrences) {
+        String query =
+            "SELECT i.name, COUNT(*) as occurrences " +
+            "FROM ingredient i, recipe r " +
+            "WHERE i.recipeID = r.id AND type = ? " +
+            "GROUP BY i.name " +
+            "HAVING occurrences >= ?";
+
         LinkedList<String> ingredients = new LinkedList<>();
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, type.toString());
+            statement.setInt(2, minOccurrences);
 
             ResultSet result = statement.executeQuery();
 
@@ -100,17 +107,32 @@ public class IngredientDAOMySQL extends IngredientDAO {
 
     @Override
     public LinkedList<String> getAllStartersIngredients() {
-        return getAllIngredients(DishType.STARTER);
+        return getAllStartersIngredients(1);
     }
 
     @Override
     public LinkedList<String> getAllMainCoursesIngredients() {
-        return getAllIngredients(DishType.MAIN_COURSE);
+        return getAllMainCoursesIngredients(1);
     }
 
     @Override
     public LinkedList<String> getAllDessertsIngredients() {
-        return getAllIngredients(DishType.DESSERT);
+        return getAllDessertsIngredients(1);
+    }
+
+    @Override
+    public LinkedList<String> getAllStartersIngredients(int minOccurrences) {
+        return getAllIngredients(DishType.STARTER, minOccurrences);
+    }
+
+    @Override
+    public LinkedList<String> getAllMainCoursesIngredients(int minOccurrences) {
+        return getAllIngredients(DishType.MAIN_COURSE, minOccurrences);
+    }
+
+    @Override
+    public LinkedList<String> getAllDessertsIngredients(int minOccurrences) {
+        return getAllIngredients(DishType.DESSERT, minOccurrences);
     }
 
     @Override

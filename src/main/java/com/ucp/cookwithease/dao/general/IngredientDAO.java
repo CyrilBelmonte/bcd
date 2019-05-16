@@ -20,10 +20,15 @@ public abstract class IngredientDAO {
     public abstract LinkedList<Ingredient> findAll(Recipe recipe);
 
     public abstract LinkedList<String> getAllIngredients();
-    public abstract LinkedList<String> getAllIngredients(DishType type);
+    public abstract LinkedList<String> getAllIngredients(DishType type, int minOccurrences);
+
     public abstract LinkedList<String> getAllStartersIngredients();
     public abstract LinkedList<String> getAllMainCoursesIngredients();
     public abstract LinkedList<String> getAllDessertsIngredients();
+
+    public abstract LinkedList<String> getAllStartersIngredients(int minOccurrences);
+    public abstract LinkedList<String> getAllMainCoursesIngredients(int minOccurrences);
+    public abstract LinkedList<String> getAllDessertsIngredients(int minOccurrences);
 
     // Insert
     public abstract boolean insert(Ingredient ingredient);

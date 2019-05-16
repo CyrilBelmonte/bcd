@@ -74,14 +74,14 @@ public class AIEntries {
     }
 
     public static LinkedList<String> getAllStartersIngredients() {
-        return DAOFactory.getIngredientDAO().getAllStartersIngredients();
+        return DAOFactory.getIngredientDAO().getAllStartersIngredients(2);
     }
 
     public static LinkedList<String> getAllMainCoursesIngredients() {
-        return DAOFactory.getIngredientDAO().getAllMainCoursesIngredients();
+        return DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(2);
     }
 
     public static LinkedList<String> getAllDessertsIngredients() {
-        return DAOFactory.getIngredientDAO().getAllDessertsIngredients();
+        return DAOFactory.getIngredientDAO().getAllDessertsIngredients(2);
     }
 }
