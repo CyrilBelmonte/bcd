@@ -38,7 +38,7 @@ public class RecipeFormatter {
             "pointe", "bouteille", "dose", "quartier", "goutte", "extrait", "flocon",
             "tablette", "plaque", "cube", "carré", "blanc", "jaune", "boule", "bocal",
             "brisure", "pavé", "pilon", "coeur", "épaule", "escalope", "aiguillette",
-            "rondelle", "louche"
+            "rondelle", "louche", "bûchette"
         ));
 
         LinkedList<String> excludedAdjectives = new LinkedList<>(Arrays.asList(
