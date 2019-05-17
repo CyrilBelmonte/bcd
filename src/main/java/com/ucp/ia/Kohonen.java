@@ -33,7 +33,7 @@ public class Kohonen {
     private static double ALPHA = 0.125;
     private static double BETA = 0.125;
     private static int NEURONSIZE = 200;
-    private static int LEARNINGSIZE =2000;
+    private static int LEARNINGSIZE =1000;
     private int[] Entrychoosen;
 
 
