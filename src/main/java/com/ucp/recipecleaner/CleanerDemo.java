@@ -17,7 +17,6 @@ public class CleanerDemo {
         System.out.println(AITools.contains("Tarte au rôti! ", "roti"));
 
 
-        /*
         System.err.println("*** STARTERS NAME ***");
 
         for (String starterName : startersName) {
@@ -27,6 +26,7 @@ public class CleanerDemo {
             Thread.sleep(10);
         }
 
+        /*
         System.err.println("\n*** STARTERS INGREDIENT ***");
 
         for (String starterIngredient : startersIngredient) {
@@ -35,6 +35,7 @@ public class CleanerDemo {
             System.out.flush();
             Thread.sleep(10);
         }
+        */
 
 
         System.err.println("\n*** MAIN COURSES NAME ***");
@@ -46,6 +47,7 @@ public class CleanerDemo {
             Thread.sleep(10);
         }
 
+        /*
         System.err.println("\n*** MAIN COURSES INGREDIENT ***");
 
         for (String mainCourseIngredients : mainCoursesIngredients) {
@@ -54,6 +56,7 @@ public class CleanerDemo {
             System.out.flush();
             Thread.sleep(10);
         }
+        */
 
 
         System.err.println("\n*** DESSERTS NAME ***");
@@ -65,6 +68,7 @@ public class CleanerDemo {
             Thread.sleep(10);
         }
 
+        /*
         System.err.println("\n*** DESSERTS INGREDIENT ***");
 
         for (String dessertIngredients : dessertsIngredients) {

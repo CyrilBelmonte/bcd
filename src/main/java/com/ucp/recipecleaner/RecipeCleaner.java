@@ -214,9 +214,9 @@ public class RecipeCleaner {
 
         String standardizedRecipeName =
             reduceWhiteSpacesFromString(
+            deleteAccentsFromString(
             deleteUnwantedNamesFromString(
             deleteUnwantedWordsFromString(
-            deleteAccentsFromString(
             deleteIngredientsFromString(
             deleteAdjectivesFromString(
             deleteShortWordsFromString(
