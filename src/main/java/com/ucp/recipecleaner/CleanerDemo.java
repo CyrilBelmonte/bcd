@@ -15,6 +15,8 @@ public class CleanerDemo {
 
 
         System.out.println(AITools.contains("Tarte au rôti! ", "roti"));
+        System.out.println(AITools.normalizeQuantity(5, "ml"));
+        System.out.println(AIEntries.getMaxIngredientsQuantity());
 
 
         System.err.println("*** STARTERS NAME ***");

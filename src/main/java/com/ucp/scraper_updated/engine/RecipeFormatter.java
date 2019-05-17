@@ -26,7 +26,10 @@ public class RecipeFormatter {
     }
 
     private void initIngredientPattern() {
-        String ingredientRegex = ".*?(?<adjective>#ADJECTIVES#)?\\s*(?<unit>#UNITS#)?(?:demi|moitié)?\\s*(?:[a-z]{0,2} |[a-z]')?\\s*(?<name>.*)";
+        String ingredientRegex =
+            ".*?(?:(?<adjective>#ADJECTIVES#)\\s)?\\s*" +
+            "(?:(?<unit>#UNITS#)\\s)?(?:demi|moitié)?\\s*" +
+            "(?:[a-z]{0,2} |[a-z]')?\\s*(?<name>.*)";
 
         LinkedList<String> allowedUnits = new LinkedList<>(Arrays.asList(
             "ml", "cl", "dl", "l", "mg", "g", "kg",
@@ -53,7 +56,7 @@ public class RecipeFormatter {
         for (String unit : allowedUnits) {
             unitsRegex.append(pipe);
             unitsRegex.append(unit);
-            unitsRegex.append("[sx]? ");
+            unitsRegex.append("[sx]?");
             pipe = "|";
         }
 
@@ -63,7 +66,7 @@ public class RecipeFormatter {
         for (String adjective : excludedAdjectives) {
             adjectivesRegex.append(pipe);
             adjectivesRegex.append(adjective);
-            adjectivesRegex.append("[sx]? ");
+            adjectivesRegex.append("[sx]?");
             pipe = "|";
         }
 

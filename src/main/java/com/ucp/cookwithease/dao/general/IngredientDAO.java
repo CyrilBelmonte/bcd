@@ -16,6 +16,7 @@ public abstract class IngredientDAO {
     }
 
     // Select
+    public abstract LinkedList<Ingredient> findAll();
     public abstract LinkedList<Ingredient> findAll(int recipeID);
     public abstract LinkedList<Ingredient> findAll(Recipe recipe);
 

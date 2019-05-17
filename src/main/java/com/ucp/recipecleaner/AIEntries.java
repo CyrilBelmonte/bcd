@@ -1,6 +1,7 @@
 package com.ucp.recipecleaner;
 
 import com.ucp.cookwithease.dao.DAOFactory;
+import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
 
 import java.util.*;
@@ -99,5 +100,51 @@ public class AIEntries {
         LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllDessertsIngredients(2);
 
         return deleteUnwantedWordsFromList(ingredients);
+    }
+
+    public static HashMap<String, Double> getMaxIngredientsQuantity() {
+        LinkedList<Ingredient> ingredients;
+        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll();
+
+        HashMap<String, Double> maxQuantities = new HashMap<>();
+
+        String unit;
+
+        double quantity;
+        double normalizedQuantity;
+        boolean hasUnit;
+
+        double maxQuantityWithUnit = 0.0;
+        double maxQuantityWithoutUnit = 0.0;
+
+        for (Recipe recipe : recipes) {
+            ingredients = recipe.getIngredients();
+
+            for (Ingredient ingredient : ingredients) {
+                quantity = ingredient.getQuantity() / recipe.getPersons();
+                unit = ingredient.getUnit();
+
+                if (unit == null) {
+                    unit = "";
+                }
+
+                normalizedQuantity = AITools.normalizeQuantity(quantity, unit);
+
+                hasUnit = unit.equals("l") || unit.equals("g") ||
+                        quantity != normalizedQuantity;
+
+                if (hasUnit && normalizedQuantity > maxQuantityWithUnit) {
+                    maxQuantityWithUnit = normalizedQuantity;
+
+                } else if (!hasUnit && normalizedQuantity > maxQuantityWithoutUnit) {
+                    maxQuantityWithoutUnit = normalizedQuantity;
+                }
+            }
+        }
+
+        maxQuantities.put("quantityWithUnit", maxQuantityWithUnit);
+        maxQuantities.put("quantityWithoutUnit", maxQuantityWithoutUnit);
+
+        return maxQuantities;
     }
 }

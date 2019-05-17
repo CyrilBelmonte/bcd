@@ -15,6 +15,38 @@ public class IngredientDAOMySQL extends IngredientDAO {
     }
 
     @Override
+    public LinkedList<Ingredient> findAll() {
+        String query = "SELECT * FROM ingredient";
+
+        Ingredient ingredient;
+        LinkedList<Ingredient> ingredients = new LinkedList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                ingredient = new Ingredient(
+                        result.getInt("id"),
+                        result.getInt("recipeID"),
+                        result.getString("name"),
+                        result.getFloat("quantity"),
+                        result.getString("unit"));
+
+                ingredients.addLast(ingredient);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return ingredients;
+    }
+
+    @Override
     public LinkedList<Ingredient> findAll(int recipeID) {
         String query = "SELECT * FROM ingredient WHERE recipeID = ?";
 
