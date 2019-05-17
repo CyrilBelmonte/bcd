@@ -131,7 +131,7 @@ public class AIEntries {
                 normalizedQuantity = AITools.normalizeQuantity(quantity, unit);
 
                 hasUnit = unit.equals("l") || unit.equals("g") ||
-                        quantity != normalizedQuantity;
+                          quantity != normalizedQuantity;
 
                 if (hasUnit && normalizedQuantity > maxQuantityWithUnit) {
                     maxQuantityWithUnit = normalizedQuantity;

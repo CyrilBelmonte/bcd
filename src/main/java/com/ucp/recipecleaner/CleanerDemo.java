@@ -16,6 +16,12 @@ public class CleanerDemo {
 
         System.out.println(AITools.contains("Tarte au rôti! ", "roti"));
         System.out.println(AITools.normalizeQuantity(5, "ml"));
+        System.out.println(AITools.normalizeQuantity(5, "tasses"));
+        System.out.println(AITools.isUnitValid("ml"));
+        System.out.println(AITools.isUnitValid("cuillères à soupe"));
+        System.out.println(AITools.isUnitValid("tasses"));
+        System.out.println(AITools.isUnitValid("pot"));
+
         System.out.println(AIEntries.getMaxIngredientsQuantity());
 
 

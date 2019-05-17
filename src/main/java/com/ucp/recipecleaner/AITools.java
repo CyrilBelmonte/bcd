@@ -44,15 +44,33 @@ public class AITools {
         return result;
     }
 
-    public static double normalizeQuantity(double quantity, String unit) {
+    public static boolean isStandardUnit(String unit) {
         LinkedList<String> standardUnits = new LinkedList<>(Arrays.asList(
             "ml", "cl", "dl", "l", "mg", "g", "kg"
         ));
 
-        for (String standardUnit : standardUnits) {
-            if (unit.equals(standardUnit)) {
-                return convertToStandardUnit(quantity, standardUnit);
+        return standardUnits.contains(unit);
+    }
+
+    public static boolean isUnitValid(String unit) {
+        LinkedList<String> validUnits = new LinkedList<>(Arrays.asList(
+            "ml", "cl", "dl", "l", "mg", "g", "kg", "cuillère", "louche", "tasse",
+            "verre", "bol", "brique", "portion", "tranche", "morceau", "rondelle",
+            "part", "dose", "barquette", "bouteille", "quartier", "goutte"
+        ));
+
+        for (String validUnit : validUnits) {
+            if (unit.contains(validUnit)) {
+                return true;
             }
+        }
+
+        return false;
+    }
+
+    public static double normalizeQuantity(double quantity, String unit) {
+        if (isStandardUnit(unit)) {
+            return convertToStandardUnit(quantity, unit);
         }
 
         if (unit.contains("cuillère")) {
