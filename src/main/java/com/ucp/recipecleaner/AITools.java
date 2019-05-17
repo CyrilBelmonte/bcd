@@ -49,6 +49,10 @@ public class AITools {
             "ml", "cl", "dl", "l", "mg", "g", "kg"
         ));
 
+        if (unit == null) {
+            return false;
+        }
+
         return standardUnits.contains(unit);
     }
 
@@ -58,6 +62,10 @@ public class AITools {
             "verre", "bol", "brique", "portion", "tranche", "morceau", "rondelle",
             "part", "dose", "barquette", "bouteille", "quartier", "goutte"
         ));
+
+        if (unit == null) {
+            return false;
+        }
 
         for (String validUnit : validUnits) {
             if (unit.contains(validUnit)) {
@@ -69,6 +77,10 @@ public class AITools {
     }
 
     public static double normalizeQuantity(double quantity, String unit) {
+        if (unit == null) {
+            return quantity;
+        }
+
         if (isStandardUnit(unit)) {
             return convertToStandardUnit(quantity, unit);
         }
