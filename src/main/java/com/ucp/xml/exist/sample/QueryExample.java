@@ -1,4 +1,4 @@
-package com.ucp.xml.sample;
+package com.ucp.xml.exist.sample;
 import org.apache.log4j.BasicConfigurator;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.*;
@@ -23,19 +23,19 @@ public class QueryExample {
 
         Class cl = forName(driver);
         Database database = (Database)cl.newInstance();
+
         DatabaseManager.registerDatabase(database);
 
         //Accès à la collection
-        Collection col = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/categories" );
+        Collection col = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/categories" ,"admin","bcd1234");
 
         //Appel au service permettant d’exécuter des requêtes avec XPath
-
         XPathQueryService service = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         service.setProperty("indent", "yes");
 
         //Description de la requête
 
-        ResourceSet result = service.query("//category[@type='plat']/reciepes/reciepe");
+        ResourceSet result = service.query(" let $doc := //category[@type='plat']/recipes/recipe[@id_r='7'] return update value $doc/@dist_r with '5.0'");
         ResourceIterator i = result.getIterator();
         while(i.hasMoreResources()) {
             Resource r = i.nextResource();
