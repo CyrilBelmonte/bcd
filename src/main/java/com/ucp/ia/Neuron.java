@@ -10,6 +10,7 @@ public class Neuron {
     private double action;
     private double potential;
     private LinkedList<Double> Weight;
+    private LinkedList<Double> Weighttitle;
 
     public LinkedList<Double> getWeight() {
         return Weight;
@@ -24,6 +25,7 @@ public class Neuron {
 
     public Neuron() {
         Weight=new LinkedList<>();
+        Weighttitle = new LinkedList<>();
     }
 
     public double getaction() {
@@ -42,4 +44,7 @@ public class Neuron {
         this.potential = potential;
     }
 
+    public LinkedList<Double> getWeighttitle() {
+        return Weighttitle;
+    }
 }

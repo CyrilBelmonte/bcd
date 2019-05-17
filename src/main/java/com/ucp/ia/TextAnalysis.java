@@ -2,6 +2,7 @@
 package com.ucp.ia;
 
 import com.ucp.cookwithease.model.*;
+import com.ucp.recipecleaner.AITools;
 
 
 import java.util.LinkedList;
@@ -13,24 +14,34 @@ import java.util.LinkedList;
  * Recipes text  analysis
  */
 
-/*
-* TEST initialiation poid  0 ou  1 pour chaque ingredients
-*
-* */
+
 public class TextAnalysis {
+    private LinkedList<Entry> entry = new LinkedList<>();
+    private LinkedList<IngredientsWeight> titleweight = new LinkedList<>();
 
-    LinkedList<EntryNeuron> entry = new LinkedList<>();
-    TextAnalysis(LinkedList<String> ingredients,LinkedList<Recipe> recipes){
-
+     TextAnalysis(LinkedList<String> ingredients,LinkedList<Recipe> recipes,LinkedList<String> TitleList){
         for(int index=0; index < recipes.size() ;index++) {
+
             LinkedList<IngredientsWeight> iwlist = new LinkedList<>();
-            for (String ing : ingredients) {
-                IngredientsWeight iw = new IngredientsWeight(ing);
-                iwlist.add(iw);
+            LinkedList<IngredientsWeight> twlist = new LinkedList<>();
+            /*Create Weight Based on Title */
+            for (String title : TitleList) {
+                    IngredientsWeight tw = new IngredientsWeight(title);
+                    twlist.add(tw);
+
             }
-            EntryNeuron en = new EntryNeuron(iwlist);
+            /*Create Ingredient weight*/
+            for (String ing : ingredients) {
+                if(!ing.equals("poivre") && !ing.equals("sel")) {
+                    IngredientsWeight iw = new IngredientsWeight(ing);
+                    iwlist.add(iw);
+                }
+            }
+            Entry en = new Entry(iwlist,twlist, recipes.get(index).getName());
             entry.add(en);
         }
+
+
     }
 
 
@@ -43,7 +54,7 @@ public class TextAnalysis {
 
 
 /*
-    LinkedList<EntryNeuron> Analyse(LinkedList<Recipe> recipes){
+    LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
         for(int index=0 ; index < recipes.size() ; index ++){
             String text="";
 
@@ -70,8 +81,29 @@ public class TextAnalysis {
         return entry;
     }
 */
+/**
+ *  Function
+     * V 1.0.0.1 : binary Weight 0 the ingredients isn't exist
+ * Add Weight based on Title
+     * @param recipes : list of Recipes
+     * @return all Recipes with each
+            */
+LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
 
-LinkedList<EntryNeuron> Analyse(LinkedList<Recipe> recipes){
+    /*Initialise Weight on Title */
+
+    for(Entry en : entry) {
+         /*Search title for Initialisation*/
+        int test=0;
+        for(int indextitle=0 ; indextitle < en.getDatatitle().size() ; indextitle ++) {
+            if(AITools.contains(en.getRecipeName(),en.getDatatitle().get(indextitle).getName()))
+                en.getDatatitle().get(indextitle).setWeight(1);
+            else
+                test++;
+        }
+
+    }
+    /*Initialise Weight on Ingredients*/
     for(int index=0 ; index < recipes.size() ; index ++) {
         for (Ingredient ing : recipes.get(index).getIngredients()) {
             for(int index2=0 ; index2 < entry.get(index).getData().size() ; index2++){
