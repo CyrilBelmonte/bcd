@@ -2,9 +2,11 @@
 package com.ucp.ia;
 
 import com.ucp.cookwithease.model.*;
+import com.ucp.recipecleaner.AIEntries;
 import com.ucp.recipecleaner.AITools;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -89,7 +91,7 @@ public class TextAnalysis {
      * @return all Recipes with each
             */
 LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
-
+    HashMap<String,Double> hashMap = AIEntries.getMaxIngredientsQuantity();
     /*Initialise Weight on Title */
 
     for(Entry en : entry) {
@@ -107,8 +109,20 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     for(int index=0 ; index < recipes.size() ; index ++) {
         for (Ingredient ing : recipes.get(index).getIngredients()) {
             for(int index2=0 ; index2 < entry.get(index).getData().size() ; index2++){
-                if(entry.get(index).getData().get(index2).getName().equals(ing.getName()))
-                    entry.get(index).getData().get(index2).setWeight(1);
+                if(entry.get(index).getData().get(index2).getName().equals(ing.getName())) {
+                    double quantities = ing.getQuantity()/recipes.get(index).getPersons();
+                    quantities=AITools.normalizeQuantity(quantities,ing.getUnit());
+                    boolean validunit = AITools.isUnitValid(ing.getUnit());
+                    if(validunit){
+                        double weight = quantities/hashMap.get("quantityWithUnit");
+                        entry.get(index).getData().get(index2).setWeight(weight);
+                    }
+                    else {
+                        double weight = quantities/hashMap.get("quantityWithoutUnit");
+                        entry.get(index).getData().get(index2).setWeight(weight);
+                    }
+
+                }
             }
         }
     }
