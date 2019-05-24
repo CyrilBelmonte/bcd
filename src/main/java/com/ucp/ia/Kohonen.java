@@ -29,11 +29,11 @@ public class Kohonen {
     private LinkedList<String> TitleList;
     private static int  dvp=7;
     private static int  dvn=9;
-    private static double epsilon = 0.75;
+    private static double epsilon = 0.25;
     private static double ALPHA = 0.125;
     private static double BETA = 0.125;
-    private static int NEURONSIZE = 200;
-    private static int LEARNINGSIZE =1000;
+    private static int NEURONSIZE = 100;
+    private static int LEARNINGSIZE =30;
     private int[] Entrychoosen;
 
 
@@ -99,11 +99,12 @@ public class Kohonen {
 
 
     double nu(int value) {
+
         if(abs(value) <= dvp){
-            return 1-(ALPHA*value) ;
+            return 1-(ALPHA*abs(value)) ;
         }
         else if(abs(value) > dvp && abs(value) <= dvn){
-            return -BETA*(value-dvp);
+            return -BETA*(abs(value)-dvp);
         }
         else if(value == 0) {
             return 1;
@@ -155,16 +156,16 @@ Double voisinage(int index){
                 distance= distance + pow(dist,2);
             }
             /*V1.0.0.1 add title weight*/
-            /*
+
             for (int index2 = 0; index2 < en.getDatatitle().size(); index2++) {
                 double w1 = en.getDatatitle().get(index2).getWeight() ;
                 double w2 = neuron.getWeighttitle().get(index2);
                 distancetitle+= pow((w1-w2),2);
             }
-            */
-            //distancetitle = sqrt(distancetitle);
+
+           // distancetitle = sqrt(distancetitle);
             distance = sqrt(distance);
-            //distance=(distance+distancetitle)/2;
+            //distance=(distance*2+distancetitle)/3;
             neuron.setPotential(distance);
             neuron.setaction((1.0/(1+distance)));
         }
@@ -251,7 +252,11 @@ Double voisinage(int index){
                     Action(Entry.get(index));
                     winner = WinnerDetermined();
                     System.out.println(winner);
-                    Learning(winner, index);
+                    if(winner == 0){
+                        System.out.println("zero");
+                    }
+                        Learning(winner, index);
+
                 }
             }
             for (int index2=0; index2 < Entrychoosen.length ; index2++)
@@ -265,12 +270,12 @@ Double voisinage(int index){
             BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Result.csv"));
             for (int index5 = 0; index5 < NEURONSIZE; index5++) {
                 for (int index6 = 0; index6 < kohonen.get(0).getWeight().size(); index6++) {
-                    disp = disp + kohonen.get(index5).getWeight().get(index6) + ";";
-                }
-                disp = disp + "\n";
+                disp = disp + kohonen.get(index5).getWeight().get(index6) + ";";
             }
-            writer.write(disp);
-            writer.close();
+            disp = disp + "\n";
+        }
+        writer.write(disp);
+        writer.close();
         }catch (IOException e){
 
         }
@@ -310,7 +315,7 @@ Double voisinage(int index){
             String disp2 = "";
             BufferedWriter writer2 = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Recette.csv"));
             for (int index5 = 0; index5 < NEURONSIZE; index5++) {
-                for (int index6 = 0; index6 < cluster.get(index5).getRecipes().size(); index6++) {
+                 for (int index6 = 0; index6 < cluster.get(index5).getRecipes().size(); index6++) {
                     disp2 = disp2 + cluster.get(index5).getRecipes().get(index6).getName() + ";";
                 }
                 disp2 = disp2 + "\n";

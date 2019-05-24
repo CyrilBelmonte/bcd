@@ -20,10 +20,16 @@ import java.util.LinkedList;
 public class TextAnalysis {
     private LinkedList<Entry> entry = new LinkedList<>();
     private LinkedList<IngredientsWeight> titleweight = new LinkedList<>();
+    private LinkedList<IngredientsWeight> MaxIngredients = new LinkedList<>();
 
      TextAnalysis(LinkedList<String> ingredients,LinkedList<Recipe> recipes,LinkedList<String> TitleList){
+         for (String ing : ingredients) {
+             if(!ing.equals("poivre") && !ing.equals("sel")) {
+                 IngredientsWeight iw2 = new IngredientsWeight(ing);
+                 MaxIngredients.add(iw2);
+             }
+         }
         for(int index=0; index < recipes.size() ;index++) {
-
             LinkedList<IngredientsWeight> iwlist = new LinkedList<>();
             LinkedList<IngredientsWeight> twlist = new LinkedList<>();
             /*Create Weight Based on Title */
@@ -36,7 +42,19 @@ public class TextAnalysis {
             for (String ing : ingredients) {
                 if(!ing.equals("poivre") && !ing.equals("sel")) {
                     IngredientsWeight iw = new IngredientsWeight(ing);
+
                     iwlist.add(iw);
+
+                }
+            }
+            for(Ingredient ingredient : recipes.get(index).getIngredients() ){
+                double quantities = ingredient.getQuantity()/recipes.get(index).getPersons();
+                quantities=AITools.normalizeQuantity(quantities,ingredient.getUnit());
+                for(int index2=0 ; index2 < MaxIngredients.size() ; index2++) {
+                    if (MaxIngredients.get(index2).getName().equals(ingredient.getName())) {
+                        if (MaxIngredients.get(index2).getWeight() < quantities)
+                            MaxIngredients.get(index2).setWeight(quantities);
+                    }
                 }
             }
             Entry en = new Entry(iwlist,twlist, recipes.get(index).getName());
@@ -114,11 +132,20 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
                     quantities=AITools.normalizeQuantity(quantities,ing.getUnit());
                     boolean validunit = AITools.isUnitValid(ing.getUnit());
                     if(validunit){
-                        double weight = quantities/hashMap.get("quantityWithUnit");
+                        double weight=0;
+                        if(quantities > 1)
+                         weight = quantities/MaxIngredients.get(index2).getWeight();
+                        else
+                         weight = 0;
                         entry.get(index).getData().get(index2).setWeight(weight);
                     }
                     else {
-                        double weight = quantities/hashMap.get("quantityWithoutUnit");
+                        double weight=0;
+                        if(quantities < 1)
+                            weight = 0;
+                        else
+                            weight  = quantities/hashMap.get("quantityWithoutUnit");
+
                         entry.get(index).getData().get(index2).setWeight(weight);
                     }
 
