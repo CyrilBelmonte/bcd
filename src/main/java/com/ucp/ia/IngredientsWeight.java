@@ -5,19 +5,19 @@ import com.ucp.cookwithease.model.*;
 
 
 public class IngredientsWeight {
-    private double Weight;
+    private Double Weight;
     private String Name;
 
     public IngredientsWeight(String name) {
-        Weight = 0;
+        Weight = 0.0;
         Name = name;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return Weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         Weight = weight;
     }
 

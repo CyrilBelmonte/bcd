@@ -32,8 +32,8 @@ public class Kohonen {
     private static double epsilon = 0.25;
     private static double ALPHA = 0.125;
     private static double BETA = 0.125;
-    private static int NEURONSIZE = 100;
-    private static int LEARNINGSIZE =30;
+    private static int NEURONSIZE = 200;
+    private static int LEARNINGSIZE =1;
     private int[] Entrychoosen;
 
 
@@ -144,13 +144,16 @@ Double voisinage(int index){
                 winner = index;
             }
         }
+        //if (winner == 0)
+           // System.out.println("STOP");
         return winner;
     }
 
     public void Action(com.ucp.ia.Entry en){
-        double distance=0;
+
         double distancetitle=0;
         for(Neuron neuron : kohonen) {
+            double distance=0;
             for (int index = 0; index < en.getData().size(); index++) {
                 double dist=en.getData().get(index).getWeight()-neuron.getWeight().get(index);
                 distance= distance + pow(dist,2);
@@ -193,12 +196,15 @@ Double voisinage(int index){
                     learning = (epsilon * (entryweight - neuronweight)*voisin /*nu(winner-index)*/);
                 }
                     kohonen.get(index).getWeight().set(index2,kohonen.get(index).getWeight().get(index2)+learning);
-                    if( kohonen.get(index).getWeight().get(index2) < 0)
-                        kohonen.get(index).getWeight().set(index2,0.0);
+                    if( kohonen.get(index).getWeight().get(index2) < -1)
+                        kohonen.get(index).getWeight().set(index2,-1.0);
                 if( kohonen.get(index).getWeight().get(index2) > 1)
                     kohonen.get(index).getWeight().set(index2,1.0);
+
+
             }
 
+            /*
             for(int index2=0;index2 < kohonen.get(index).getWeighttitle().size() ; index2++){
                  entryweight = Entry.get(entry).getDatatitle().get(index2).getWeight();
                  neuronweight = kohonen.get(index).getWeighttitle().get(index2);
@@ -207,16 +213,16 @@ Double voisinage(int index){
                      learning = (epsilon * (entryweight - neuronweight));
                 }
                 else {
-                   //  learning = (epsilon * (entryweight - neuronweight) * voisinage(index)/**nu(winner-index)*/);
+                    learning = (epsilon * (entryweight - neuronweight) * voisinage(index));
                 }
-                //kohonen.get(index).getWeighttitle().set(index2,kohonen.get(index).getWeighttitle().get(index2)+learning);
+                kohonen.get(index).getWeighttitle().set(index2,kohonen.get(index).getWeighttitle().get(index2)+learning);
                 if( kohonen.get(index).getWeighttitle().get(index2) < 0)
                     kohonen.get(index).getWeighttitle().set(index2,0.0);
                 if( kohonen.get(index).getWeighttitle().get(index2) > 1)
                     kohonen.get(index).getWeighttitle().set(index2,1.0);
-            }
-        }
 
+            }*/
+        }
 
     }
 
@@ -252,9 +258,6 @@ Double voisinage(int index){
                     Action(Entry.get(index));
                     winner = WinnerDetermined();
                     System.out.println(winner);
-                    if(winner == 0){
-                        System.out.println("zero");
-                    }
                         Learning(winner, index);
 
                 }

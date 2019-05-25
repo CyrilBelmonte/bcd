@@ -6,6 +6,9 @@ import com.ucp.recipecleaner.AIEntries;
 import com.ucp.recipecleaner.AITools;
 
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -117,7 +120,7 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
         int test=0;
         for(int indextitle=0 ; indextitle < en.getDatatitle().size() ; indextitle ++) {
             if(AITools.contains(en.getRecipeName(),en.getDatatitle().get(indextitle).getName()))
-                en.getDatatitle().get(indextitle).setWeight(1);
+                en.getDatatitle().get(indextitle).setWeight(1.0);
             else
                 test++;
         }
@@ -133,18 +136,12 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
                     boolean validunit = AITools.isUnitValid(ing.getUnit());
                     if(validunit){
                         double weight=0;
-                        if(quantities > 1)
-                         weight = quantities/MaxIngredients.get(index2).getWeight();
-                        else
-                         weight = 0;
+                         weight = quantities/(MaxIngredients.get(index2).getWeight()+1);
                         entry.get(index).getData().get(index2).setWeight(weight);
                     }
                     else {
                         double weight=0;
-                        if(quantities < 1)
-                            weight = 0;
-                        else
-                            weight  = quantities/hashMap.get("quantityWithoutUnit");
+                        weight  = quantities/(MaxIngredients.get(index2).getWeight()+1);
 
                         entry.get(index).getData().get(index2).setWeight(weight);
                     }
@@ -153,6 +150,22 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
             }
         }
     }
+    try {
+        String disp = "";
+        BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Entry.csv"));
+        for (int index5 = 0; index5 < entry.size(); index5++) {
+            disp=disp+entry.get(index5).getRecipeName()+";";
+            for (int index6 = 0; index6 < entry.get(0).getData().size(); index6++) {
+                disp = disp + entry.get(index5).getData().get(index6).getName() + ";"+ entry.get(index5).getData().get(index6).getWeight() + ";";
+            }
+            disp = disp + "\n";
+        }
+        writer.write(disp);
+        writer.close();
+    }catch (IOException e){
+
+    }
+
     return entry;
 }
 
