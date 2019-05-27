@@ -31,7 +31,7 @@ public class Kohonen {
         private static double ALPHA = 0.125;
         private static double BETA = 0.125;
         private static int NEURONSIZE = 100;
-        private static int LEARNINGSIZE =50;
+        private static int LEARNINGSIZE =25;
         private int[] Entrychoosen;
 
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes, LinkedList<String> TitleList) {

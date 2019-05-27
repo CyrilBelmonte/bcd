@@ -58,46 +58,44 @@ public class testia {
 
              int indexcat=0;
              for(Categorie cat : kohonen.getCluster()) {
+                 data=data+indexcat+";starter;";
+                 for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
+                     data = data + cat.getDistanceCat(indexdisp) + ";";
+                 }
                  if (!cat.getRecipes().isEmpty()) {
-                     data=data+indexcat+";starter;";
-                     for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
-                         data = data + cat.getDistanceCat(indexdisp) + ";";
-                     }
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
                          data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
-
-                     data = data + "\n";
                  }
+                 data = data + "\n";
                  indexcat++;
              }
 
              for(Categorie cat : kohonen2.getCluster()) {
+                 data=data+indexcat+";main_Courses;";
+                 for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
+                     data = data + cat.getDistanceCat(indexdisp) + ";";
+                 }
                  if (!cat.getRecipes().isEmpty()) {
-                     data=data+indexcat+";mainCourses;";
-                     for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
-                         data = data + cat.getDistanceCat(indexdisp) + ";";
-                     }
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
                          data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
-
-                     data = data + "\n";
                  }
+
+                 data = data + "\n";
                  indexcat++;
              }
              for(Categorie cat : kohonen3.getCluster()) {
+                 data=data+indexcat+";dessert;";
+                 for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
+                     data = data + cat.getDistanceCat(indexdisp) + ";";
+                 }
                  if (!cat.getRecipes().isEmpty()) {
-                     data=data+indexcat+";dessert;";
-                     for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
-                         data = data + cat.getDistanceCat(indexdisp) + ";";
-                     }
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
                          data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
-
-                     data = data + "\n";
                  }
+                 data = data + "\n";
                  indexcat++;
              }
              writer3.write(data);
