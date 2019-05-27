@@ -166,7 +166,7 @@ public class DbXML {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File("src/main/resources/testUser.xml"));
+            StreamResult result = new StreamResult(new File("src/main/resources/testsusers.xml"));
 
             transformer.setOutputProperty(OutputKeys.INDENT,"yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
