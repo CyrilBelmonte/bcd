@@ -54,7 +54,7 @@ public class TextAnalysis {
                 double quantities = ingredient.getQuantity()/recipes.get(index).getPersons();
                 quantities=AITools.normalizeQuantity(quantities,ingredient.getUnit());
                 for(int index2=0 ; index2 < MaxIngredients.size() ; index2++) {
-                    if (MaxIngredients.get(index2).getName().equals(ingredient.getName())) {
+                    if (MaxIngredients.get(index2).getName().equals(ingredient.getCleanedName())) {
                         if (MaxIngredients.get(index2).getWeight() < quantities)
                             MaxIngredients.get(index2).setWeight(quantities);
                     }
@@ -112,7 +112,6 @@ public class TextAnalysis {
      * @return all Recipes with each
             */
 LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
-    HashMap<String,Double> hashMap = AIEntries.getMaxIngredientsQuantity();
     /*Initialise Weight on Title */
 
     for(Entry en : entry) {
@@ -130,7 +129,7 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     for(int index=0 ; index < recipes.size() ; index ++) {
         for (Ingredient ing : recipes.get(index).getIngredients()) {
             for(int index2=0 ; index2 < entry.get(index).getData().size() ; index2++){
-                if(entry.get(index).getData().get(index2).getName().equals(ing.getName())) {
+                if(entry.get(index).getData().get(index2).getName().equals(ing.getCleanedName())) {
                     double quantities = ing.getQuantity()/recipes.get(index).getPersons();
                     quantities=AITools.normalizeQuantity(quantities,ing.getUnit());
                     boolean validunit = AITools.isUnitValid(ing.getUnit());

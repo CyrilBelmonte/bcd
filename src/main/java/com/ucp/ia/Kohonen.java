@@ -28,26 +28,25 @@ public class Kohonen {
     private LinkedList<Recipe> recipes;
     private LinkedList<String> TitleList;
     private static int  dvp=7;
-    private static int  dvn=9;
-    private static double epsilon = 0.25;
-    private static double ALPHA = 0.125;
-    private static double BETA = 0.125;
-    private static int NEURONSIZE = 200;
-    private static int LEARNINGSIZE =1;
-    private int[] Entrychoosen;
-
+        private static int  dvn=9;
+        private static double epsilon = 0.5;
+        private static double ALPHA = 0.125;
+        private static double BETA = 0.125;
+        private static int NEURONSIZE = 100;
+        private static int LEARNINGSIZE =10;
+        private int[] Entrychoosen;
 
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes, LinkedList<String> TitleList) {
-        this.recipes = recipes;
-        cluster = new LinkedList<>();
-        kohonen = new LinkedList<>();
+            this.recipes = recipes;
+            cluster = new LinkedList<>();
+            kohonen = new LinkedList<>();
         Entry = new LinkedList<>();
         this.TitleList=TitleList;
         Entrychoosen=new int[recipes.size()];
         TextAnalysis analysis=new TextAnalysis(ingredients,recipes,TitleList);
         Entry=analysis.Analyse(recipes);
+        System.out.println(Entry.size());
         InitWeight(ingredients);
-
     }
 
 
@@ -64,36 +63,21 @@ public class Kohonen {
             Neuron neuron = new Neuron();
             Categorie categorie=new Categorie(NEURONSIZE,index);
             for(String ing :ingredients) {
-                double val = random()*2-1;
+                double val = random();
                 neuron.getWeight().add(val);
             }
 
             for(String Title : TitleList){
-                double val = random();
-                neuron.getWeighttitle().add(val);
+                double val = random()*2-1;
+                neuron.getWeighttitle().add(0.0);
             }
             kohonen.add(neuron);
             cluster.add(categorie);
         }
 
 
-        /** TEST WEIGHT INITIALISE IN CIRCLE*/
-        /*
-        for(int index =0 ; index < NEURONSIZE ; index++ ){
-            Neuron neuron = new Neuron();
-            Categorie categorie=new Categorie(NEURONSIZE,index);
-                for(int index3=0 ; index3 < index ; index3++){
-                    double val= abs(cos(2*(PI)*index3/ingredients.size()));
-                    neuron.getWeight().add(val);
-                }
-                for(int index4=index ; index4 <  ingredients.size() ; index4++){
-                    double val= abs(sin(2*(PI)*index4/ingredients.size()));
-                    neuron.getWeight().add(val);
-                }
-            kohonen.add(neuron);
-            cluster.add(categorie);
-        }
-        */
+
+
     }
 
 
@@ -151,8 +135,9 @@ Double voisinage(int index){
 
     public void Action(com.ucp.ia.Entry en){
 
-        double distancetitle=0;
+
         for(Neuron neuron : kohonen) {
+            double distancetitle=0;
             double distance=0;
             for (int index = 0; index < en.getData().size(); index++) {
                 double dist=en.getData().get(index).getWeight()-neuron.getWeight().get(index);
@@ -166,9 +151,9 @@ Double voisinage(int index){
                 distancetitle+= pow((w1-w2),2);
             }
 
-           // distancetitle = sqrt(distancetitle);
+            //distancetitle = sqrt(distancetitle);
+            distance=(distance+distancetitle);
             distance = sqrt(distance);
-            //distance=(distance*2+distancetitle)/3;
             neuron.setPotential(distance);
             neuron.setaction((1.0/(1+distance)));
         }
@@ -204,7 +189,6 @@ Double voisinage(int index){
 
             }
 
-            /*
             for(int index2=0;index2 < kohonen.get(index).getWeighttitle().size() ; index2++){
                  entryweight = Entry.get(entry).getDatatitle().get(index2).getWeight();
                  neuronweight = kohonen.get(index).getWeighttitle().get(index2);
@@ -213,7 +197,7 @@ Double voisinage(int index){
                      learning = (epsilon * (entryweight - neuronweight));
                 }
                 else {
-                    learning = (epsilon * (entryweight - neuronweight) * voisinage(index));
+                    learning = (epsilon * (entryweight - neuronweight) * nu(index));
                 }
                 kohonen.get(index).getWeighttitle().set(index2,kohonen.get(index).getWeighttitle().get(index2)+learning);
                 if( kohonen.get(index).getWeighttitle().get(index2) < 0)
@@ -221,7 +205,7 @@ Double voisinage(int index){
                 if( kohonen.get(index).getWeighttitle().get(index2) > 1)
                     kohonen.get(index).getWeighttitle().set(index2,1.0);
 
-            }*/
+            }
         }
 
     }
@@ -257,7 +241,6 @@ Double voisinage(int index){
                     Nblearn++;
                     Action(Entry.get(index));
                     winner = WinnerDetermined();
-                    System.out.println(winner);
                         Learning(winner, index);
 
                 }
@@ -267,7 +250,7 @@ Double voisinage(int index){
             System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
 
-
+        /*
         try {
             String disp = "";
             BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Result.csv"));
@@ -282,7 +265,7 @@ Double voisinage(int index){
         }catch (IOException e){
 
         }
-
+        */
 
 
         for(int index3=0; index3 < Entry.size() ; index3 ++ ){
@@ -291,29 +274,8 @@ Double voisinage(int index){
             cluster.get(winner).getRecipes().add(recipes.get(index3));
             cluster.get(winner).getDistance().add(kohonen.get(winner).getPotential());
         }
-        try {
-            BufferedWriter writer3 = new BufferedWriter(new FileWriter("./src/main/resources/SortiIA.csv"));
-            String data="";
-            int indexcat=0;
-            for(Categorie cat : cluster) {
-                if (!cat.getRecipes().isEmpty()) {
-                    data=data+indexcat+";mainCourses;";
-                    for (int indexdisp = 0; indexdisp < NEURONSIZE; indexdisp++) {
-                        data = data + cat.getDistanceCat(indexdisp) + ";";
-                    }
-                    for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
-                        data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
-                    }
-
-                    data = data + "\n";
-                }
-                indexcat++;
-            }
-            writer3.write(data);
-            writer3.close();
-            } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        System.out.println("Clustering Terminer");
+        /*
         try {
             String disp2 = "";
             BufferedWriter writer2 = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Recette.csv"));
@@ -328,6 +290,8 @@ Double voisinage(int index){
         }catch (IOException e){
 
         }
+        */
+
     }
 
     public LinkedList<Neuron> getKohonen() {

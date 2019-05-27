@@ -5,15 +5,27 @@ import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
 import com.ucp.recipecleaner.AIEntries;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class testia {
      public static void main(String[] args) {
 
-         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAllMainCourses();
-         LinkedList<String> ingredientsall = new LinkedList<>();
-         ingredientsall = AIEntries.getAllMainCoursesIngredients();
+         LinkedList<Recipe> recipesmain = DAOFactory.getRecipeDAO().findAllMainCourses();
+         LinkedList<Recipe> recipesdessert = DAOFactory.getRecipeDAO().findAllDesserts();
+         LinkedList<Recipe> recipestarter = DAOFactory.getRecipeDAO().findAllStarters();
+
+         LinkedList<String> ingredientsmain = new LinkedList<>();
+         ingredientsmain = AIEntries.getAllMainCoursesIngredients();
+         LinkedList<String> ingredientsdessert = new LinkedList<>();
+         ingredientsdessert = AIEntries.getAllDessertsIngredients();
+         LinkedList<String> ingredientsstarter = new LinkedList<>();
+         ingredientsstarter = AIEntries.getAllMainCoursesIngredients();
          LinkedList<String> mainCoursesName = AIEntries.getPartsOfMainCoursesName();
+         LinkedList<String> dessertName = AIEntries.getPartsOfDessertsName();
+         LinkedList<String> starterName = AIEntries.getPartsOfDessertsName();
          /*
          for(Recipe recipe : recipes) {
              LinkedList<Ingredient> ingredients = DAOFactory.getIngredientDAO().findAll(recipe);
@@ -31,13 +43,73 @@ public class testia {
          {
              System.out.println(ingredient);
          }*/
-            Kohonen kohonen = new Kohonen(ingredientsall,recipes,mainCoursesName);
+         System.out.println(recipestarter.size());
+            Kohonen kohonen = new Kohonen(ingredientsstarter,recipestarter,starterName);
                     kohonen.Clustering();
+         Kohonen kohonen2 = new Kohonen(ingredientsmain,recipesmain,mainCoursesName);
+         kohonen.Clustering();
+         Kohonen kohonen3 = new Kohonen(ingredientsdessert,recipesdessert,dessertName);
+         kohonen.Clustering();
+         String data="CatID;DIStID;RecetteID;RecetteDist \n";
+         try {
+             BufferedWriter writer3 = new BufferedWriter(new FileWriter("./src/main/resources/SortiIA.csv"));
+
+             int indexcat=0;
+             for(Categorie cat : kohonen.getCluster()) {
+                 if (!cat.getRecipes().isEmpty()) {
+                     data=data+indexcat+";starter;";
+                     for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
+                         data = data + cat.getDistanceCat(indexdisp) + ";";
+                     }
+                     for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
+                         data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
+                     }
+
+                     data = data + "\n";
+                 }
+                 indexcat++;
+             }
+             for(Categorie cat : kohonen2.getCluster()) {
+                 if (!cat.getRecipes().isEmpty()) {
+                     data=data+indexcat+";mainCourses;";
+                     for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
+                         data = data + cat.getDistanceCat(indexdisp) + ";";
+                     }
+                     for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
+                         data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
+                     }
+
+                     data = data + "\n";
+                 }
+                 indexcat++;
+             }
+             for(Categorie cat : kohonen3.getCluster()) {
+                 if (!cat.getRecipes().isEmpty()) {
+                     data=data+indexcat+";dessert;";
+                     for (int indexdisp = 0; indexdisp < 100; indexdisp++) {
+                         data = data + cat.getDistanceCat(indexdisp) + ";";
+                     }
+                     for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
+                         data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
+                     }
+
+                     data = data + "\n";
+                 }
+                 indexcat++;
+             }
+             writer3.write(data);
+             writer3.close();
+         } catch (IOException ex) {
+             ex.printStackTrace();
+         }
+                    /*
                     for(Categorie cat : kohonen.getCluster()) {
                         System.out.println("**************** NEXT CATEGORIE ****************");
                         for (Recipe recipe : cat.getRecipes()) {
                             System.out.println(recipe.getName());
                         }
                     }
+                    */
+
     }
 }
