@@ -43,13 +43,15 @@ public class testia {
          {
              System.out.println(ingredient);
          }*/
-         System.out.println(recipestarter.size());
             Kohonen kohonen = new Kohonen(ingredientsstarter,recipestarter,starterName);
                     kohonen.Clustering();
+
          Kohonen kohonen2 = new Kohonen(ingredientsmain,recipesmain,mainCoursesName);
-         kohonen.Clustering();
+         kohonen2.Clustering();
          Kohonen kohonen3 = new Kohonen(ingredientsdessert,recipesdessert,dessertName);
-         kohonen.Clustering();
+         kohonen3.Clustering()
+         ;
+
          String data="CatID;DIStID;RecetteID;RecetteDist \n";
          try {
              BufferedWriter writer3 = new BufferedWriter(new FileWriter("./src/main/resources/SortiIA.csv"));
@@ -62,13 +64,14 @@ public class testia {
                          data = data + cat.getDistanceCat(indexdisp) + ";";
                      }
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
-                         data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
+                         data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
 
                      data = data + "\n";
                  }
                  indexcat++;
              }
+
              for(Categorie cat : kohonen2.getCluster()) {
                  if (!cat.getRecipes().isEmpty()) {
                      data=data+indexcat+";mainCourses;";
@@ -76,7 +79,7 @@ public class testia {
                          data = data + cat.getDistanceCat(indexdisp) + ";";
                      }
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
-                         data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
+                         data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
 
                      data = data + "\n";
@@ -90,7 +93,7 @@ public class testia {
                          data = data + cat.getDistanceCat(indexdisp) + ";";
                      }
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
-                         data = data + cat.getRecipes().get(indexdisp).getName() + ";" + cat.getDistance().get(indexdisp) + ";";
+                         data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
 
                      data = data + "\n";
@@ -102,6 +105,8 @@ public class testia {
          } catch (IOException ex) {
              ex.printStackTrace();
          }
+
+
                     /*
                     for(Categorie cat : kohonen.getCluster()) {
                         System.out.println("**************** NEXT CATEGORIE ****************");
