@@ -70,7 +70,7 @@ public class Recipe {
 
     public Ingredient getIngredientFromName(String ingredientName) {
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getName().equals(ingredientName)) {
+            if (ingredient.getCleanedName().equals(ingredientName)) {
                 return ingredient;
             }
         }

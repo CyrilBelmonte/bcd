@@ -4,6 +4,7 @@ import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
 import com.ucp.recipecleaner.AITools;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -13,6 +14,8 @@ public class AIEntry extends AIObject {
     @Override
     public void initializeCoordinates(LinkedList<String> ingredientsName, LinkedList<String> recipesName) {
         super.initializeCoordinates(ingredientsName, recipesName);
+
+        HashMap<String, Double> maxIngredientsQuantities = Constants.getMaxIngredientsQuantities();
 
         String unit;
         double quantity;
@@ -31,19 +34,7 @@ public class AIEntry extends AIObject {
                 unit = ingredient.getUnit();
 
                 quantity = AITools.normalizeQuantity(quantity, unit);
-
-                if (AITools.isUnitValid(unit)) {
-                    quantity /= (Constants.getQuantityWithUnit() * 2 /* / 2 */);
-
-                } else {
-                    quantity /= (Constants.getQuantityWithoutUnit() * 2 /* / 2 */);
-                }
-
-                /*
-                if (quantity > 1) {
-                    quantity = 1.0;
-                }
-                */
+                quantity /= maxIngredientsQuantities.get(ingredientName);
 
                 setCoordinateValue(ingredientName, quantity);
             }

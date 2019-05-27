@@ -31,7 +31,7 @@ public class RecipeFormatter {
         String ingredientRegex =
             ".*?(?:(?<adjective>#ADJECTIVES#)\\s)?\\s*" +
             "(?:(?<unit>#UNITS#)\\s)?(?:demi|moitié)?\\s*" +
-            "(?<name>(?:[a-z]{0,2} |[a-z]')?.*)";
+            "(?:[a-z]{0,2} |[a-z]')?\\s*(?<name>.*)";
 
         LinkedList<String> allowedUnits = new LinkedList<>(Arrays.asList(
             "ml", "cl", "dl", "l", "mg", "g", "kg",

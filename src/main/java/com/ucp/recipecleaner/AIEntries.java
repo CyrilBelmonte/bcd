@@ -102,48 +102,42 @@ public class AIEntries {
         return deleteUnwantedWordsFromList(ingredients);
     }
 
-    public static HashMap<String, Double> getMaxIngredientsQuantity() {
+    public static HashMap<String, Double> getMaxIngredientsQuantities() {
         LinkedList<Ingredient> ingredients;
         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll();
-
         HashMap<String, Double> maxQuantities = new HashMap<>();
 
+        String ingredientName;
         String unit;
 
         double quantity;
         double normalizedQuantity;
-        boolean hasUnit;
-
-        double maxQuantityWithUnit = 0.0;
-        double maxQuantityWithoutUnit = 0.0;
+        double maxIngredientQuantity;
 
         for (Recipe recipe : recipes) {
             ingredients = recipe.getIngredients();
 
             for (Ingredient ingredient : ingredients) {
+                ingredientName = ingredient.getCleanedName();
+
+                if (maxQuantities.containsKey(ingredientName)) {
+                    maxIngredientQuantity = maxQuantities.get(ingredientName);
+
+                } else {
+                    maxQuantities.put(ingredientName, 1.0);
+                    maxIngredientQuantity = 1.0;
+                }
+
                 quantity = ingredient.getQuantity() / recipe.getPersons();
                 unit = ingredient.getUnit();
 
-                if (unit == null) {
-                    unit = "";
-                }
-
                 normalizedQuantity = AITools.normalizeQuantity(quantity, unit);
 
-                hasUnit = unit.equals("l") || unit.equals("g") ||
-                          quantity != normalizedQuantity;
-
-                if (hasUnit && normalizedQuantity > maxQuantityWithUnit) {
-                    maxQuantityWithUnit = normalizedQuantity;
-
-                } else if (!hasUnit && normalizedQuantity > maxQuantityWithoutUnit) {
-                    maxQuantityWithoutUnit = normalizedQuantity;
+                if (normalizedQuantity > maxIngredientQuantity) {
+                    maxQuantities.put(ingredientName, normalizedQuantity);
                 }
             }
         }
-
-        maxQuantities.put("quantityWithUnit", maxQuantityWithUnit);
-        maxQuantities.put("quantityWithoutUnit", maxQuantityWithoutUnit);
 
         return maxQuantities;
     }
