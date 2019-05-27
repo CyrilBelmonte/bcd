@@ -22,7 +22,7 @@ public class CleanerDemo {
         System.out.println(AITools.isUnitValid("tasses"));
         System.out.println(AITools.isUnitValid("pot"));
 
-        System.out.println(AIEntries.getMaxIngredientsQuantity());
+        System.out.println(AIEntries.getMaxIngredientsQuantities());
 
 
         System.err.println("*** STARTERS NAME ***");

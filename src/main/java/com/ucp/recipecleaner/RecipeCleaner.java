@@ -132,7 +132,7 @@ public class RecipeCleaner {
             "wok[s]?", "zébré[s]?", "écoliers[s]?", "gourmandise[s]?", "apéro", "dessert[s]?",
             "mélange[s]?", "concentré[e]?[s]?", "frais", "fermenté[e]?[s]?", "r[aâ]pé[e]?[s]?",
             "coulis", "poudre[s]?", "fumé[e]?[s]?", "cru[e]?[s]?", "liquide[s]?", "amère[s]?",
-            "brassé[e]?[s]?", "chair[s]?", "sec[s]?", "pelé[e]?[s]?", "pulpe[s]?", "sauvage"
+            "brassé[e]?[s]?", "chair[s]?", "sec[s]?", "pelé[e]?[s]?", "pulpe[s]?", "sauvage[s]?"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
