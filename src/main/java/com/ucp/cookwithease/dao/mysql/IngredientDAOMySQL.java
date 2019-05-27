@@ -96,7 +96,7 @@ public class IngredientDAOMySQL extends IngredientDAO {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                ingredients.addLast(result.getString("name"));
+                ingredients.addLast(result.getString("cleanedName"));
             }
 
             statement.close();
@@ -127,7 +127,7 @@ public class IngredientDAOMySQL extends IngredientDAO {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                ingredients.addLast(result.getString("name"));
+                ingredients.addLast(result.getString("cleanedName"));
             }
 
             statement.close();

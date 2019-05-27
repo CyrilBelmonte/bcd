@@ -39,23 +39,31 @@ public class ScrapeToDatabase {
 
         System.out.println("*** Retrieving of " + maxRecipes + " recipes ***");
 
-        while (recipesRegistry.size() < maxRecipes) {
+        while (recipesRegistry.size() < maxRecipes && i < urlRecipe.size()) {
             recipe = recipeParser.parse(urlRecipe.get(i));
 
             if (recipe != null && recipe.getType() != DishType.OTHER) {
-                hasSucceeded = DAOFactory.getRecipeDAO().insert(recipe);
 
-                if (hasSucceeded) {
-                    addRecipeToRegistry(recipe);
-
-                    System.out.println("[SUCCEEDED] Recipe #" + recipesRegistry.size() +
-                        " has been inserted | " + recipe.getName() +
+                if (hasRecipeInRegistry(recipe)) {
+                    System.err.println("[SKIPPED] Recipe #" + recipesRegistry.size() +
+                        " has already been processed | " + recipe.getName() +
                         " | URL: "+ urlRecipe.get(i));
 
                 } else {
-                    System.err.println("[FAILED] Recipe #" + recipesRegistry.size() +
-                        " has not been inserted | " + recipe.getName() +
-                        " | URL: "+ urlRecipe.get(i));
+                    hasSucceeded = DAOFactory.getRecipeDAO().insert(recipe);
+
+                    if (hasSucceeded) {
+                        addRecipeToRegistry(recipe);
+
+                        System.out.println("[SUCCEEDED] Recipe #" + recipesRegistry.size() +
+                            " has been inserted | " + recipe.getName() +
+                            " | URL: "+ urlRecipe.get(i));
+
+                    } else {
+                        System.err.println("[FAILED] Recipe #" + recipesRegistry.size() +
+                            " has not been inserted | " + recipe.getName() +
+                            " | URL: "+ urlRecipe.get(i));
+                    }
                 }
             }
 
