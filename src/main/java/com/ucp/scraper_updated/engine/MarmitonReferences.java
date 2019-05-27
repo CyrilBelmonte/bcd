@@ -2,7 +2,7 @@ package com.ucp.scraper_updated.engine;
 
 
 public class MarmitonReferences {
-    public static final String RECIPE_NAME_PATH_SELECTOR = "#content h1";
+    public static final String RECIPE_NAME_PATH_SELECTOR = "#content > .padded-content > .main-title";
     public static final String DURATION_PATH_SELECTOR = "#sticky-desktop-only > div.padded-content.col-center-special-desktop > div.recipe-infos__timmings > div.recipe-infos__timmings__total-time.title-4 > span";
     public static final String NUM_PERSONS_PATH_SELECTOR = "#sticky-desktop-only > div.af-cols > div.af-col-center > div.padded-content.recipe-infos__container > div.recipe-infos > div.recipe-infos__quantity > span.title-2.recipe-infos__quantity__value";
     public static final String RECIPE_TAGS_PATH_SELECTOR = "#content ul.mrtn-tags-list";
