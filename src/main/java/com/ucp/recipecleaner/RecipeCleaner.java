@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class RecipeCleaner {
     private Pattern adjectivesPattern;
     private Pattern stopWordsPattern;
+    private Pattern unwantedUnitsPattern;
     private Pattern unwantedWordsPattern;
     private Pattern unwantedNamesPattern;
     private Pattern ingredientsPattern;
@@ -24,6 +25,7 @@ public class RecipeCleaner {
     public RecipeCleaner() {
         initAdjectivesPattern();
         initStopWordsPattern();
+        initUnwantedUnitsPattern();
         initUnwantedWordsPattern();
         initUnwantedNamesPattern();
         initIngredientsPattern();
@@ -65,7 +67,7 @@ public class RecipeCleaner {
             "moelleuse[s]?", "délice[s]?", "enti(?:er|ière)[s]?", "express", "fau(?:x|sse[s]?)",
             "onctueu(?:x|se[s]?)", "savoureu(?:x|se[s]?)", "original[e]?[s]?", "préféré[e]?[s]?",
             "parfumée[e]?[s]?", "magique[s]?", "individuel(?:le)?[s]?", "cuit[e]?[s]?",
-            "garni[e]?[s]?", "gourmand[e]?[s]?"
+            "garni[e]?[s]?", "gourmand[e]?[s]?", "doux", "brut[s]?", "épais(?:se)?[s]?"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
@@ -83,12 +85,33 @@ public class RecipeCleaner {
             "étant", "suis", "es[t]?", "sommes", "êtes", "sont", "soi[ts]?", "ayant",
             "eu[e]?[s]?", "ai", "as", "avons", "avez", "ceci", "cela", "cet",
             "cette", "ici", "quel(?:le)?[s]?", "tou(?:s|t[es]?)", "comme", "très", "peu",
-            "trop", "ultra", "extra", "moins", "plus", "pourtant", "fait[e]?[s]?"
+            "trop", "ultra", "extra", "moins", "plus", "pourtant", "fait[e]?[s]?",
+            "moitié[s]?", "demi[e]?[s]?", "non"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
 
         stopWordsPattern = buildPattern(regex, excludedStopWords);
+    }
+
+    private void initUnwantedUnitsPattern() {
+        LinkedList<String> excludedWords = new LinkedList<>(Arrays.asList(
+            "ml", "cl", "dl", "l", "mg", "g", "kg",
+            "cuillère[s]?(?: à (?:soupe|café))?", "tasse[s]?(?: à café)?", "bol[s]?",
+            "tranche[s]?", "branche[s]?", "feuille[s]?", "bouquet[s]?", "brin[s]?", "botte[s]?",
+            "fleur[s]?", "gousse[s]?", "bûche[s]?", "bâton[s]?", "verre[s]?", "brique[s]?",
+            "briquette[s]?", "part[s]?", "bloc[s]?", "barquette[s]?", "pot[s]?", "boîte[s]?",
+            "sachet[s]?", "paquet[s]?", "rouleau[x]?", "graine[s]?", "poignée[s]?", "pincée[s]?",
+            "zeste[s]?", "portion[s]?", "morceau[s]?", "filet[s]?", "cuisse[s]?", "pointe[s]?",
+            "bouteille[s]?", "dose[s]?", "quartier[s]?", "goutte[s]?", "extrait[s]?", "flocon[s]?",
+            "tablette[s]?", "plaque[s]?", "cube[s]?", "carré[s]?", "blanc[s]?", "jaune[s]?", "boule[s]?",
+            "bocal[s]?", "brisure[s]?", "pavé[s]?", "pilon[s]?", "coeur[s]?", "épaule[s]?",
+            "escalope[s]?", "aiguillette[s]?", "rondelle[s]?", "louche[s]?", "bûchette[s]?"
+        ));
+
+        String regex = "(^|\\b)({TERMS})(\\b|$)";
+
+        unwantedUnitsPattern = buildPattern(regex, excludedWords);
     }
 
     private void initUnwantedWordsPattern() {
@@ -106,7 +129,9 @@ public class RecipeCleaner {
             "partage[s]?", "pièce[s]?", "pépite[s]?", "rit", "roi[s]?", "rondelle[s]?", "rose[s]?",
             "saint[s]?", "saveur[s]?", "souhait[s]?", "sphère[s]?", "spirale[s]?", "sucré[e]?[s]?",
             "surprise[s]?", "tartiner", "tasse[s]?", "tendresse[s]?", "tigré[s]?", "tricolore[s]?",
-            "wok[s]?", "zébré[s]?", "écoliers[s]?", "gourmandise[s]?", "apéro", "dessert[s]?"
+            "wok[s]?", "zébré[s]?", "écoliers[s]?", "gourmandise[s]?", "apéro", "dessert[s]?",
+            "mélange[s]?", "concentré[e]?[s]?", "frais", "fermenté[e]?[s]?", "rapé[e]?[s]?",
+            "coulis", "poudre[s]?", "fumé[e]?[s]?"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
@@ -173,6 +198,10 @@ public class RecipeCleaner {
         return stopWordsPattern.matcher(sentence).replaceAll(" ");
     }
 
+    private String deleteUnwantedUnitsFromString(String sentence) {
+        return unwantedUnitsPattern.matcher(sentence).replaceAll(" ");
+    }
+
     private String deleteUnwantedWordsFromString(String sentence) {
         return unwantedWordsPattern.matcher(sentence).replaceAll(" ");
     }
@@ -233,5 +262,23 @@ public class RecipeCleaner {
            Arrays.asList(standardizedRecipeName.split(" ")));
 
         return results;
+    }
+
+    public String getCleanedIngredientName(String ingredientName) {
+        ingredientName = ingredientName.toLowerCase();
+
+        String standardizedIngredientName =
+            reduceWhiteSpacesFromString(
+            deleteAccentsFromString(
+            deleteUnwantedWordsFromString(
+            deleteAdjectivesFromString(
+            deleteShortWordsFromString(
+            deleteStopWordsFromString(
+            deleteUnwantedUnitsFromString(
+            deletePunctuationFromString(
+            deleteParenthesesFromString(ingredientName)
+        ))))))));
+
+        return standardizedIngredientName;
     }
 }

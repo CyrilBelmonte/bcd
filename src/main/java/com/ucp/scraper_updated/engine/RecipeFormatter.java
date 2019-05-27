@@ -3,6 +3,7 @@ package com.ucp.scraper_updated.engine;
 import com.ucp.cookwithease.model.DishType;
 import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Level;
+import com.ucp.recipecleaner.RecipeCleaner;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
 public class RecipeFormatter {
     private Pattern recipeDurationPattern;
     private Pattern ingredientPattern;
+    private RecipeCleaner cleaner = new RecipeCleaner();
 
     public RecipeFormatter() {
         initRecipeDurationPattern();
@@ -29,7 +31,7 @@ public class RecipeFormatter {
         String ingredientRegex =
             ".*?(?:(?<adjective>#ADJECTIVES#)\\s)?\\s*" +
             "(?:(?<unit>#UNITS#)\\s)?(?:demi|moitié)?\\s*" +
-            "(?:[a-z]{0,2} |[a-z]')?\\s*(?<name>.*)";
+            "(?<name>(?:[a-z]{0,2} |[a-z]')?.*)";
 
         LinkedList<String> allowedUnits = new LinkedList<>(Arrays.asList(
             "ml", "cl", "dl", "l", "mg", "g", "kg",
@@ -105,11 +107,13 @@ public class RecipeFormatter {
         if (hasSucceeded) {
             String adjective = ingredientMatcher.group("adjective");
             String name = ingredientMatcher.group("name");
+            String cleanedName = cleaner.getCleanedIngredientName(name);
             String unit = ingredientMatcher.group("unit");
 
             ingredient = new Ingredient();
 
             ingredient.setName(name);
+            ingredient.setCleanedName(cleanedName);
             ingredient.setUnit(unit);
         }
 

@@ -59,6 +59,7 @@ CREATE TABLE Step (
 CREATE TABLE Ingredient (
   id                INTEGER NOT NULL AUTO_INCREMENT,
   name              VARCHAR(50),
+  cleanedName       VARCHAR(50),
   quantity          FLOAT,
   unit              VARCHAR(20),
   recipeID          INTEGER,

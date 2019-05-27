@@ -15,6 +15,7 @@ public class Ingredient {
     private int recipeID;
 
     private String name;
+    private String cleanedName;
     private float quantity;
     private String unit;
 

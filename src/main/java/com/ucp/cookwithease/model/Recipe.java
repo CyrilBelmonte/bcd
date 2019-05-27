@@ -58,6 +58,26 @@ public class Recipe {
         comments.addFirst(comment);
     }
 
+    public boolean hasIngredient(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(ingredientName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Ingredient getIngredientFromName(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(ingredientName)) {
+                return ingredient;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public String toString() {
         StringBuffer ingredientsDescription = new StringBuffer();

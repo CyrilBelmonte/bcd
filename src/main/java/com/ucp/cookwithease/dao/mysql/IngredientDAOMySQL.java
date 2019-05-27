@@ -28,11 +28,12 @@ public class IngredientDAOMySQL extends IngredientDAO {
 
             while (result.next()) {
                 ingredient = new Ingredient(
-                        result.getInt("id"),
-                        result.getInt("recipeID"),
-                        result.getString("name"),
-                        result.getFloat("quantity"),
-                        result.getString("unit"));
+                    result.getInt("id"),
+                    result.getInt("recipeID"),
+                    result.getString("name"),
+                    result.getString("cleanedName"),
+                    result.getFloat("quantity"),
+                    result.getString("unit"));
 
                 ingredients.addLast(ingredient);
             }
@@ -64,6 +65,7 @@ public class IngredientDAOMySQL extends IngredientDAO {
                     result.getInt("id"),
                     recipeID,
                     result.getString("name"),
+                    result.getString("cleanedName"),
                     result.getFloat("quantity"),
                     result.getString("unit"));
 
@@ -86,7 +88,7 @@ public class IngredientDAOMySQL extends IngredientDAO {
 
     @Override
     public LinkedList<String> getAllIngredients() {
-        String query = "SELECT DISTINCT name FROM ingredient";
+        String query = "SELECT DISTINCT cleanedName FROM ingredient";
         LinkedList<String> ingredients = new LinkedList<>();
 
         try {
@@ -109,10 +111,10 @@ public class IngredientDAOMySQL extends IngredientDAO {
     @Override
     public LinkedList<String> getAllIngredients(DishType type, int minOccurrences) {
         String query =
-            "SELECT i.name, COUNT(*) as occurrences " +
+            "SELECT cleanedName, COUNT(*) as occurrences " +
             "FROM ingredient i, recipe r " +
             "WHERE i.recipeID = r.id AND type = ? " +
-            "GROUP BY i.name " +
+            "GROUP BY cleanedName " +
             "HAVING occurrences >= ?";
 
         LinkedList<String> ingredients = new LinkedList<>();
@@ -171,17 +173,18 @@ public class IngredientDAOMySQL extends IngredientDAO {
     public boolean insert(Ingredient ingredient) {
         String query =
             "INSERT INTO ingredient" +
-            "(name, quantity, unit, recipeID)" +
-            "VALUES (?, ?, ?, ?)";
+            "(name, cleanedName, quantity, unit, recipeID)" +
+            "VALUES (?, ?, ?, ?, ?)";
 
         boolean hasSucceeded = false;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, ingredient.getName());
-            statement.setFloat(2, ingredient.getQuantity());
-            statement.setString(3, ingredient.getUnit());
-            statement.setInt(4, ingredient.getRecipeID());
+            statement.setString(2, ingredient.getCleanedName());
+            statement.setFloat(3, ingredient.getQuantity());
+            statement.setString(4, ingredient.getUnit());
+            statement.setInt(5, ingredient.getRecipeID());
             statement.executeUpdate();
 
             ResultSet result = statement.getGeneratedKeys();

@@ -43,17 +43,19 @@ public class ScrapeToDatabase {
             recipe = recipeParser.parse(urlRecipe.get(i));
 
             if (recipe != null && recipe.getType() != DishType.OTHER) {
-                System.out.println("URL = "+urlRecipe.get(i));
                 hasSucceeded = DAOFactory.getRecipeDAO().insert(recipe);
 
                 if (hasSucceeded) {
-                    System.out.println("[SUCCEEDED] Recipe #" + (i + 1) +
-                            " has been inserted (" + recipe.getName() + ")");
                     addRecipeToRegistry(recipe);
 
+                    System.out.println("[SUCCEEDED] Recipe #" + recipesRegistry.size() +
+                        " has been inserted | " + recipe.getName() +
+                        " | URL: "+ urlRecipe.get(i));
+
                 } else {
-                    System.err.println("[FAILED] Recipe #" + (i + 1) +
-                            " has not been inserted (" + recipe.getName() + ")");
+                    System.err.println("[FAILED] Recipe #" + recipesRegistry.size() +
+                        " has not been inserted | " + recipe.getName() +
+                        " | URL: "+ urlRecipe.get(i));
                 }
             }
 

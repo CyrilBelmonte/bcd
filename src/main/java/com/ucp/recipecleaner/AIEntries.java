@@ -85,19 +85,19 @@ public class AIEntries {
     }
 
     public static LinkedList<String> getAllStartersIngredients() {
-        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllStartersIngredients(2);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllStartersIngredients(3);
 
         return deleteUnwantedWordsFromList(ingredients);
     }
 
     public static LinkedList<String> getAllMainCoursesIngredients() {
-        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(2);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(3);
 
         return deleteUnwantedWordsFromList(ingredients);
     }
 
     public static LinkedList<String> getAllDessertsIngredients() {
-        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllDessertsIngredients(2);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllDessertsIngredients(3);
 
         return deleteUnwantedWordsFromList(ingredients);
     }
