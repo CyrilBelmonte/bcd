@@ -24,13 +24,18 @@ public class CsvFile implements CsvFileInt{
     }
     private void init(){
         lines = CsvFileHelper.readFile(file);
-
+        int i = 0;
         data = new ArrayList<String[]> (lines.size());
 
         String sep = new Character(SEPARATOR).toString();
         for (String line : lines){
-            String[] oneData = line.split(sep);
-            data.add(oneData);
+            if(i==0){
+                i++;
+                continue;
+            }else {
+                String[] oneData = line.split(sep);
+                data.add(oneData);
+            }
         }
     }
 

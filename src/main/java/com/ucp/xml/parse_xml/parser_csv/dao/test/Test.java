@@ -29,7 +29,10 @@ public class Test {
         queryCategory.printAllCat();
         System.out.println("ADD");
         queryCategory.addCategories(categoriesList);
+
         System.out.println("PRINT");
         queryCategory.printAllCat();
+        System.out.println(categoriesList.get(0).getIdOfCat());
+        //queryCategory.findRecipe("1");
     }
 }

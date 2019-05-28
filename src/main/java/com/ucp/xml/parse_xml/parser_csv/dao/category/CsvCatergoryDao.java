@@ -2,7 +2,6 @@ package com.ucp.xml.parse_xml.parser_csv.dao.category;
 
 
 
-import com.ucp.cookwithease.model.DishType;
 import com.ucp.xml.parse_xml.parser_csv.dao.csv.CsvFile;
 import com.ucp.xml.parse_xml.parser_csv.dao.csv.CsvFileInt;
 
@@ -15,6 +14,7 @@ public class CsvCatergoryDao implements CategorieDao {
 
     private File file;
     private CsvFileInt csvFileInt;
+    private static final int NB_CAT = 99;
 
     @Override
     public List<Category> findAllCategorie(){
@@ -30,16 +30,10 @@ public class CsvCatergoryDao implements CategorieDao {
 
     public HashMap<String,Integer> countCategories (List<String []> data){
         HashMap<String , Integer> counts = new HashMap<>();
-        counts.put("starter",0);
-        counts.put("mainCourses",0);
-        counts.put("dessert",0);
-        for (String[] oneData : data){
-            int old = counts.get(oneData[1]);
-            counts.put(oneData[1],old+1);
-        }
-        counts.put("starter",99);
-        counts.put("mainCourses",99);
-        counts.put("dessert",99);
+
+        counts.put("starter",NB_CAT);
+        counts.put("main_Courses",NB_CAT);
+        counts.put("dessert",NB_CAT);
 
         return counts;
     }

@@ -117,4 +117,24 @@ public class QueryCategory {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<String> findRecipe(String id_r){
+        ArrayList<String> recipeID = new ArrayList<>();
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+            /**/
+            ResourceSet result = service.query("//categories/category[/recipe[@id_r='"+id_r+"']/recipe/@id_r");
+            ResourceIterator i = result.getIterator();
+            while(i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                recipeID.add((String)r.getContent());
+            }
+
+        }catch (Exception e){
+            System.err.println("[ERROR][Query findRecipe with id_r ="+id_r+"] ");
+            e.printStackTrace();
+        }
+        return recipeID;
+    }
 }
