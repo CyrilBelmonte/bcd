@@ -124,7 +124,7 @@ public class QueryCategory {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
             /**/
-            ResourceSet result = service.query("//categories/category[/recipe[@id_r='"+id_r+"']/recipe/@id_r");
+            ResourceSet result = service.query("for $category in //categories/category "+"where $category/recipes/recipe/@id_r='"+id_r+"'"+"return $category/recipes/recipe/@id_r/string()");
             ResourceIterator i = result.getIterator();
             while(i.hasMoreResources()) {
                 Resource r = i.nextResource();
@@ -136,5 +136,27 @@ public class QueryCategory {
             e.printStackTrace();
         }
         return recipeID;
+    }
+
+    public ArrayList<String> findCategoriesByType(String type){
+        ArrayList<String> categories =  new ArrayList<>();
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("//categories/category[@type='"+type+"']/@id_c/string()");
+            ResourceIterator i = result.getIterator();
+            while(i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                categories.add((String)r.getContent());
+            }
+
+        }catch (Exception e){
+            System.err.println("[ERROR][Query findCategoriesByType with type ="+type+"] ");
+            e.printStackTrace();
+        }
+        return categories;
+
+
     }
 }
