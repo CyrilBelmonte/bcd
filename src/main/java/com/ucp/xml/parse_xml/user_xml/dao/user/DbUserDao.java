@@ -2,6 +2,8 @@ package com.ucp.xml.parse_xml.user_xml.dao.user;
 
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.model.Recipe;
+import com.ucp.xml.exist.query.InitConnection;
+import com.ucp.xml.exist.query.QueryCategory;
 import org.apache.log4j.BasicConfigurator;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
@@ -17,8 +19,6 @@ public class DbUserDao implements UserDao {
     public DbUserDao() {
         super();
     }
-
-
 
     @Override
     public List<User> findAllUser() {
@@ -36,13 +36,14 @@ public class DbUserDao implements UserDao {
     private User dbToUser(int idUser, LinkedList<com.ucp.cookwithease.model.User> friends, LinkedList<Recipe> bookmarks) {
         SimpleUser user = new SimpleUser();
 
+        QueryCategory queryCategory = new QueryCategory();
         // Id of the user
         user.setIdUser(idUser);
         // Categories of the user
         try {
-            user.setEntreeCategories(existDBConnection("//category[@type='starter']/@id/string()"));
-            user.setPlatCategories(existDBConnection("//category[@type='mainCourses']/@id/string()"));
-            user.setDessertCategories(existDBConnection("//category[@type='dessert']/@id/string()"));
+            user.setEntreeCategories(queryCategory.findCategoriesByType("starter"));
+            user.setPlatCategories(queryCategory.findCategoriesByType("main_Courses"));
+            user.setDessertCategories(queryCategory.findCategoriesByType("dessert"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,21 +67,11 @@ public class DbUserDao implements UserDao {
     }
 
     private static HashMap<Integer, String> existDBConnection(String xPathQuery) throws Exception {
-        BasicConfigurator.configure();
-        String driver = "org.exist.xmldb.DatabaseImpl";
+        InitConnection connection = new InitConnection();
 
-        //déterminer la classe de driver utilisée
-        //Pour se connecter à une base de données il est essentiel de charger dans un premier temps le
-        //pilote de la base de données à laquelle on désire se connecter grâce à un appel au
-        // DriverManager (gestionnaire de pilotes) : Class.forName("nom.de.la.classe");
-        // Cette instruction charge le pilote et crée une instance de cette classe.
-
-        Class cl = forName(driver);
-        Database database = (Database)cl.newInstance();
-        DatabaseManager.registerDatabase(database);
 
         //Accès à la collection
-        Collection col = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/categories" );
+        Collection col = connection.getCollection();
 
         //Appel au service permettant d’exécuter des requêtes avec XPath
 

@@ -8,6 +8,7 @@ import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -138,17 +139,19 @@ public class QueryCategory {
         return recipeID;
     }
 
-    public ArrayList<String> findCategoriesByType(String type){
-        ArrayList<String> categories =  new ArrayList<>();
+    public HashMap<Integer, String> findCategoriesByType(String type){
+        HashMap<Integer, String> categories =  new HashMap<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
             ResourceSet result = service.query("//categories/category[@type='"+type+"']/@id_c/string()");
             ResourceIterator i = result.getIterator();
+            int index = 0;
             while(i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                categories.add((String)r.getContent());
+                categories.put(index, (String)r.getContent());
+                index++;
             }
 
         }catch (Exception e){

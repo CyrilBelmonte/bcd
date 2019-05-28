@@ -10,6 +10,7 @@ import com.ucp.xml.parse_xml.parser_csv.dao.helper.CsvFileHelper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Test {
     private static final String FILE_NAME ="src/main/resources/SortiIA.csv";
@@ -36,7 +37,7 @@ public class Test {
         System.out.println("PRINT");
         queryCategory.printAllCat();
         System.out.println(categoriesList.get(0).getIdOfCat());*/
-        ArrayList<String> test = queryCategory.findRecipe("332");
+        Map<Integer, String> test = queryCategory.findCategoriesByType("dessert");
         System.out.println(test.toString());
     }
 }

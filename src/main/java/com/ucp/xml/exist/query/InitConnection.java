@@ -9,7 +9,6 @@ import org.xmldb.api.modules.XPathQueryService;
 import static java.lang.Class.forName;
 
 public class InitConnection {
-/*
     private static String driver = "org.exist.xmldb.DatabaseImpl";
     public Collection collection;
 
@@ -22,8 +21,8 @@ public class InitConnection {
 
             DatabaseManager.registerDatabase(database);
 
-             collection = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/categories" ,"admin","bcd1234");
-            System.out.println("test");
+             collection = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/bcd" ,"admin","bcd1234");
+            System.out.println("InitConnectionTest");
 
 
         }catch (Exception e){
@@ -34,5 +33,5 @@ public class InitConnection {
 
     public Collection getCollection() {
         return collection;
-    }*/
+    }
 }

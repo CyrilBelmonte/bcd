@@ -1,18 +1,21 @@
-package com.ucp.xml.parse_xml.prof_xml.profile;
+package com.ucp.xml.parse_xml.prof_xml.profile.dbtoXML;
 
+import com.ucp.xml.parse_xml.prof_xml.profile.dao.profil.Profile;
+import com.ucp.xml.parse_xml.user_xml.dao.user.User;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfXML {
 
-    public List<Profile> profiles;
+    public ArrayList<Profile> profiles;
 
-    public ProfXML(List<Profile> profiles){
+    public ProfXML(ArrayList<Profile> profiles){
         this.profiles=profiles;
     }
 
@@ -45,7 +48,7 @@ public class ProfXML {
                     profileElement.appendChild(userElement);
 
                     Attr attr_id_u = document.createAttribute("id_u");
-                    attr_id_u.setValue(user.getIdUser());
+                    attr_id_u.setValue(user.getIdUser().toString());
 
                     profileElement.setAttributeNode(attr_id_u);
                 }
