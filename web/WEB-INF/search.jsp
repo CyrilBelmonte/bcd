@@ -14,7 +14,7 @@
 <head>
     <%@ include file="includes/head.jsp" %>
 
-    <title>Recherche - Cook with ease</title>
+    <title>Rechercher - Cook with ease</title>
 </head>
 <body>
 <header>

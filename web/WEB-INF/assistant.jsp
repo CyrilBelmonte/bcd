@@ -13,7 +13,7 @@
 <head>
     <%@ include file="includes/head.jsp" %>
 
-    <title>Assistant - Cook with ease</title>
+    <title>Mon chef - Cook with ease</title>
 </head>
 <body>
 <header>

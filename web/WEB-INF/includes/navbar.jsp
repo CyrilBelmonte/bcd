@@ -14,9 +14,9 @@
             <img src="<c:url value="/img/nav-logo.png"/>" alt="Cook with ease">
         </a>
 
-        <a class="nav-link <c:out value="${param.selected == 'search' ? 'active' : ''}" />" href="<c:url value="/search"/>">Recherche</a>
-        <a class="nav-link <c:out value="${param.selected == 'discover' ? 'active' : ''}" />" href="<c:url value="/discover"/>">Découverte</a>
-        <a class="nav-link <c:out value="${param.selected == 'assistant' ? 'active' : ''}" />" href="<c:url value="/assistant"/>">Assistant</a>
+        <a class="nav-link <c:out value="${param.selected == 'search' ? 'active' : ''}" />" href="<c:url value="/search"/>">Rechercher</a>
+        <a class="nav-link <c:out value="${param.selected == 'discover' ? 'active' : ''}" />" href="<c:url value="/discover"/>">Découvrir</a>
+        <a class="nav-link <c:out value="${param.selected == 'assistant' ? 'active' : ''}" />" href="<c:url value="/assistant"/>">Mon chef</a>
         <a class="nav-link <c:out value="${param.selected == 'friends' ? 'active' : ''}" />" href="<c:url value="/friends"/>">Amis</a>
         <a class="nav-link <c:out value="${param.selected == 'bookmarks' ? 'active' : ''}" />" href="<c:url value="/bookmarks"/>">Favoris</a>
         <a class="nav-link <c:out value="${param.selected == 'settings' ? 'active' : ''}" /> ml-auto" href="<c:url value="/settings"/>"><span class="icon" data-feather="edit-2"></span></a>
