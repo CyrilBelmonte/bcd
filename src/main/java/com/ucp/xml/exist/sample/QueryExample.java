@@ -5,8 +5,7 @@ import org.xmldb.api.modules.*;
 import org.xmldb.api.*;
 
 import static java.lang.Class.forName;
-
-//import;
+/*
 
 public class QueryExample {
 
@@ -43,3 +42,4 @@ public class QueryExample {
         }
     }
 }
+*/

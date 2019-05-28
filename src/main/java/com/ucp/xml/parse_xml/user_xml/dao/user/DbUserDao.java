@@ -40,8 +40,8 @@ public class DbUserDao implements UserDao {
         user.setIdUser(idUser);
         // Categories of the user
         try {
-            user.setEntreeCategories(existDBConnection("//category[@type='entree']/@id/string()"));
-            user.setPlatCategories(existDBConnection("//category[@type='plat']/@id/string()"));
+            user.setEntreeCategories(existDBConnection("//category[@type='starter']/@id/string()"));
+            user.setPlatCategories(existDBConnection("//category[@type='mainCourses']/@id/string()"));
             user.setDessertCategories(existDBConnection("//category[@type='dessert']/@id/string()"));
         } catch (Exception e) {
             e.printStackTrace();

@@ -25,6 +25,5 @@ public class ReaderCsv {
             System.err.println("[ERROR] IOException = "+ex.toString());
         }
         return urls;
-
     }
 }

@@ -1,5 +1,6 @@
 package com.ucp.xml.exist.conf;
 
+
 public class InitExistDB {
 
     private String collectionPath = "bcd";
