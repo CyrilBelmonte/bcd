@@ -34,26 +34,6 @@ public class QueryCategory {
         }
     }
 
-    public List<String> findFriends(String idUser) {
-        List<String> friends = new ArrayList<>();
-        try {
-            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-            service.setProperty("indent", "yes");
-
-            ResourceSet result = service.query(" let $doc := //category[@type='plat']/recipes/recipe[@id_r='7'] return update value $doc/@dist_r with '5.0'");
-            ResourceIterator i = result.getIterator();
-
-
-            while (i.hasMoreResources()) {
-                Resource r = i.nextResource();
-                friends.add((String) r.getContent());
-            }
-        } catch (Exception e) {
-            System.err.println("[ERROR][Query findFriends] " + e);
-        }
-        return friends;
-    }
-
     public void addCategory(Category category) {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
@@ -118,8 +98,8 @@ public class QueryCategory {
         }
     }
 
-    public ArrayList<String> findRecipe(String id_r) {
-        ArrayList<String> recipeID = new ArrayList<>();
+    public ArrayList<Integer> findRecipe(int id_r) {
+        ArrayList<Integer> recipeID = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -128,7 +108,7 @@ public class QueryCategory {
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                recipeID.add((String) r.getContent());
+                recipeID.add(Integer.parseInt((String) r.getContent()));
             }
 
         } catch (Exception e) {
@@ -138,7 +118,7 @@ public class QueryCategory {
         return recipeID;
     }
 
-    public String findCatByRecipe(String idRecipe) {
+    public int findCatByRecipe(int idRecipe) {
         String results = "";
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
@@ -154,7 +134,7 @@ public class QueryCategory {
             System.err.println("[ERROR][Query findCatByRecipe] ");
             e.printStackTrace();
         }
-        return results;
+        return Integer.parseInt(results);
     }
 
     public HashMap<Integer, String> findCategoriesByType(String type) {
@@ -179,7 +159,7 @@ public class QueryCategory {
         return categories;
     }
 
-    public String getTypeCat(String idCategory) {
+    public String getTypeCat(int idCategory) {
         String results = "";
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");

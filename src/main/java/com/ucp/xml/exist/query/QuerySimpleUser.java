@@ -124,14 +124,14 @@ public class QuerySimpleUser {
         }
     }
 
-    public boolean majCat(String idUser, String idRecipe, int mark) {
+    public boolean majCat(int idUser, int idRecipe, int mark) {
 
         QueryCategory queryCategory = new QueryCategory();
-        String idCategory = queryCategory.findCatByRecipe(idRecipe);
+        int idCategory = queryCategory.findCatByRecipe(idRecipe);
         String typeCategory = queryCategory.getTypeCat(idCategory);
 
-        HashMap<String, Float> tCategories = new HashMap<>();
-        HashMap<String, Float> tP1Categories = new HashMap<>();
+        HashMap<Integer, Float> tCategories = new HashMap<>();
+        HashMap<Integer, Float> tP1Categories = new HashMap<>();
 
         int err = 1 / (6 - mark);
         System.out.println("Id user = " + idUser + " Id Category " + idCategory + " Type = " + typeCategory);
@@ -145,7 +145,7 @@ public class QuerySimpleUser {
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 String tab[] = ((String) r.getContent()).split(";");
-                tCategories.put(tab[0], Float.parseFloat(tab[1]));
+                tCategories.put(Integer.parseInt(tab[0]), Float.parseFloat(tab[1]));
             }
 
             Float d_tp1 = (tCategories.get(idCategory)) * EPSILON * err;
@@ -154,17 +154,17 @@ public class QuerySimpleUser {
 
             Float sum = 0.0f;
 
-            for (Map.Entry<String, Float> entry : tCategories.entrySet()) {
+            for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
                 sum = sum + entry.getValue();
             }
-            for (Map.Entry<String, Float> entry : tCategories.entrySet()) {
+            for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
                 Float prob = entry.getValue();
-                String id_c = entry.getKey();
+                Integer id_c = entry.getKey();
 
                 tP1Categories.put(id_c, prob / sum);
             }
 
-            for (Map.Entry<String, Float> entry : tP1Categories.entrySet()) {
+            for (Map.Entry<Integer, Float> entry : tP1Categories.entrySet()) {
                 service.query("let $doc := //users/user/categories/type[@value='" + typeCategory + "']/category[@id_c='" + entry.getKey() + "'] return update value $doc/@proba with '" + entry.getValue() + "'");
             }
             return true;
@@ -180,7 +180,7 @@ public class QuerySimpleUser {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@proba) for $category in $path where $category/@proba = $maxU return $category/@id_c/string()");
+            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@proba) for $category in $path where $category/@proba = $maxU return $category/@id_c");
             ResourceIterator i = result.getIterator();
 
 
