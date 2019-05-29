@@ -174,8 +174,8 @@ public class QuerySimpleUser {
         }
     }
 
-    public int getFirstCategory(int idUser, String type) {
-        String idCategory = "";
+    public ArrayList<Integer> getFirstCategory(int idUser, String type) {
+        ArrayList<Integer> catList = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -186,11 +186,11 @@ public class QuerySimpleUser {
 
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                idCategory = idCategory + r.getContent();
+                catList.add(Integer.parseInt((String) r.getContent())) ;
             }
         } catch (Exception e) {
             System.err.println("[ERROR][Query getFirstCategory] " + e);
         }
-        return Integer.parseInt(idCategory);
+        return catList;
     }
 }
