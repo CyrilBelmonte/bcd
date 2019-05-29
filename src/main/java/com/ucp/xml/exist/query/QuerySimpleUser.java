@@ -15,7 +15,7 @@ import static java.lang.Class.forName;
 public class QuerySimpleUser {
     private static String driver = "org.exist.xmldb.DatabaseImpl";
     private Collection collection;
-    private static final int EPSILON =4;
+    private static final int EPSILON = 4;
 
     public QuerySimpleUser() {
         try {
@@ -124,55 +124,73 @@ public class QuerySimpleUser {
         }
     }
 
-    public boolean majCat(String idUser, String idRecipe, int mark) {
+    public boolean majCat(int idUser, int idRecipe, int mark) {
 
         QueryCategory queryCategory = new QueryCategory();
-        String idCategory = queryCategory.findCatByRecipe(idRecipe);
+        int idCategory = queryCategory.findCatByRecipe(idRecipe);
         String typeCategory = queryCategory.getTypeCat(idCategory);
 
-        HashMap<String , Float> tCategories = new HashMap<>();
-        HashMap<String ,Float> tP1Categories = new HashMap<>();
+        HashMap<Integer, Float> tCategories = new HashMap<>();
+        HashMap<Integer, Float> tP1Categories = new HashMap<>();
 
-        int err = 1/(6-mark);
-        System.out.println("Id user = "+idUser+" Id Category "+idCategory+" Type = "+typeCategory);
+        int err = 1 / (6 - mark);
+        System.out.println("Id user = " + idUser + " Id Category " + idCategory + " Type = " + typeCategory);
 
 
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            ResourceSet result = service.query("for $category in //users/user[@id_u='"+idUser+"']/categories/type[@value='"+typeCategory+"']/category return  $category/@id_c/string()||';'||$category/@proba/string()");
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category return  $category/@id_c/string()||';'||$category/@proba/string()");
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 String tab[] = ((String) r.getContent()).split(";");
-                tCategories.put(tab[0],Float.parseFloat(tab[1]));
+                tCategories.put(Integer.parseInt(tab[0]), Float.parseFloat(tab[1]));
             }
 
-            Float d_tp1 = (tCategories.get(idCategory))*EPSILON*err;
+            Float d_tp1 = (tCategories.get(idCategory)) * EPSILON * err;
 
-            tCategories.put(idCategory,d_tp1);
+            tCategories.put(idCategory, d_tp1);
 
             Float sum = 0.0f;
 
-            for(Map.Entry<String, Float> entry : tCategories.entrySet()) {
+            for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
                 sum = sum + entry.getValue();
             }
-
-            System.out.println("SOMME = "+sum);
-            for(Map.Entry<String, Float> entry : tCategories.entrySet()) {
+            for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
                 Float prob = entry.getValue();
-                String id_c = entry.getKey();
+                Integer id_c = entry.getKey();
 
-                tP1Categories.put(id_c,prob/sum);
+                tP1Categories.put(id_c, prob / sum);
             }
 
-            for(Map.Entry<String, Float> entry : tP1Categories.entrySet()) {
-                service.query("let $doc := //users/user/categories/type[@value='"+typeCategory+"']/category[@id_c='"+entry.getKey()+"'] return update value $doc/@proba with '"+entry.getValue()+"'");
+            for (Map.Entry<Integer, Float> entry : tP1Categories.entrySet()) {
+                service.query("let $doc := //users/user/categories/type[@value='" + typeCategory + "']/category[@id_c='" + entry.getKey() + "'] return update value $doc/@proba with '" + entry.getValue() + "'");
             }
             return true;
         } catch (Exception e) {
             System.err.println("[ERROR][Query majCat] " + e);
             return false;
         }
+    }
+
+    public ArrayList<Integer> getFirstCategory(int idUser, String type) {
+        ArrayList<Integer> catList = new ArrayList<>();
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@proba) for $category in $path where $category/@proba = $maxU return $category/@id_c/string()");
+            ResourceIterator i = result.getIterator();
+
+
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                catList.add(Integer.parseInt((String) r.getContent())) ;
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR][Query getFirstCategory] " + e);
+        }
+        return catList;
     }
 }
