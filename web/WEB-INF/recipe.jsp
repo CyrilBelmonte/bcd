@@ -105,10 +105,21 @@
     <div class="container">
         <h2>Vous aimerez peut-être aussi</h2>
 
-        <div class="row">
-            <div class="col-12 col-sm-4 col-md-3">
-                <a class="card card-body recipe-suggestion" href="recipe.html">
-                    <p>Soupe de champignons</p>
+        <div class="more-recipes">
+            <div>
+                <a class="card card-body horizontal-recipe-card" href="recipe.html">
+                    <h3 class="card-title">Velouté de champignons</h3>
+                    <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
+                </a>
+
+                <a class="card card-body horizontal-recipe-card" href="recipe.html">
+                    <h3 class="card-title">Velouté de champignons</h3>
+                    <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
+                </a>
+
+                <a class="card card-body horizontal-recipe-card" href="recipe.html">
+                    <h3 class="card-title">Velouté de champignons</h3>
+                    <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
                 </a>
             </div>
         </div>

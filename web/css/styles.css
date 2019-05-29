@@ -225,11 +225,16 @@ a.card:hover {
   min-height: 100vh;
 }
 
-#login-banner {
+#login-banner,
+#recipe-suggestions {
   background-color: #000;
-  background-image: url('../img/login-banner.jpg');
+  background-image: url('../img/main-banner.jpg');
   background-size: cover;
   background-position: center;
+}
+
+#recipe-suggestions {
+  background-attachment: fixed;
 }
 
 #login-section {
@@ -258,8 +263,7 @@ a.card:hover {
   margin-top: -5.5rem;
 }
 
-#search-banner,
-#recipe-suggestions {
+#search-banner {
   background-color: #000;
   background-image: url('../img/search-banner.jpg');
   background-attachment: fixed;
@@ -388,7 +392,7 @@ a.card:hover {
   object-fit: cover;
 }
 
-.recipe-card .score {
+.score {
   font-size: .9rem;
   color: #aaa;
   margin: 0;
@@ -568,6 +572,88 @@ a.comment-indicator .icon {
 
 .recipe-comment .comment-score .icon {
   margin-right: .25rem;
+}
+
+
+/* -------------------------------------------------------
+ * Assistant page
+ * ------------------------------------------------------- */
+.day {
+  margin-bottom: 5rem;
+}
+
+.menu {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.time {
+  width: 3rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.time > .icon {
+  height: 1.5rem;
+  color: #fa405b;
+}
+
+.more-recipes,
+.menu-details {
+  position: relative;
+  z-index: 2;
+  height: 8rem;
+  overflow-y: hidden;
+  border-left: 1px solid rgba(0, 0, 0, .15);
+  border-right: 1px solid rgba(0, 0, 0, .15);
+}
+
+.more-recipes > div,
+.menu-details > div {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+}
+
+.horizontal-recipe-card {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 30rem;
+  text-align: left;
+  margin: 0 1rem;
+}
+
+.more-recipes .horizontal-recipe-card {
+  width: 20rem;
+}
+
+.menu-details .horizontal-recipe-card {
+  width: 30rem;
+}
+
+.horizontal-recipe-card > .card-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.horizontal-recipe-card .card-img {
+  height: 100px;
+  width: 100%;
+  object-fit: cover;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 
