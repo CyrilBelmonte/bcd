@@ -22,10 +22,10 @@ public class testia {
          LinkedList<String> ingredientsdessert = new LinkedList<>();
          ingredientsdessert = AIEntries.getAllDessertsIngredients();
          LinkedList<String> ingredientsstarter = new LinkedList<>();
-         ingredientsstarter = AIEntries.getAllMainCoursesIngredients();
+         ingredientsstarter = AIEntries.getPartsOfStartersName();
          LinkedList<String> mainCoursesName = AIEntries.getPartsOfMainCoursesName();
          LinkedList<String> dessertName = AIEntries.getPartsOfDessertsName();
-         LinkedList<String> starterName = AIEntries.getPartsOfDessertsName();
+         LinkedList<String> starterName = AIEntries.getPartsOfStartersName();
          /*
          for(Recipe recipe : recipes) {
              LinkedList<Ingredient> ingredients = DAOFactory.getIngredientDAO().findAll(recipe);
@@ -45,7 +45,7 @@ public class testia {
          }*/
          KohonenThread kt = new KohonenThread(ingredientsstarter,recipestarter,starterName,"starter");
          KohonenThread kt2 = new KohonenThread(ingredientsmain,recipesmain,mainCoursesName,"mainCourses");
-         KohonenThread kt3 = new KohonenThread(ingredientsmain,recipesmain,mainCoursesName,"dessert");
+         KohonenThread kt3 = new KohonenThread(ingredientsdessert,recipesdessert,dessertName,"dessert");
 
          kt.start();
          kt2.start();
