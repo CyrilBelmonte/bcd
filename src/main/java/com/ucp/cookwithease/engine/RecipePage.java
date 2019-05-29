@@ -93,6 +93,21 @@ public class RecipePage extends Page<RecipeForm> {
         }
     }
 
+    public boolean loadSuggestions() {
+        LinkedList<Recipe> suggestedRecipes = DAOFactory.getRecipeDAO().findAllStarters();
+
+        if (suggestedRecipes.size() == 0) {
+            form.addGlobalError("Aucune suggestion.");
+
+            return false;
+
+        } else {
+            request.setAttribute("suggestedRecipes", suggestedRecipes);
+
+            return true;
+        }
+    }
+
     public int getRecipeID() {
         return recipeID;
     }

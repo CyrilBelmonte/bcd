@@ -234,6 +234,7 @@ a.card:hover {
 }
 
 #recipe-suggestions {
+  min-height: 15rem;
   background-attachment: fixed;
 }
 
@@ -642,7 +643,7 @@ a.comment-indicator .icon {
   width: 30rem;
 }
 
-.horizontal-recipe-card > .card-title {
+.horizontal-recipe-card .card-title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

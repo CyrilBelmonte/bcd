@@ -21,6 +21,8 @@ public class RecipeServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + References.VIEW_SEARCH);
 
         } else {
+            page.loadSuggestions();
+
             this.getServletContext().getRequestDispatcher(
                 References.INTERNAL_VIEW_RECIPE).forward(request, response);
         }
