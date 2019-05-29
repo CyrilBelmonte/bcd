@@ -7,7 +7,9 @@ public class TestSimpleUser {
     public static void main(String[] args) {
         QuerySimpleUser querySimpleUser = new QuerySimpleUser();
         QueryCategory queryCategory = new QueryCategory();
-        System.out.println(querySimpleUser.getFirstCategory(1,"starter"));
-        System.out.println(queryCategory.findCatByRecipe(22));
+        System.out.println(querySimpleUser.getFirstCategory(1,"main_Courses"));
+        querySimpleUser.majCat(1,22,5);
+        System.out.println(querySimpleUser.getFirstCategory(1,"main_Courses"));
+        //System.out.println(queryCategory.findCatByRecipe(22));
     }
 }
