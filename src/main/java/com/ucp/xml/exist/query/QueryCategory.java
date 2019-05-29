@@ -159,8 +159,8 @@ public class QueryCategory {
         return categories;
     }
 
-    public String getTypeCat(int idCategory) {
-        String results = "";
+    public ArrayList<Integer> getTypeCat(int idCategory) {
+        ArrayList<Integer> catList = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -169,12 +169,12 @@ public class QueryCategory {
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                results = results + ((String) r.getContent());
+                catList.add(Integer.parseInt((String) r.getContent()));
             }
         } catch (Exception e) {
             System.err.println("[ERROR][Query getTypeCat] ");
             e.printStackTrace();
         }
-        return results;
+        return catList;
     }
 }
