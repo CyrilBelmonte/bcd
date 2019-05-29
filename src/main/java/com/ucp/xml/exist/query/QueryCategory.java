@@ -137,19 +137,18 @@ public class QueryCategory {
         return Integer.parseInt(results);
     }
 
-    public HashMap<Integer, String> findCategoriesByType(String type) {
-        HashMap<Integer, String> categories = new HashMap<>();
+    public HashMap<String, Float> findCategoriesByType(String type){
+        HashMap<String, Float> categories =  new HashMap<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("//categories/category[@type='" + type + "']/@id_c/string()");
-            ResourceIterator i = result.getIterator();
-            int index = 0;
-            while (i.hasMoreResources()) {
+            ResourceSet resultId = service.query("//categories/category[@type='"+type+"']/@id_c/string()");
+            ResourceIterator i = resultId.getIterator();
+            int count = countCategoriesByType(type);
+            while(i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                categories.put(index, (String) r.getContent());
-                index++;
+                categories.put(r.getContent().toString(), 1f/count);
             }
 
         } catch (Exception e) {
@@ -159,6 +158,27 @@ public class QueryCategory {
         return categories;
     }
 
+    public Integer countCategoriesByType(String type) {
+        Integer count = 0;
+
+        try{
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet resultId = service.query("count(//category[@type='"+type+"'])");
+            ResourceIterator i = resultId.getIterator();
+
+            while(i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                count = Integer.parseInt(r.getContent().toString());
+            }
+
+        }catch (Exception e){
+            System.err.println("[ERROR][Query findCategoriesByType with type ="+type+"] ");
+            e.printStackTrace();
+        }
+        return count;
+    }
     public String getTypeCat(int idCategory) {
         String results = "";
         try {
