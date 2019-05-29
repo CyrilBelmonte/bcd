@@ -30,8 +30,8 @@ public class Kohonen {
         private static double epsilon = 0.5;
         private static double ALPHA = 0.125;
         private static double BETA = 0.125;
-        private static int NEURONSIZE = 100;
-        private static int LEARNINGSIZE =4000;
+        private static int NEURONSIZE = 200;
+        private static int LEARNINGSIZE =10;
         private LinkedList<Integer> Entrychoosen;
 
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes, LinkedList<String> TitleList) {
@@ -246,12 +246,12 @@ Double voisinage(int index){
         long debut = System.currentTimeMillis();
         for(int indextest=0; indextest < LEARNINGSIZE ; indextest++) {
             if(indextest==1) System.out.println("DUREE MIN:"+(System.currentTimeMillis()-debut)*LEARNINGSIZE/60000);
-            int index = pickEntry();
-                    Action(Entry.get(index));
-                    winner = WinnerDetermined();
-                        Learning(winner, index);
-
-
+            for(Entry entrey : Entry) {
+                int index = pickEntry();
+                Action(Entry.get(index));
+                winner = WinnerDetermined();
+                Learning(winner, index);
+            }
 
             System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
