@@ -7,6 +7,7 @@
 --%>
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,217 +25,66 @@
 
 <section>
     <div class="container">
-        <div class="day">
-            <h2>Lundi</h2>
+        <c:if test="${not empty error}">
+            <p><c:out value="${error.description}" /></p>
+        </c:if>
 
-            <div class="menu">
-                <div class="time">
-                    <span class="icon" data-feather="sun"></span>
-                </div>
-                <div class="menu-details">
-                    <div>
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-5">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-7">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+        <c:forEach items="${days}" var="day">
+            <div class="day">
+                <h2><c:out value="${day.name}" /></h2>
 
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
+                <div class="menu">
+                    <div class="time">
+                        <span class="icon" data-feather="sun"></span>
+                    </div>
+                    <div class="menu-details">
+                        <div>
+                            <c:forEach items="${day.lunchRecipes}" var="recipe">
+                                <a class="card horizontal-recipe-card" href="<c:url value="/recipe"><c:param name="id" value="${recipe.id}" /></c:url>">
+                                    <div class="row no-gutters">
+                                        <div class="col-5">
+                                            <img class="card-img" src="<c:out value="${recipe.picture}" />" alt="Illustration de recette">
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="card-body">
+                                                <h3 class="card-title"><c:out value="${recipe.name}" /></h3>
+                                                <p class="score"><span class="icon" data-feather="star"></span> <strong><fmt:formatNumber value="${recipe.rating}" maxFractionDigits="1" /></strong> sur 5</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                                </a>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="menu">
-                <div class="time">
-                    <span class="icon" data-feather="moon"></span>
-                </div>
-                <div class="menu-details">
-                    <div>
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-5">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-7">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
+                <div class="menu">
+                    <div class="time">
+                        <span class="icon" data-feather="moon"></span>
+                    </div>
+                    <div class="menu-details">
+                        <div>
+                            <c:forEach items="${day.dinnerRecipes}" var="recipe">
+                                <a class="card horizontal-recipe-card" href="<c:url value="/recipe"><c:param name="id" value="${recipe.id}" /></c:url>">
+                                    <div class="row no-gutters">
+                                        <div class="col-5">
+                                            <img class="card-img" src="<c:out value="${recipe.picture}" />" alt="Illustration de recette">
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="card-body">
+                                                <h3 class="card-title"><c:out value="${recipe.name}" /></h3>
+                                                <p class="score"><span class="icon" data-feather="star"></span> <strong><fmt:formatNumber value="${recipe.rating}" maxFractionDigits="1" /></strong> sur 5</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                                </a>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
+
             </div>
-        </div>
-
-        <div class="day">
-            <h2>Mardi</h2>
-
-            <div class="menu">
-                <div class="time">
-                    <span class="icon" data-feather="sun"></span>
-                </div>
-                <div class="menu-details">
-                    <div>
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-5">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-7">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="menu">
-                <div class="time">
-                    <span class="icon" data-feather="moon"></span>
-                </div>
-                <div class="menu-details">
-                    <div>
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-5">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-7">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="card horizontal-recipe-card" href="recipe.html">
-                            <div class="row no-gutters">
-                                <div class="col-4">
-                                    <img class="card-img" src="https://assets.afcdn.com/recipe/20160404/2282_w420h344c1cx1500cy1000.jpg" alt="Illustration de recette">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Velouté de champignons</h3>
-                                        <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </c:forEach>
 
     </div>
 </section>

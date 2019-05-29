@@ -102,28 +102,22 @@
 </section>
 
 <section id="recipe-suggestions">
-    <div class="container">
-        <h2>Vous aimerez peut-être aussi</h2>
+    <c:if test="${not empty suggestedRecipes}">
+        <div class="container">
+            <h2>Vous aimerez peut-être aussi</h2>
 
-        <div class="more-recipes">
-            <div>
-                <a class="card card-body horizontal-recipe-card" href="recipe.html">
-                    <h3 class="card-title">Velouté de champignons</h3>
-                    <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                </a>
-
-                <a class="card card-body horizontal-recipe-card" href="recipe.html">
-                    <h3 class="card-title">Velouté de champignons</h3>
-                    <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                </a>
-
-                <a class="card card-body horizontal-recipe-card" href="recipe.html">
-                    <h3 class="card-title">Velouté de champignons</h3>
-                    <p class="score"><span class="icon" data-feather="star"></span> <strong>4.9</strong> sur 5</p>
-                </a>
+            <div class="more-recipes">
+                <div>
+                    <c:forEach items="${suggestedRecipes}" var="suggestedRecipe">
+                        <a class="card card-body horizontal-recipe-card" href="<c:url value="/recipe"><c:param name="id" value="${suggestedRecipe.id}" /></c:url>">
+                            <h3 class="card-title"><c:out value="${suggestedRecipe.name}" /></h3>
+                            <p class="score"><span class="icon" data-feather="star"></span> <strong><fmt:formatNumber value="${suggestedRecipe.rating}" maxFractionDigits="1" /></strong> sur 5</p>
+                        </a>
+                    </c:forEach>
+                </div>
             </div>
         </div>
-    </div>
+    </c:if>
 </section>
 
 <section>
