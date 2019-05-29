@@ -43,12 +43,9 @@ public class testia {
          {
              System.out.println(ingredient);
          }*/
-         Kohonen kohonen = new Kohonen(ingredientsstarter,recipestarter,starterName);
-         KohonenThread kt = new KohonenThread(kohonen,"starter");
-         Kohonen kohonen2 = new Kohonen(ingredientsmain,recipesmain,mainCoursesName);
-         KohonenThread kt2 = new KohonenThread(kohonen2,"mainCourses");
-         Kohonen kohonen3 = new Kohonen(ingredientsdessert,recipesdessert,dessertName);
-         KohonenThread kt3 = new KohonenThread(kohonen3,"dessert");
+         KohonenThread kt = new KohonenThread(ingredientsstarter,recipestarter,starterName,"starter");
+         KohonenThread kt2 = new KohonenThread(ingredientsmain,recipesmain,mainCoursesName,"mainCourses");
+         KohonenThread kt3 = new KohonenThread(ingredientsmain,recipesmain,mainCoursesName,"dessert");
 
          kt.start();
          kt2.start();
@@ -57,6 +54,11 @@ public class testia {
          kt.join();
          kt2.join();
          kt3.join();
+
+         Kohonen kohonen = kt.getKohonen();
+         Kohonen kohonen2 = kt2.getKohonen();
+         Kohonen kohonen3 = kt3.getKohonen();
+
 
          String data="CatID;DIStID;RecetteID;RecetteDist \n";
          try {

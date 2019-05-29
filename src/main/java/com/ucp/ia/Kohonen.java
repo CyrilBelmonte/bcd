@@ -256,7 +256,7 @@ Double voisinage(int index){
             System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
 
-
+        /*
         try {
             String disp = "";
             BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Result.csv"));
@@ -272,7 +272,7 @@ Double voisinage(int index){
 
         }
 
-
+        */
 
         for(int index3=0; index3 < Entry.size() ; index3 ++ ){
             Action(Entry.get(index3));
@@ -281,6 +281,7 @@ Double voisinage(int index){
             cluster.get(winner).getDistance().add(kohonen.get(winner).getPotential());
         }
 
+        /*
         try {
             String disp2 = "";
             BufferedWriter writer2 = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Recette"+recipes.get(0).getType()+".csv"));
@@ -295,7 +296,7 @@ Double voisinage(int index){
         }catch (IOException e){
 
         }
-
+        */
 
     }
 

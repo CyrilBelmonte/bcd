@@ -149,6 +149,7 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
             }
         }
     }
+    /*
     try {
         String disp = "";
         BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Entry.csv"));
@@ -164,7 +165,7 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     }catch (IOException e){
 
     }
-
+*/
     return entry;
 }
 
