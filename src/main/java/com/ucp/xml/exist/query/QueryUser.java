@@ -42,13 +42,13 @@ public class QueryUser {
                 query += "<category id_c='" + entry.getValue() + "' proba='" + 1f/starterCount + "'/>";
             }
 
-            query += "</type><type value='mainCourse' sum='" + 1f/mainCount + "'>";
+            query += "</type><type value='mainCourse' sum='" + mainCount + "'>";
 
             for (Map.Entry<Integer, String> entry : user.getPlatCategories().entrySet()) {
                 query += "<category id_c='" + entry.getValue() + "' proba='" + 1f/mainCount + "'/>";
             }
 
-            query += "</type><type value='dessert' sum='" + 1f/dessertCount + "'>";
+            query += "</type><type value='dessert' sum='" + dessertCount + "'>";
 
             for (Map.Entry<Integer, String> entry : user.getDessertCategories().entrySet()) {
                 query += "<category id_c='" + entry.getValue() + "' proba='" + 1f/dessertCount + "'/>";
