@@ -140,14 +140,13 @@ public class QuerySimpleUser {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category return  $category/@id_c/string()||';'||$category/@proba/string()");
+            ResourceSet result = service.query("for $category in //users/user[@id_u='"+idUser+"']/categories/type[@value='"+typeCategory+"']/category return  $category/@id_c/string() ||\";\"|| $category/@proba/string()");
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 String tab[] = ((String) r.getContent()).split(";");
                 tCategories.put(Integer.parseInt(tab[0]), Float.parseFloat(tab[1]));
             }
-
             Float d_tp1 = (tCategories.get(idCategory)) * EPSILON * err;
 
             tCategories.put(idCategory, d_tp1);
@@ -160,7 +159,9 @@ public class QuerySimpleUser {
             for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
                 Float prob = entry.getValue();
                 Integer id_c = entry.getKey();
-
+                if(prob==0.0){
+                    prob=0.000000001f;
+                }
                 tP1Categories.put(id_c, prob / sum);
             }
 
@@ -170,6 +171,7 @@ public class QuerySimpleUser {
             return true;
         } catch (Exception e) {
             System.err.println("[ERROR][Query majCat] " + e);
+            e.printStackTrace();
             return false;
         }
     }

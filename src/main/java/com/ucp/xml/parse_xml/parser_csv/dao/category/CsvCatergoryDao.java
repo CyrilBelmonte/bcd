@@ -14,7 +14,7 @@ public class CsvCatergoryDao implements CategorieDao {
 
     private File file;
     private CsvFileInt csvFileInt;
-    private static final int NB_CAT = 199;
+    private static final int NB_CAT = 99;
 
     @Override
     public List<Category> findAllCategorie(){
