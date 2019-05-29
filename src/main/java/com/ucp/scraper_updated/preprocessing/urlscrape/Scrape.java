@@ -30,15 +30,11 @@ public class Scrape {
         }
     }
 
-    private String  getTitleFromWeb(){
-        try{
+    private String getTitleFromWeb() {
+        try {
             return this.connection.get().select("#content > .padded-content > .main-title").get(0).ownText();
-        }catch (Exception e ){
-            //#content > div:nth-child(4) > h1
-            //#content > div:nth-child(4) > h1
-            //System.err.println("Error :"+e);
+        } catch (Exception e) {
             return null;
         }
-
     }
 }

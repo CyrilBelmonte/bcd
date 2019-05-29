@@ -29,12 +29,16 @@ public class QuerySimpleUser {
             collection = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/bcd/", "admin", "bcd1234");
 
         } catch (Exception e) {
-            System.err.println("[ERROR QueryUser] : " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : QuerySimpleUser]");
+            e.printStackTrace();
             collection = null;
         }
     }
 
-    public boolean addFriend(String idUser, String idFriend) {
+    /*
+     *Function to add friend for an user
+     */
+    public boolean addFriend(int idUser, int idFriend) {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -43,12 +47,16 @@ public class QuerySimpleUser {
 
             return true;
         } catch (Exception e) {
-            System.err.println("[ERROR][Query addFriend] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : addFriend]");
+            e.printStackTrace();
             return false;
         }
     }
 
-    public boolean addBookmark(String idUser, String idRecipe) {
+    /*
+     *Function to add a bookmark for an user
+     */
+    public boolean addBookmark(int idUser, int idRecipe) {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -57,30 +65,38 @@ public class QuerySimpleUser {
 
             return true;
         } catch (Exception e) {
-            System.err.println("[ERROR][Query addBookmark] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : addBookmark]");
+            e.printStackTrace();
             return false;
         }
     }
 
-    public List<String> bookmarksList(String idUser) {
-        List<String> bookmarks = new ArrayList<>();
+    /*
+     *Function to return the bookmark's list of one user
+     */
+    public List<Integer> bookmarksList(int idUser) {
+        List<Integer> bookmarks = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            ResourceSet result = service.query("//users/user[@id_u='" + idUser + "']/bookmarks");
+            ResourceSet result = service.query("//users/user[@id_u='" + idUser + "']/bookmarks/bookmark/@id_r/string()");
 
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                bookmarks.add((String) r.getContent());
+                bookmarks.add(Integer.parseInt((String) r.getContent()));
             }
         } catch (Exception e) {
-            System.err.println("[ERROR][Query addBookmark] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : bookmarkList]");
+            e.printStackTrace();
         }
         return bookmarks;
     }
 
-    public boolean deleteBookmark(String idUser, String idRecipe) {
+    /*
+     *Function to delete a bookmark of one user
+     */
+    public boolean deleteBookmark(int idUser, int idRecipe) {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -88,30 +104,38 @@ public class QuerySimpleUser {
             service.query("for $bookmark in //users/user[@id_u='" + idUser + "']/bookmarks/bookmark[@id_r='" + idRecipe + "'] return update delete $bookmark");
             return true;
         } catch (Exception e) {
-            System.err.println("[ERROR][Query addBookmark] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : deleteBookmark]");
+            e.printStackTrace();
             return false;
         }
     }
 
-    public ArrayList<String> friendsList(String idUser) {
-        ArrayList<String> friends = new ArrayList<>();
+    /*
+     *Function to return the friend's list of one user
+     */
+    public ArrayList<Integer> friendsList(int idUser) {
+        ArrayList<Integer> friends = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            ResourceSet result = service.query("//users/user[@id_u='" + idUser + "']/friends/friend/@id_u");
+            ResourceSet result = service.query("//users/user[@id_u='" + idUser + "']/friends/friend/@id_u/string()");
 
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                friends.add((String) r.getContent());
+                friends.add(Integer.parseInt((String) r.getContent()));
             }
         } catch (Exception e) {
-            System.err.println("[ERROR][Query friendsList] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : friendsList]");
+            e.printStackTrace();
         }
         return friends;
     }
 
-    public boolean deleteFriend(String idUser, String idFriend) {
+    /*
+     * Function to delete a friend of one user
+     */
+    public boolean deleteFriend(int idUser, int idFriend) {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -119,11 +143,15 @@ public class QuerySimpleUser {
             service.query("for $friends in //users/user[@id_u='" + idUser + "']/friends/friend[@id_u='" + idFriend + "'] return update delete $friends");
             return true;
         } catch (Exception e) {
-            System.err.println("[ERROR][Query addBookmark] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : deleteFriend]");
+            e.printStackTrace();
             return false;
         }
     }
 
+    /*
+     *Function to update the category who the user put a mark
+     */
     public boolean majCat(int idUser, int idRecipe, int mark) {
 
         QueryCategory queryCategory = new QueryCategory();
@@ -140,7 +168,7 @@ public class QuerySimpleUser {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            ResourceSet result = service.query("for $category in //users/user[@id_u='"+idUser+"']/categories/type[@value='"+typeCategory+"']/category return  $category/@id_c/string() ||\";\"|| $category/@proba/string()");
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category return  $category/@id_c/string() ||\";\"|| $category/@proba/string()");
             ResourceIterator i = result.getIterator();
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
@@ -159,8 +187,8 @@ public class QuerySimpleUser {
             for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
                 Float prob = entry.getValue();
                 Integer id_c = entry.getKey();
-                if(prob==0.0){
-                    prob=0.000000001f;
+                if (prob == 0.0) {
+                    prob = 0.000000001f;
                 }
                 tP1Categories.put(id_c, prob / sum);
             }
@@ -170,12 +198,15 @@ public class QuerySimpleUser {
             }
             return true;
         } catch (Exception e) {
-            System.err.println("[ERROR][Query majCat] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : majCat]");
             e.printStackTrace();
             return false;
         }
     }
 
+    /*
+     *Function to return a categories' list to suggest category
+     */
     public ArrayList<Integer> getFirstCategory(int idUser, String type) {
         ArrayList<Integer> catList = new ArrayList<>();
         try {
@@ -188,10 +219,11 @@ public class QuerySimpleUser {
 
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                catList.add(Integer.parseInt((String) r.getContent())) ;
+                catList.add(Integer.parseInt((String) r.getContent()));
             }
         } catch (Exception e) {
-            System.err.println("[ERROR][Query getFirstCategory] " + e);
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : getFirstCategory]");
+            e.printStackTrace();
         }
         return catList;
     }
