@@ -174,13 +174,13 @@ public class QuerySimpleUser {
         }
     }
 
-    public String getFirstCategory(String idUser, String type) {
+    public int getFirstCategory(int idUser, String type) {
         String idCategory = "";
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@proba) for $category in $path where $category/@proba = $maxU return $category/@id_c");
+            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@proba) for $category in $path where $category/@proba = $maxU return $category/@id_c/string()");
             ResourceIterator i = result.getIterator();
 
 
@@ -191,6 +191,6 @@ public class QuerySimpleUser {
         } catch (Exception e) {
             System.err.println("[ERROR][Query getFirstCategory] " + e);
         }
-        return idCategory;
+        return Integer.parseInt(idCategory);
     }
 }

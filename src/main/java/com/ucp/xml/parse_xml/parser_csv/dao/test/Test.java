@@ -18,15 +18,15 @@ public class Test {
     private static CategorieDao categorieDao;
 
     public static void main(String[] args) {
-        /*
+
         file = CsvFileHelper.getRessource(FILE_NAME);
         categorieDao = new CsvCatergoryDao(file);
         List<Category> categoriesList = new ArrayList<>();
 
         categoriesList = categorieDao.findAllCategorie();
-        */
+
         QueryCategory queryCategory = new QueryCategory();
-        /*
+
         System.out.println("ERASE");
         queryCategory.removeAll();
         System.out.println("PRINT");
@@ -36,8 +36,7 @@ public class Test {
 
         System.out.println("PRINT");
         queryCategory.printAllCat();
-        System.out.println(categoriesList.get(0).getIdOfCat());*/
-        Map<Integer, String> test = queryCategory.findCategoriesByType("dessert");
-        System.out.println(test.toString());
+        //Map<Integer, String> test = queryCategory.findCategoriesByType("dessert");
+        //System.out.println(test.toString());
     }
 }
