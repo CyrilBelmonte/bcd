@@ -30,8 +30,8 @@ public class Kohonen {
         private static double epsilon = 0.5;
         private static double ALPHA = 0.125;
         private static double BETA = 0.125;
-        private static int NEURONSIZE = 100;
-        private static int LEARNINGSIZE =25;
+        private static int NEURONSIZE = 50;
+        private static int LEARNINGSIZE =100;
         private int[] Entrychoosen;
 
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes, LinkedList<String> TitleList) {
@@ -61,11 +61,10 @@ public class Kohonen {
             Categorie categorie=new Categorie(NEURONSIZE,index);
             for(String ing :ingredients) {
                 double val = random();
-                neuron.getWeight().add(val);
+                neuron.getWeight().add(0.0);
             }
 
             for(String Title : TitleList){
-                double val = random()*2-1;
                 neuron.getWeighttitle().add(0.0);
             }
             kohonen.add(neuron);
@@ -213,7 +212,7 @@ Double voisinage(int index){
      */
 
     public void Clustering(){
-        System.out.println("DUREE MIN:"+(20*LEARNINGSIZE)/60);
+
         /*
         try {
             String disp = "";
@@ -228,8 +227,9 @@ Double voisinage(int index){
         }
         */
         int winner=0;
-
+        long debut = System.currentTimeMillis();
         for(int indextest=0; indextest < LEARNINGSIZE ; indextest++) {
+            if(indextest==1) System.out.println("DUREE MIN:"+(System.currentTimeMillis()-debut)*LEARNINGSIZE/60000);
             int Nblearn=0;
             while( Nblearn < Entry.size()) {
                 int index = (int) (random()*(Entrychoosen.length));
@@ -247,7 +247,7 @@ Double voisinage(int index){
             System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
 
-        /*
+
         try {
             String disp = "";
             BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Result.csv"));
@@ -262,7 +262,7 @@ Double voisinage(int index){
         }catch (IOException e){
 
         }
-        */
+
 
 
         for(int index3=0; index3 < Entry.size() ; index3 ++ ){
