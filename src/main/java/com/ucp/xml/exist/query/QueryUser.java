@@ -1,11 +1,13 @@
 package com.ucp.xml.exist.query;
 
+import com.ucp.xml.parse_xml.user_xml.dao.user.SimpleUser;
 import com.ucp.xml.parse_xml.user_xml.dao.user.User;
 import org.apache.log4j.BasicConfigurator;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,20 +40,20 @@ public class QueryUser {
 
             query += "<categories><type value='starter' sum='" + starterCount + "'>";
 
-            for (Map.Entry<Integer, String> entry: user.getEntreeCategories().entrySet()) {
-                query += "<category id_c='" + entry.getValue() + "' proba='" + 1f/starterCount + "'/>";
+            for (Map.Entry<String, Float> entry: user.getEntreeCategories().entrySet()) {
+                query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/starterCount + "'/>";
             }
 
-            query += "</type><type value='mainCourse' sum='" + mainCount + "'>";
+            query += "</type><type value='main_Courses' sum='" + mainCount + "'>";
 
-            for (Map.Entry<Integer, String> entry : user.getPlatCategories().entrySet()) {
-                query += "<category id_c='" + entry.getValue() + "' proba='" + 1f/mainCount + "'/>";
+            for (Map.Entry<String, Float> entry : user.getPlatCategories().entrySet()) {
+                query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/mainCount + "'/>";
             }
 
             query += "</type><type value='dessert' sum='" + dessertCount + "'>";
 
-            for (Map.Entry<Integer, String> entry : user.getDessertCategories().entrySet()) {
-                query += "<category id_c='" + entry.getValue() + "' proba='" + 1f/dessertCount + "'/>";
+            for (Map.Entry<String, Float> entry : user.getDessertCategories().entrySet()) {
+                query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/dessertCount + "'/>";
             }
 
             query += "</type></categories><friends>";
@@ -81,6 +83,32 @@ public class QueryUser {
         }
     }
 
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("/users/user/@id_u/string()");
+            ResourceIterator i = result.getIterator();
+
+            while(i.hasMoreResources()) {
+                Resource r = i.nextResource();
+
+                // Create User and add him
+                User user = new SimpleUser();
+                user.setIdUser(Integer.parseInt(r.getContent().toString()));
+
+                users.add(user);
+                System.out.println(user.getIdUser());
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR] [Query getUsers] "+e);
+            e.printStackTrace();
+        }
+        return users;
+    }
     public void printAllUser() {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");

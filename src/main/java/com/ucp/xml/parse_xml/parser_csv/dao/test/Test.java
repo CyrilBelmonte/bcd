@@ -36,7 +36,8 @@ public class Test {
 
         System.out.println("PRINT");
         queryCategory.printAllCat();
-        //Map<Integer, String> test = queryCategory.findCategoriesByType("dessert");
-        //System.out.println(test.toString());
+        System.out.println(categoriesList.get(0).getIdOfCat());
+        Map<String, Float> test = queryCategory.findCategoriesByType("dessert");
+        System.out.println(test.toString());
     }
 }

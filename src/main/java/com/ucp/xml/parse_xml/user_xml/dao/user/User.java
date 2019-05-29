@@ -4,9 +4,10 @@ import java.util.HashMap;
 
 public interface User {
     Integer getIdUser();
-    HashMap<Integer, String> getEntreeCategories();
-    HashMap<Integer, String> getPlatCategories();
-    HashMap<Integer, String> getDessertCategories();
+    void setIdUser(int idUser);
+    HashMap<String, Float> getEntreeCategories();
+    HashMap<String, Float> getPlatCategories();
+    HashMap<String, Float> getDessertCategories();
     HashMap<Integer, String> getFriends();
     HashMap<Integer, String> getBookmarks();
 }

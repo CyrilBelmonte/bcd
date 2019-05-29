@@ -5,9 +5,9 @@ import java.util.List;
 
 public class SimpleUser implements User {
     private Integer idUser;
-    private HashMap<Integer, String> entreeCategories;
-    private HashMap<Integer, String> platCategories;
-    private HashMap<Integer, String> dessertCategories;
+    private HashMap<String, Float> entreeCategories;
+    private HashMap<String, Float> platCategories;
+    private HashMap<String, Float> dessertCategories;
     private HashMap<Integer, String> friends;
     private HashMap<Integer, String> bookmarks;
 
@@ -16,22 +16,23 @@ public class SimpleUser implements User {
         return idUser;
     }
 
+    @Override
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
     @Override
-    public HashMap<Integer, String> getEntreeCategories() {
+    public HashMap<String, Float> getEntreeCategories() {
         return entreeCategories;
     }
 
     @Override
-    public HashMap<Integer, String> getPlatCategories() {
+    public HashMap<String, Float> getPlatCategories() {
         return platCategories;
     }
 
     @Override
-    public HashMap<Integer, String> getDessertCategories() {
+    public HashMap<String, Float> getDessertCategories() {
         return dessertCategories;
     }
 
@@ -45,15 +46,15 @@ public class SimpleUser implements User {
         return bookmarks;
     }
 
-    public void setEntreeCategories(HashMap<Integer, String> entreeCategories) {
+    public void setEntreeCategories(HashMap<String, Float> entreeCategories) {
         this.entreeCategories = entreeCategories;
     }
 
-    public void setPlatCategories(HashMap<Integer, String> platCategories) {
+    public void setPlatCategories(HashMap<String, Float> platCategories) {
         this.platCategories = platCategories;
     }
 
-    public void setDessertCategories(HashMap<Integer, String> dessertCategories) {
+    public void setDessertCategories(HashMap<String, Float> dessertCategories) {
         this.dessertCategories = dessertCategories;
     }
 
