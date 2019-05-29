@@ -22,7 +22,7 @@ public class testia {
          LinkedList<String> ingredientsdessert = new LinkedList<>();
          ingredientsdessert = AIEntries.getAllDessertsIngredients();
          LinkedList<String> ingredientsstarter = new LinkedList<>();
-         ingredientsstarter = AIEntries.getPartsOfStartersName();
+         ingredientsstarter = AIEntries.getAllStartersIngredients();
          LinkedList<String> mainCoursesName = AIEntries.getPartsOfMainCoursesName();
          LinkedList<String> dessertName = AIEntries.getPartsOfDessertsName();
          LinkedList<String> starterName = AIEntries.getPartsOfStartersName();
