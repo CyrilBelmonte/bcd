@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class testia {
-     public static void main(String[] args) {
+     public static void main(String[] args) throws Exception {
 
          LinkedList<Recipe> recipesmain = DAOFactory.getRecipeDAO().findAllMainCourses();
          LinkedList<Recipe> recipesdessert = DAOFactory.getRecipeDAO().findAllDesserts();
@@ -43,21 +43,26 @@ public class testia {
          {
              System.out.println(ingredient);
          }*/
-           // Kohonen kohonen = new Kohonen(ingredientsstarter,recipestarter,starterName);
-             //       kohonen.Clustering();
-
+         Kohonen kohonen = new Kohonen(ingredientsstarter,recipestarter,starterName);
+         KohonenThread kt = new KohonenThread(kohonen,"starter");
          Kohonen kohonen2 = new Kohonen(ingredientsmain,recipesmain,mainCoursesName);
-         kohonen2.Clustering();
-         //Kohonen kohonen3 = new Kohonen(ingredientsdessert,recipesdessert,dessertName);
-         //kohonen3.Clustering()
-         ;
+         KohonenThread kt2 = new KohonenThread(kohonen2,"mainCourses");
+         Kohonen kohonen3 = new Kohonen(ingredientsdessert,recipesdessert,dessertName);
+         KohonenThread kt3 = new KohonenThread(kohonen3,"dessert");
+
+         kt.start();
+         kt2.start();
+         kt3.start();
+
+         kt.join();
+         kt2.join();
+         kt3.join();
 
          String data="CatID;DIStID;RecetteID;RecetteDist \n";
          try {
              BufferedWriter writer3 = new BufferedWriter(new FileWriter("./src/main/resources/SortiIA.csv"));
 
              int indexcat=0;
-             /*
              for(Categorie cat : kohonen.getCluster()) {
                  data=data+indexcat+";starter;";
                  for (int indexdisp = 0; indexdisp < kohonen2.getCluster().size(); indexdisp++) {
@@ -71,7 +76,6 @@ public class testia {
                  data = data + "\n";
                  indexcat++;
              }
-            */
              for(Categorie cat : kohonen2.getCluster()) {
                  data=data+indexcat+";main_Courses;";
                  for (int indexdisp = 0; indexdisp < kohonen2.getCluster().size(); indexdisp++) {
@@ -86,9 +90,9 @@ public class testia {
                  data = data + "\n";
                  indexcat++;
              }
-             /*
+
              for(Categorie cat : kohonen3.getCluster()) {
-                 data=data+indexcat+";dessert;";
+                 data = data + indexcat + ";dessert;";
                  for (int indexdisp = 0; indexdisp < kohonen2.getCluster().size(); indexdisp++) {
                      data = data + cat.getDistanceCat(indexdisp) + ";";
                  }
@@ -100,7 +104,7 @@ public class testia {
                  data = data + "\n";
                  indexcat++;
              }
-             */
+
 
              writer3.write(data);
              writer3.close();

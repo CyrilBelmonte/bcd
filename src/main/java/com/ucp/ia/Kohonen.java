@@ -30,9 +30,9 @@ public class Kohonen {
         private static double epsilon = 0.5;
         private static double ALPHA = 0.125;
         private static double BETA = 0.125;
-        private static int NEURONSIZE = 50;
+        private static int NEURONSIZE = 200;
         private static int LEARNINGSIZE =100;
-        private int[] Entrychoosen;
+        private LinkedList<Integer> Entrychoosen;
 
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes, LinkedList<String> TitleList) {
             this.recipes = recipes;
@@ -40,10 +40,23 @@ public class Kohonen {
             kohonen = new LinkedList<>();
         Entry = new LinkedList<>();
         this.TitleList=TitleList;
-        Entrychoosen=new int[recipes.size()];
         TextAnalysis analysis=new TextAnalysis(ingredients,recipes,TitleList);
         Entry=analysis.Analyse(recipes);
+        Entrychoosen= new LinkedList<>();
         InitWeight(ingredients);
+    }
+
+    private int pickEntry() {
+        if (Entrychoosen.size() == 0) {
+            for (int i = 0; i < Entry.size(); i++) {
+                Entrychoosen.addLast(i);
+            }
+        }
+
+        int pickedIndex = (int) (Math.random() * Entrychoosen.size());
+        Entrychoosen.remove(pickedIndex);
+
+        return pickedIndex;
     }
 
 
@@ -52,7 +65,6 @@ public class Kohonen {
      * initialisation of Weight
      * @version 1.0.0.0 : initialisation random
      */
-
     public void InitWeight(LinkedList<String> ingredients){
 
 
@@ -61,7 +73,7 @@ public class Kohonen {
             Categorie categorie=new Categorie(NEURONSIZE,index);
             for(String ing :ingredients) {
                 double val = random();
-                neuron.getWeight().add(0.0);
+                neuron.getWeight().add(val);
             }
 
             for(String Title : TitleList){
@@ -80,11 +92,11 @@ public class Kohonen {
 
     double nu(int value) {
 
-        if(abs(value) <= dvp){
-            return 1-(ALPHA*abs(value)) ;
+        if(value <= dvp){
+            return 1-(ALPHA*value) ;
         }
-        else if(abs(value) > dvp && abs(value) <= dvn){
-            return -BETA*(abs(value)-dvp);
+        else if(value > dvp && value <= dvn){
+            return -BETA*(value-dvp);
         }
         else if(value == 0) {
             return 1;
@@ -136,7 +148,9 @@ Double voisinage(int index){
             double distancetitle=0;
             double distance=0;
             for (int index = 0; index < en.getData().size(); index++) {
-                double dist=en.getData().get(index).getWeight()-neuron.getWeight().get(index);
+                double w1 = en.getData().get(index).getWeight();
+                double w2 =neuron.getWeight().get(index);
+                double dist=w1-w2;
                 distance= distance + pow(dist,2);
             }
             /*V1.0.0.1 add title weight*/
@@ -144,10 +158,11 @@ Double voisinage(int index){
             for (int index2 = 0; index2 < en.getDatatitle().size(); index2++) {
                 double w1 = en.getDatatitle().get(index2).getWeight() ;
                 double w2 = neuron.getWeighttitle().get(index2);
-                distancetitle+= pow((w1-w2),2);
+                double dist=w1-w2;
+                distancetitle+= pow((dist),2);
             }
 
-            //distancetitle = sqrt(distancetitle);
+
             distance=(distance+distancetitle);
             distance = sqrt(distance);
             neuron.setPotential(distance);
@@ -165,8 +180,9 @@ Double voisinage(int index){
         Double entryweight=0.0;
         Double neuronweight=0.0;
         for(int index =0;index < kohonen.size() ; index++){
-            double voisin = nu(winner - index);//voisinage(index);
-            for(int index2=0;index2 < kohonen.get(index).getWeight().size() ; index2++){
+            double voisin = nu(abs(winner - index));//voisinage(index);
+            int size = kohonen.get(index).getWeight().size();
+            for(int index2=0;index2 < size ; index2++){
                 entryweight = Entry.get(entry).getData().get(index2).getWeight();
                 neuronweight = kohonen.get(index).getWeight().get(index2);
                 if(index == winner){
@@ -184,8 +200,8 @@ Double voisinage(int index){
 
 
             }
-
-            for(int index2=0;index2 < kohonen.get(index).getWeighttitle().size() ; index2++){
+            int sizetitle = kohonen.get(index).getWeighttitle().size();
+            for(int index2=0;index2 < sizetitle ; index2++){
                  entryweight = Entry.get(entry).getDatatitle().get(index2).getWeight();
                  neuronweight = kohonen.get(index).getWeighttitle().get(index2);
 
@@ -230,20 +246,13 @@ Double voisinage(int index){
         long debut = System.currentTimeMillis();
         for(int indextest=0; indextest < LEARNINGSIZE ; indextest++) {
             if(indextest==1) System.out.println("DUREE MIN:"+(System.currentTimeMillis()-debut)*LEARNINGSIZE/60000);
-            int Nblearn=0;
-            while( Nblearn < Entry.size()) {
-                int index = (int) (random()*(Entrychoosen.length));
-                if(Entrychoosen[index] == 0) {
-                    Entrychoosen[index]=1;
-                    Nblearn++;
+            int index = pickEntry();
                     Action(Entry.get(index));
                     winner = WinnerDetermined();
                         Learning(winner, index);
 
-                }
-            }
-            for (int index2=0; index2 < Entrychoosen.length ; index2++)
-                Entrychoosen[index2]=0;
+
+
             System.out.println("APPRENTISSAGE NB "+(indextest+1));
         }
 
