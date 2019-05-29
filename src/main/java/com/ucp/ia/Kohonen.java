@@ -31,7 +31,7 @@ public class Kohonen {
         private static double ALPHA = 0.125;
         private static double BETA = 0.125;
         private static int NEURONSIZE = 100;
-        private static int LEARNINGSIZE =2000;
+        private static int LEARNINGSIZE =4000;
         private LinkedList<Integer> Entrychoosen;
 
     public Kohonen(LinkedList<String> ingredients, LinkedList<Recipe> recipes, LinkedList<String> TitleList) {
@@ -53,7 +53,7 @@ public class Kohonen {
             }
         }
 
-        int pickedIndex = (int) (Math.random() * Entrychoosen.size());
+        int pickedIndex = (int) (Math.random() * (Entrychoosen.size()-1));
         Entrychoosen.remove(pickedIndex);
 
         return pickedIndex;
