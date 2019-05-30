@@ -125,7 +125,7 @@ public class RecipePage extends Page<RecipeForm> {
 
         LinkedList<Recipe> suggestedRecipes = DAOFactory.getRecipeDAO().findAll(recipesID);
 
-        if (recipesID.size() == 0) {
+        if (suggestedRecipes.size() == 0) {
             form.addGlobalError("Aucune suggestion.");
 
             return false;

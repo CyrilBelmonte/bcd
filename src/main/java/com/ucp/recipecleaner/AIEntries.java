@@ -45,7 +45,7 @@ public class AIEntries {
         }
 
         for (Map.Entry<String, Integer> namesSet : namePartsIndex.entrySet()) {
-            if (namesSet.getValue() > 1) {
+            if (namesSet.getValue() > 3) {
                 results.add(namesSet.getKey());
             }
         }
@@ -55,8 +55,8 @@ public class AIEntries {
 
     private static LinkedList<String> deleteUnwantedWordsFromList(LinkedList<String> words) {
         LinkedList<String> excludedWords = new LinkedList<>(Arrays.asList(
-            "sel", "poivre", "sucre", "sucre en poudre", "beurre", "farine", "eau", "lait",
-            "huile", "huile d'olive"
+            "sel", "poivre", "sucre", "sucre poudre", "beurre", "farine", "eau", "lait",
+            "huile", "huile olive", "", " "
         ));
 
         for (String excludedWord : excludedWords) {
@@ -85,19 +85,19 @@ public class AIEntries {
     }
 
     public static LinkedList<String> getAllStartersIngredients() {
-        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllStartersIngredients(3);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllStartersIngredients(10);
 
         return deleteUnwantedWordsFromList(ingredients);
     }
 
     public static LinkedList<String> getAllMainCoursesIngredients() {
-        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(3);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllMainCoursesIngredients(10);
 
         return deleteUnwantedWordsFromList(ingredients);
     }
 
     public static LinkedList<String> getAllDessertsIngredients() {
-        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllDessertsIngredients(3);
+        LinkedList<String> ingredients = DAOFactory.getIngredientDAO().getAllDessertsIngredients(10);
 
         return deleteUnwantedWordsFromList(ingredients);
     }
