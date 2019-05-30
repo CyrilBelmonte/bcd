@@ -217,6 +217,13 @@ a.card:hover {
   margin-right: .25rem;
 }
 
+/* Alerts */
+.alert-warning {
+  color: #fa405b;
+  background-color: #fff;
+  border: 1px dotted #fa405b;
+}
+
 
 /* -------------------------------------------------------
  * Special styles

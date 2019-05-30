@@ -26,9 +26,9 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.3.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -169,6 +169,12 @@
             <groupId>org.exist-db</groupId>
             <artifactId>exist-expath</artifactId>
             <version>${exist.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <repositories>

@@ -45,9 +45,9 @@ public class AssistantPage extends Page<AssistantForm> {
         LinkedList<Recipe> suggestedDesserts = DAOFactory.getRecipeDAO().findAllDesserts();
         // ----------------------------------------------------
 
-        if (suggestedStarters.size() < days.size() * 2 ||
-            suggestedMainCourses.size() < days.size() * 2 ||
-            suggestedDesserts.size() < days.size() * 2) {
+        if (suggestedStarters.size() < maxDays * 2 ||
+            suggestedMainCourses.size() < maxDays * 2 ||
+            suggestedDesserts.size() < maxDays * 2) {
 
             form.addGlobalError("Le nombre de recettes pertinentes est trop faible pour construire le menu.");
 

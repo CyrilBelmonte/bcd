@@ -52,7 +52,7 @@ public class Kohonen {
             }
         }
 
-        int pickedIndex = (int) (Math.random() * unpickedEntries.size());
+        int pickedIndex = (int) (Math.random() * (unpickedEntries.size() - 1));
         unpickedEntries.remove(pickedIndex);
 
         return entries.get(pickedIndex);
