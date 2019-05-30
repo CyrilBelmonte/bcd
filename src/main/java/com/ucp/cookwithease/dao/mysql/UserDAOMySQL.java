@@ -4,10 +4,12 @@ import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.dao.general.UserDAO;
 import com.ucp.cookwithease.model.Comment;
 import com.ucp.cookwithease.model.User;
+import com.ucp.xml.exist.query.QuerySimpleUser;
 
 import java.sql.*;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class UserDAOMySQL extends UserDAO {
@@ -23,6 +25,53 @@ public class UserDAOMySQL extends UserDAO {
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            while ((user = getUserFromRSet(result)) != null) {
+                users.addLast(user);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Query exception : " + e.getMessage());
+        }
+
+        return users;
+    }
+
+    @Override
+    public LinkedList<User> findAll(LinkedList<Integer> usersID) {
+        String query = "SELECT * FROM user WHERE id IN (???) ORDER BY FIELD (id, ???)";
+
+        User user;
+        LinkedList<User> users = new LinkedList<>();
+
+        int usersLength = usersID.size();
+
+        if (usersLength == 0) {
+            return users;
+        }
+
+        StringBuffer stringBuffer = new StringBuffer();
+        String separator = "";
+
+        for (int id : usersID) {
+            stringBuffer.append(separator);
+            stringBuffer.append("?");
+            separator = ", ";
+        }
+
+        query = query.replace("???", stringBuffer);
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            for (int i = 0; i < usersLength; i++) {
+                statement.setInt(i + 1, usersID.get(i));
+                statement.setInt(usersLength + i + 1, usersID.get(i));
+            }
+
             ResultSet result = statement.executeQuery();
 
             while ((user = getUserFromRSet(result)) != null) {
@@ -225,6 +274,10 @@ public class UserDAOMySQL extends UserDAO {
                 Date inscriptionDate = new Date(resultSet.getDate("inscriptionDate").getTime());
                 LinkedList<Comment> comments = DAOFactory.getCommentDAO().findAllFromUser(id);
 
+                QuerySimpleUser query = new QuerySimpleUser();
+                List<Integer> friends = query.friendsList(id);
+                List<Integer> bookmarks = query.bookmarksList(id);
+
                 user = new User();
 
                 user.setId(id);
@@ -234,6 +287,8 @@ public class UserDAOMySQL extends UserDAO {
                 user.setEmail(email);
                 user.setInscriptionDate(inscriptionDate);
                 user.setComments(comments);
+                user.setFriends(new LinkedList<Integer>(friends));
+                user.setBookmarks(new LinkedList<Integer>(bookmarks));
             }
 
         } catch (SQLException e) {

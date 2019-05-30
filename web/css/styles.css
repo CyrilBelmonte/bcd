@@ -219,6 +219,7 @@ a.card:hover {
 
 /* Alerts */
 .alert-warning {
+  font-size: .9rem;
   color: #fa405b;
   background-color: #fff;
   border: 1px dotted #fa405b;

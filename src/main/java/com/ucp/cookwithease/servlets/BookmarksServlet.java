@@ -1,5 +1,7 @@
 package com.ucp.cookwithease.servlets;
 
+import com.ucp.cookwithease.engine.BookmarksPage;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,13 @@ public class BookmarksServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        BookmarksPage page = new BookmarksPage(request);
+        boolean hasSucceeded = page.loadBookmarks();
+
+        if (!hasSucceeded) {
+            request.setAttribute("error", page.getFormErrors().getFirst());
+        }
+
         this.getServletContext().getRequestDispatcher(
             References.INTERNAL_VIEW_BOOKMARKS).forward(request, response);
     }
@@ -20,6 +29,9 @@ public class BookmarksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        super.doPost(request, response);
+        BookmarksPage page = new BookmarksPage(request);
+        page.deleteBookmark();
+
+        response.sendRedirect(request.getContextPath() + References.VIEW_BOOKMARKS);
     }
 }

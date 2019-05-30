@@ -21,7 +21,7 @@ public class SearchPage extends Page<SearchForm> {
         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
 
         if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher.");
+            form.addGlobalError("Aucune recette à afficher");
 
             return false;
 
@@ -47,7 +47,7 @@ public class SearchPage extends Page<SearchForm> {
         }
 
         if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette ne correspond à vos critères de recherche.");
+            form.addGlobalError("Aucune recette ne correspond à vos critères de recherche");
 
             return false;
 
