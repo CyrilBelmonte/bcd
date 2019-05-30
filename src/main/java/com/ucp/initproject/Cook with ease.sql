@@ -12,12 +12,17 @@
  * Master 1 IISC 2018-2019
  * University of Cergy-Pontoise
  */
+
+START TRANSACTION;
+
 DROP DATABASE IF EXISTS CookWithEase;
 CREATE DATABASE CookWithEase;
 USE CookWithEase;
 
-
+--
 -- User table
+--
+
 CREATE TABLE User (
   id                INTEGER NOT NULL AUTO_INCREMENT,
   firstName         VARCHAR(50),
@@ -30,8 +35,12 @@ CREATE TABLE User (
   PRIMARY KEY (id)
 );
 
+-- --------------------------------------------------------
 
--- Recipe tables
+--
+-- Recipe table
+--
+
 CREATE TABLE Recipe (
   id                INTEGER NOT NULL AUTO_INCREMENT,
   name              VARCHAR(100),
@@ -46,6 +55,12 @@ CREATE TABLE Recipe (
   PRIMARY KEY (id)
 );
 
+-- --------------------------------------------------------
+
+--
+-- Step table
+--
+
 CREATE TABLE Step (
   id                INTEGER NOT NULL AUTO_INCREMENT,
   position          INTEGER,
@@ -55,6 +70,12 @@ CREATE TABLE Step (
   PRIMARY KEY (id),
   FOREIGN KEY (recipeID) REFERENCES Recipe (id)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Ingredient table
+--
 
 CREATE TABLE Ingredient (
   id                INTEGER NOT NULL AUTO_INCREMENT,
@@ -67,6 +88,12 @@ CREATE TABLE Ingredient (
   PRIMARY KEY (id),
   FOREIGN KEY (recipeID) REFERENCES Recipe (id)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Comment table
+--
 
 CREATE TABLE Comment (
   userID            INTEGER NOT NULL,
@@ -81,24 +108,38 @@ CREATE TABLE Comment (
   FOREIGN KEY (recipeID) REFERENCES Recipe (id)
 );
 
+-- --------------------------------------------------------
 
--- Other tables
-/*
-CREATE TABLE Bookmark (
-  userID            INTEGER NOT NULL,
-  recipeID          INTEGER NOT NULL,
+--
+-- Bookmark table
+--
 
-  PRIMARY KEY (userID, recipeID),
-  FOREIGN KEY (userID) REFERENCES User (id),
-  FOREIGN KEY (recipeID) REFERENCES Recipe (id)
-);
+--
+-- CREATE TABLE Bookmark (
+--   userID            INTEGER NOT NULL,
+--   recipeID          INTEGER NOT NULL,
+--
+--   PRIMARY KEY (userID, recipeID),
+--   FOREIGN KEY (userID) REFERENCES User (id),
+--   FOREIGN KEY (recipeID) REFERENCES Recipe (id)
+-- );
+--
 
-CREATE TABLE Friend (
-  userID            INTEGER NOT NULL,
-  friendID          INTEGER NOT NULL,
+-- --------------------------------------------------------
 
-  PRIMARY KEY (userID, friendID),
-  FOREIGN KEY (userID) REFERENCES User (id),
-  FOREIGN KEY (friendID) REFERENCES User (id)
-);
-*/
+--
+-- Friend table
+--
+
+--
+-- CREATE TABLE Friend (
+--   userID            INTEGER NOT NULL,
+--   friendID          INTEGER NOT NULL,
+--
+--   PRIMARY KEY (userID, friendID),
+--   FOREIGN KEY (userID) REFERENCES User (id),
+--   FOREIGN KEY (friendID) REFERENCES User (id)
+-- );
+--
+
+COMMIT;
