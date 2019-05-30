@@ -1,8 +1,6 @@
 package com.ucp.cookwithease.servlets;
 
 import com.ucp.cookwithease.engine.RegisterPage;
-import com.ucp.cookwithease.forms.FieldError;
-import com.ucp.cookwithease.forms.RegisterForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.LinkedList;
 
 
 public class RegisterServlet extends HttpServlet {

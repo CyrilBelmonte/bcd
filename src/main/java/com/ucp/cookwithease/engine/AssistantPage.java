@@ -49,7 +49,7 @@ public class AssistantPage extends Page<AssistantForm> {
             suggestedMainCourses.size() < maxDays * 2 ||
             suggestedDesserts.size() < maxDays * 2) {
 
-            form.addGlobalError("Le nombre de recettes pertinentes est trop faible pour construire le menu.");
+            form.addGlobalError("Le nombre de recettes pertinentes est trop faible pour construire le menu");
 
             return false;
         }

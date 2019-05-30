@@ -33,9 +33,16 @@
             <p><span class="icon" data-feather="user-plus"></span><c:out value="${profile.friendsCount}" /> amis</p>
             <p><span class="icon" data-feather="radio"></span><c:out value="${profile.bookmarksCount}" /> abonnements</p>
         </div>
-        <form action="<c:url value="/profile"/>" method="post">
-            <button class="btn btn-follow" type="submit" name="follow" value="<c:out value="${param.id}" />"><span class="icon" data-feather="plus"></span>Suivre</button>
-        </form>
+        <c:choose>
+            <c:when test="${not isFriend}">
+                <form action="<c:url value="/profile"/>" method="post">
+                    <button class="btn btn-follow" type="submit" name="follow" value="<c:out value="${param.id}" />"><span class="icon" data-feather="plus"></span>Suivre</button>
+                </form>
+            </c:when>
+            <c:otherwise>
+                <button class="btn btn-follow" type="button" disabled><span class="icon" data-feather="check"></span>Vous êtes amis</button>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 

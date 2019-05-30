@@ -21,7 +21,7 @@ public class DiscoverPage extends Page<DiscoverForm> {
         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
 
         if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher.");
+            form.addGlobalError("Aucune recette à afficher");
 
             return false;
 
@@ -36,7 +36,7 @@ public class DiscoverPage extends Page<DiscoverForm> {
         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
 
         if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher.");
+            form.addGlobalError("Aucune recette à afficher");
 
             return false;
 
@@ -51,7 +51,7 @@ public class DiscoverPage extends Page<DiscoverForm> {
         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
 
         if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher.");
+            form.addGlobalError("Aucune recette à afficher");
 
             return false;
 

@@ -1,11 +1,6 @@
 package com.ucp.cookwithease.servlets;
 
 import com.ucp.cookwithease.engine.ProfilePage;
-import com.ucp.cookwithease.engine.RecipePage;
-import com.ucp.cookwithease.forms.ProfileForm;
-import com.ucp.cookwithease.forms.RecipeForm;
-import com.ucp.cookwithease.model.Recipe;
-import com.ucp.cookwithease.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +33,6 @@ public class ProfileServlet extends HttpServlet {
         ProfilePage page = new ProfilePage(request);
         page.follow();
 
-        response.sendRedirect(request.getContextPath() + References.VIEW_FRIENDS);
+        response.sendRedirect(request.getContextPath() + References.VIEW_PROFILE + "?id=" + page.getProfileID());
     }
 }

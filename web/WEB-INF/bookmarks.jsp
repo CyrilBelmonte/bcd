@@ -27,11 +27,17 @@
         <form action="<c:url value="/bookmarks"/>" method="post">
             <h2>Favoris</h2>
 
-            <div class="card card-body card-hover bookmark">
-                <p class="bookmark-name"><span class="icon" data-feather="bookmark"></span>Verrine de mousse au chèvre</p>
-                <a class="btn btn-display" href="<c:url value="/recipe"><c:param name="id" value="100" /></c:url>"><span class="icon" data-feather="book-open"></span>Afficher</a>
-                <button class="btn btn-delete" type="submit" name="delete" value="1"><span class="icon" data-feather="trash-2"></span>Retirer</button>
-            </div>
+            <c:if test="${not empty error}">
+                <p><c:out value="${error.description}" /></p>
+            </c:if>
+
+            <c:forEach items="${bookmarks}" var="bookmark">
+                <div class="card card-body card-hover bookmark">
+                    <p class="bookmark-name"><span class="icon" data-feather="bookmark"></span><c:out value="${bookmark.name}" /></p>
+                    <a class="btn btn-display" href="<c:url value="/recipe"><c:param name="id" value="${bookmark.id}" /></c:url>"><span class="icon" data-feather="book-open"></span>Afficher</a>
+                    <button class="btn btn-delete" type="submit" name="delete" value="<c:out value="${bookmark.id}" />"><span class="icon" data-feather="trash-2"></span>Retirer</button>
+                </div>
+            </c:forEach>
 
         </form>
     </div>

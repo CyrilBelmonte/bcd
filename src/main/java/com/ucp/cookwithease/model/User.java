@@ -24,8 +24,8 @@ public class User {
     private String email;
     private Date inscriptionDate;
 
-    private LinkedList<Recipe> bookmarks = new LinkedList<>();
-    private LinkedList<User> friends = new LinkedList<>();
+    private LinkedList<Integer> bookmarks = new LinkedList<>();
+    private LinkedList<Integer> friends = new LinkedList<>();
     private LinkedList<Comment> comments = new LinkedList<>();
 
     public void setId(int id) {
@@ -36,18 +36,57 @@ public class User {
         }
     }
 
-    public void addBookmark(Recipe recipe) {
-        bookmarks.addFirst(recipe);
+    public boolean hasBookmark(int recipeID) {
+        return bookmarks.contains(recipeID);
     }
 
-    public void addFriend(User friend) {
-        friends.addFirst(friend);
+    public boolean hasFriend(int friendID) {
+        return friends.contains(friendID);
+    }
+
+    public boolean hasComment(int recipeID) {
+        for (Comment comment : comments) {
+            if (comment.getRecipeID() == recipeID) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void addBookmark(int recipeID) {
+        bookmarks.addFirst(recipeID);
+    }
+
+    public void addFriend(int friendID) {
+        friends.addFirst(friendID);
     }
 
     public void addComment(Comment comment) {
         comment.setUserID(id);
         comment.setPseudo(pseudo);
         comments.addFirst(comment);
+    }
+
+    public void deleteBookmark(int recipeID) {
+        bookmarks.remove((Integer) recipeID);
+    }
+
+    public void deleteFriend(int friendID) {
+        friends.remove((Integer) friendID);
+    }
+
+    public void deleteComment(int recipeID) {
+        Comment comment;
+
+        for (int i = 0; i < comments.size(); i++) {
+            comment = comments.get(i);
+
+            if (comment.getRecipeID() == recipeID) {
+                comments.remove(i);
+                break;
+            }
+        }
     }
 
     public int getBookmarksCount() {

@@ -15,6 +15,7 @@ public abstract class UserDAO {
 
     // Select
     public abstract LinkedList<User> findAll();
+    public abstract LinkedList<User> findAll(LinkedList<Integer> usersID);
 
     public abstract User find(int id);
     public abstract User find(String pseudo);

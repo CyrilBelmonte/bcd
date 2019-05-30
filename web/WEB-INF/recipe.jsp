@@ -90,12 +90,19 @@
                     <p><c:out value="${step.description}" /></p>
                 </c:forEach>
 
-                <form action="<c:url value="/recipe"/>" method="post">
-                    <button class="btn btn-bookmark" type="submit" name="add-bookmark">
-                        <span class="icon" data-feather="bookmark"></span>
-                        Épingler cette recette
-                    </button>
-                </form>
+                <c:choose>
+                    <c:when test="${not isBookmarked}">
+                        <form action="<c:url value="/recipe"/>" method="post">
+                            <button class="btn btn-bookmark" type="submit" name="add-bookmark" value="<c:out value="${param.id}" />">
+                                <span class="icon" data-feather="bookmark"></span>
+                                Épingler cette recette
+                            </button>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn btn-bookmark" type="button" disabled><span class="icon" data-feather="check"></span>Cette recette est dans vos favoris</button>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>

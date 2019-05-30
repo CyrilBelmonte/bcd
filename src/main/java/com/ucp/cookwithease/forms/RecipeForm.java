@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RecipeForm extends Form {
     private static final String ID_PARAMETER = "id";
     private static final String ID_COMMENT_PARAMETER = "add-comment";
+    private static final String ID_BOOKMARK_PARAMETER = "add-bookmark";
     private static final String COMMENT_FIELD = "comment";
     private static final String RATING_FIELD = "rating";
     private static final int ID_MAX_VALUE = 1000000000;
@@ -36,8 +37,10 @@ public class RecipeForm extends Form {
         return rating;
     }
 
-    public int getRecipeIDFromComment() {
-        int id = getIntValueFrom(getRequest(), ID_COMMENT_PARAMETER, ID_MAX_VALUE);
+    public int getRecipeIDFromButtons() {
+        int idBookmark = getIntValueFrom(getRequest(), ID_COMMENT_PARAMETER, ID_MAX_VALUE);
+        int idComment = getIntValueFrom(getRequest(), ID_BOOKMARK_PARAMETER, ID_MAX_VALUE);
+        int id = Math.max(idBookmark, idComment);
 
         if (id == 0) {
             this.addError(ID_PARAMETER, "L'identifiant de la recette est incorrect.");
