@@ -10,4 +10,7 @@ public interface User {
     HashMap<String, Float> getDessertCategories();
     HashMap<Integer, String> getFriends();
     HashMap<Integer, String> getBookmarks();
+    void setEntreeCategories(HashMap<String, Float> categories);
+    void setPlatCategories(HashMap<String, Float> categories);
+    void setDessertCategories(HashMap<String, Float> categories);
 }

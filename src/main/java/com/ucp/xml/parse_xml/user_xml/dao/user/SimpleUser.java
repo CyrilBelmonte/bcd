@@ -46,14 +46,16 @@ public class SimpleUser implements User {
         return bookmarks;
     }
 
+    @Override
     public void setEntreeCategories(HashMap<String, Float> entreeCategories) {
         this.entreeCategories = entreeCategories;
     }
 
+    @Override
     public void setPlatCategories(HashMap<String, Float> platCategories) {
         this.platCategories = platCategories;
     }
-
+    @Override
     public void setDessertCategories(HashMap<String, Float> dessertCategories) {
         this.dessertCategories = dessertCategories;
     }
@@ -70,11 +72,11 @@ public class SimpleUser implements User {
     public String toString() {
         return "SimpleUser{" +
                 "idUser=" + idUser +
-                ", entreeCategories=" + entreeCategories.size() +
-                ", platCategories=" + platCategories.size() +
-                ", dessertCategories=" + dessertCategories.size() +
-                ", friends=" + friends.size() +
-                ", bookmarks=" + bookmarks.size() +
+                ", entreeCategories=" + (entreeCategories.isEmpty() ? 0 : entreeCategories.size()) +
+                ", platCategories=" + (platCategories.isEmpty() ? 0 : platCategories.size()) +
+                ", dessertCategories=" + (dessertCategories.isEmpty() ? 0 : dessertCategories.size()) +
+                ", friends=" + (friends.isEmpty() ? 0 : friends.size()) +
+                ", bookmarks=" + (bookmarks.isEmpty() ? 0 : bookmarks.size()) +
                 '}';
     }
 }

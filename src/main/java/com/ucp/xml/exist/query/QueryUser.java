@@ -8,6 +8,7 @@ import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,9 +100,11 @@ public class QueryUser {
                 // Create User and add him
                 User user = new SimpleUser();
                 user.setIdUser(Integer.parseInt(r.getContent().toString()));
-
+                user.setEntreeCategories(getCategories(Integer.parseInt(r.getContent().toString()), "starter"));
+                user.setPlatCategories(getCategories(Integer.parseInt(r.getContent().toString()), "main_Courses"));
+                user.setDessertCategories(getCategories(Integer.parseInt(r.getContent().toString()), "dessert"));
                 users.add(user);
-                System.out.println(user.getIdUser());
+                System.out.println("User " + user.getIdUser());
             }
         } catch (Exception e) {
             System.err.println("[ERROR] [Query getUsers] "+e);
@@ -136,5 +139,26 @@ public class QueryUser {
             System.err.println("[ERROR][Query removeAll] ");
             e.printStackTrace();
         }
+    }
+
+    public HashMap<String, Float> getCategories(Integer idUser, String type){
+        HashMap<String, Float> categories =  new HashMap<>();
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category return  $category/@id_c/string()||';'||$category/@proba/string()");
+            ResourceIterator i = result.getIterator();
+            while(i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                String tab[] = ((String) r.getContent()).split(";");
+                categories.put(tab[0], Float.parseFloat(tab[1]));
+            }
+
+        } catch (Exception e) {
+            System.err.println("[ERROR][Query findCategoriesByType with type =" + type + "] ");
+            e.printStackTrace();
+        }
+        return categories;
     }
 }

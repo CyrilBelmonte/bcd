@@ -11,14 +11,20 @@ public class TestProfile {
     private static ProfileDao profileDao;
 
     public static void main(String[] args) {
-        Float precision = 0.05f;
+        Float precision = 1f;
         Integer idUser = 1;
-        String type = "stater";
+        String type = "starter";
 
         profileDao = new DbProfileDao();
         List<Profile> profiles = profileDao.findAllProfile(precision);
-
         QueryProfile queryProfile = new QueryProfile();
+        System.out.println("ERASE");
+        queryProfile.removeAll();
+        System.out.println("PRINT");
+        queryProfile.printAllProfile();
+        System.out.println("ADD");
+        queryProfile.addProfiles(profiles);
+
         queryProfile.getProfile(idUser);
 
         queryProfile.updateProfile();
