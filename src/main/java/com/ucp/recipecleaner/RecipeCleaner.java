@@ -205,7 +205,7 @@ public class RecipeCleaner {
     }
 
     private void initPunctuationPattern() {
-        String regex = "[-.,;:!?*\"'’«»()\\[\\]/]";
+        String regex = "[-+.,;:!?&*\"'’«»()\\[\\]/]";
 
         punctuationPattern = buildPattern(regex);
     }
