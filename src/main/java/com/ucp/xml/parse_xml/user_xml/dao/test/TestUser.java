@@ -27,6 +27,7 @@ public class TestUser {
         queryUser.addUsers(users);
 
         queryUser.addUser(user);
+        queryUser.addSimpleUser(6);
 
         for (int i=0; i<users.size(); i++) {
             System.out.println("Index: " + i +
