@@ -1,8 +1,10 @@
-package com.ucp.recipecleaner;
+package com.ucp.ai_experiments;
 
+import com.ucp.cleaners.AITools;
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
+import com.ucp.cleaners.RecipeCleaner;
 
 import java.util.*;
 
@@ -56,7 +58,7 @@ public class AIEntries {
     private static LinkedList<String> deleteUnwantedWordsFromList(LinkedList<String> words) {
         LinkedList<String> excludedWords = new LinkedList<>(Arrays.asList(
             "sel", "poivre", "sucre", "sucre poudre", "beurre", "farine", "eau", "lait",
-            "huile", "huile olive", "", " "
+            "huile", "huile olive", "creme", ""
         ));
 
         for (String excludedWord : excludedWords) {

@@ -1,4 +1,6 @@
-package com.ucp.recipecleaner;
+package com.ucp.cleaners.demo;
+
+import com.ucp.cleaners.RecipeStem;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;

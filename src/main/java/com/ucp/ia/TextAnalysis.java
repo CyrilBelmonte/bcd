@@ -2,14 +2,9 @@
 package com.ucp.ia;
 
 import com.ucp.cookwithease.model.*;
-import com.ucp.recipecleaner.AIEntries;
-import com.ucp.recipecleaner.AITools;
+import com.ucp.cleaners.AITools;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 /**

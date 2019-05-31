@@ -1,7 +1,5 @@
 package com.ucp.ai_experiments;
 
-import com.ucp.recipecleaner.AIEntries;
-
 import java.util.HashMap;
 
 

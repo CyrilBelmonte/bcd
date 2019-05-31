@@ -1,4 +1,7 @@
-package com.ucp.recipecleaner;
+package com.ucp.cleaners.demo;
+
+import com.ucp.ai_experiments.AIEntries;
+import com.ucp.cleaners.AITools;
 
 import java.util.LinkedList;
 
@@ -14,7 +17,7 @@ public class CleanerDemo {
         LinkedList<String> dessertsIngredients = AIEntries.getAllDessertsIngredients();
 
 
-        System.out.println(AITools.contains("Tarte au rôti! ", "roti"));
+        System.out.println(AITools.contains("Tarte au poulet!", "poulet"));
         System.out.println(AITools.normalizeQuantity(5, "ml"));
         System.out.println(AITools.normalizeQuantity(5, "tasses"));
         System.out.println(AITools.isUnitValid("ml"));

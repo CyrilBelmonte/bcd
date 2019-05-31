@@ -1,9 +1,8 @@
-package com.ucp.scraper_updated.engine;
+package com.ucp.cleaners;
 
 import com.ucp.cookwithease.model.DishType;
 import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Level;
-import com.ucp.recipecleaner.RecipeCleaner;
 
 import java.util.Arrays;
 import java.util.LinkedList;

@@ -1,8 +1,8 @@
 package com.ucp.ai_experiments;
 
+import com.ucp.cleaners.AITools;
 import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
-import com.ucp.recipecleaner.AITools;
 
 import java.util.HashMap;
 import java.util.LinkedList;

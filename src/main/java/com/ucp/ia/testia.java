@@ -1,10 +1,8 @@
 package com.ucp.ia;
 
 import com.ucp.cookwithease.dao.DAOFactory;
-import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Recipe;
-import com.ucp.recipecleaner.AIEntries;
-import javafx.print.Printer;
+import com.ucp.ai_experiments.AIEntries;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

@@ -1,7 +1,6 @@
 package com.ucp.ai_experiments;
 
 import com.ucp.cookwithease.model.Recipe;
-import com.ucp.recipecleaner.AIEntries;
 
 import java.util.LinkedList;
 

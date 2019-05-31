@@ -1,4 +1,4 @@
-package com.ucp.recipecleaner;
+package com.ucp.cleaners;
 
 import com.ucp.cookwithease.dao.DAOFactory;
 

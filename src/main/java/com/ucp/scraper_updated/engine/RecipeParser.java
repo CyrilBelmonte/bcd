@@ -1,5 +1,6 @@
 package com.ucp.scraper_updated.engine;
 
+import com.ucp.cleaners.RecipeFormatter;
 import com.ucp.cookwithease.model.*;
 import com.ucp.cookwithease.tools.Tools;
 
