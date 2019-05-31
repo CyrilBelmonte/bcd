@@ -84,10 +84,17 @@ public class QueryUser {
             service.setProperty("indent", "yes");
 
             String query = "<user id_u='" + idUser + "'>";
-            query += "<categories><type value='starter' sum='0'>";
+            query += "<categories><type value='starter'>";
+            query += "<category id_c='0' proba='0.5' />";
+            query += "<category id_c='1' proba='0.5' />";
 
-            query += "</type><type value='main_Courses' sum='0'>";
-            query += "</type><type value='dessert' sum='0'>";
+            query += "</type><type value='main_Courses'>";
+            query += "<category id_c='2' proba='0.5' />";
+            query += "<category id_c='3' proba='0.5' />";
+
+            query += "</type><type value='dessert'>";
+            query += "<category id_c='4' proba='0.5' />";
+            query += "<category id_c='5' proba='0.5' />";
 
             query += "</type></categories><friends>";
             query += "</friends><bookmarks>";
