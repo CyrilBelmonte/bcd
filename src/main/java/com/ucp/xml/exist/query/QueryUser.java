@@ -78,6 +78,28 @@ public class QueryUser {
         }
     }
 
+    public void addSimpleUser(Integer idUser) {
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            String query = "<user id_u='" + idUser + "'>";
+            query += "<categories><type value='starter' sum='0'>";
+
+            query += "</type><type value='main_Courses' sum='0'>";
+            query += "</type><type value='dessert' sum='0'>";
+
+            query += "</type></categories><friends>";
+            query += "</friends><bookmarks>";
+            query += "</bookmarks></user>";
+
+            service.query("update insert " + query + "into //users");
+
+        } catch (Exception e) {
+            System.err.println("[ERROR] [Query addSimpleUser] " + e);
+        }
+    }
+
     public void addUsers(List<User> users) {
         for (User user : users) {
             addUser(user);
@@ -110,6 +132,16 @@ public class QueryUser {
             e.printStackTrace();
         }
         return users;
+    }
+
+    public void setSimpleUserStaters(){
+
+    }
+    public void setSimpleUserMainCourses(){
+
+    }
+    public void setSimpleUserDesserts(){
+
     }
     public void printAllUser() {
         try {
