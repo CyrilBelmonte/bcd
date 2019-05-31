@@ -5,12 +5,12 @@ import java.util.HashMap;
 public interface User {
     Integer getIdUser();
     void setIdUser(int idUser);
-    HashMap<String, Float> getEntreeCategories();
-    HashMap<String, Float> getPlatCategories();
-    HashMap<String, Float> getDessertCategories();
+    HashMap<Integer, Float> getEntreeCategories();
+    HashMap<Integer, Float> getPlatCategories();
+    HashMap<Integer, Float> getDessertCategories();
     HashMap<Integer, String> getFriends();
     HashMap<Integer, String> getBookmarks();
-    void setEntreeCategories(HashMap<String, Float> categories);
-    void setPlatCategories(HashMap<String, Float> categories);
-    void setDessertCategories(HashMap<String, Float> categories);
+    void setEntreeCategories(HashMap<Integer, Float> categories);
+    void setPlatCategories(HashMap<Integer, Float> categories);
+    void setDessertCategories(HashMap<Integer, Float> categories);
 }

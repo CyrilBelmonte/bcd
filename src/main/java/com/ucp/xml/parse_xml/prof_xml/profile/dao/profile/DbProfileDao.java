@@ -3,17 +3,11 @@ package com.ucp.xml.parse_xml.prof_xml.profile.dao.profile;
 import com.ucp.xml.exist.query.QueryUser;
 import com.ucp.xml.parse_xml.user_xml.dao.user.User;
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.log4j.BasicConfigurator;
-import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.*;
-import org.xmldb.api.modules.XPathQueryService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.Class.forName;
 
 public class DbProfileDao implements  ProfileDao{
 
@@ -30,7 +24,8 @@ public class DbProfileDao implements  ProfileDao{
     private List<Profile> dbToProfile(Float precision) {
         int index = 0;
         QueryUser queryUser = new QueryUser();
-        List<User> users = queryUser.getAllUsers();
+        List<User> users = queryUser.getAllCompleteUsers();
+
         List<User> usersRemain;
         Iterator<User> userIterator = users.iterator(); // Pour supprimer pendant le parcours de la lite
         List<Profile> profiles = new ArrayList<>();
@@ -63,55 +58,60 @@ public class DbProfileDao implements  ProfileDao{
     }
 
     private boolean isSimilar(User userProfile, User user, Float precision) {
-        boolean similar = true;
+        int starterCount = 0;
+        int mainCourseCount = 0;
+        int dessertCount = 0;
 
-        for (Map.Entry<String, Float> entryUserProfile : userProfile.getEntreeCategories().entrySet()) {
-            String idUserProfile = entryUserProfile.getKey();
+        for (Map.Entry<Integer, Float> entryUserProfile : userProfile.getEntreeCategories().entrySet()) {
+            Integer idUserProfile = entryUserProfile.getKey();
             Float probaUserProfile = entryUserProfile.getValue();
             Float probaUser = user.getEntreeCategories().get(idUserProfile);
             // Si une seule des catégories dépasse la marge return false
-            if (probaUserProfile - probaUser > 0f) {
-                if (probaUserProfile - probaUser > precision) {
-                    similar = false;
+            if (probaUserProfile - probaUser >= 0f) {
+                if (probaUserProfile - probaUser <= precision) {
+                    starterCount++;
                 }
             }
-            else if (probaUser - probaUserProfile > 0f) {
-                if (probaUser - probaUserProfile < precision) {
-                    similar = false;
+            else if (probaUser - probaUserProfile >= 0f) {
+                if (probaUser - probaUserProfile <= precision) {
+                    starterCount++;
                 }
-            } else {
-                similar = true;
             }
         }
-        return similar;
-    }
-
-    private static ArrayList<String> eXistDbConnection(String xPathQuery) throws Exception {
-        BasicConfigurator.configure();
-        String driver = "org.exist.xmldb.DatabaseImpl";
-
-        Class cl = forName(driver);
-        Database database = (Database)cl.newInstance();
-        DatabaseManager.registerDatabase(database);
-
-        // Accès à la collection
-        Collection col = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/categories");
-
-        //Appel au service permettant d’exécuter des requêtes avec XPath
-        XPathQueryService service = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-        service.setProperty("indent", "yes");
-
-        ArrayList<String> resultQuery = new ArrayList<>();
-        ResourceSet result = service.query("//users/user");
-        ResourceIterator i = result.getIterator();
-
-        int index = 0;
-        while(i.hasMoreResources()) {
-            Resource r = i.nextResource();
-            resultQuery.add(r.getContent().toString());
-            index++;
-//            System.out.println((String)r.getContent());
+        for (Map.Entry<Integer, Float> entryUserProfile : userProfile.getPlatCategories().entrySet()) {
+            Integer idCatProfile = entryUserProfile.getKey();
+            Float probaUserProfile = entryUserProfile.getValue();
+            Float probaUser = user.getPlatCategories().get(idCatProfile);
+            // Si une seule des catégories dépasse la marge return false
+            if (probaUserProfile - probaUser >= 0f) {
+                if (probaUserProfile - probaUser <= precision) {
+                    mainCourseCount++;
+                }
+            }
+            else if (probaUser - probaUserProfile >= 0f) {
+                if (probaUser - probaUserProfile <= precision) {
+                    mainCourseCount++;
+                }
+            }
         }
-        return resultQuery;
+        for (Map.Entry<Integer, Float> entryUserProfile : userProfile.getDessertCategories().entrySet()) {
+            Integer idUserProfile = entryUserProfile.getKey();
+            Float probaUserProfile = entryUserProfile.getValue();
+            Float probaUser = user.getDessertCategories().get(idUserProfile);
+            // Si une seule des catégories dépasse la marge return false
+            if (probaUserProfile - probaUser >= 0f) {
+                if (probaUserProfile - probaUser <= precision) {
+                    dessertCount++;
+                }
+            }
+            else if (probaUser - probaUserProfile >= 0f) {
+                if (probaUser - probaUserProfile <= precision) {
+                    dessertCount++;
+                }
+            }
+        }
+        System.out.println(starterCount + " + " + mainCourseCount + " + " + dessertCount);
+
+        return (starterCount >= 1 && (mainCourseCount >= 1 || dessertCount >= 1) || (mainCourseCount >= 1 && dessertCount >= 1));
     }
 }
