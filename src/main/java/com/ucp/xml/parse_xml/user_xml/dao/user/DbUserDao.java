@@ -33,7 +33,7 @@ public class DbUserDao implements UserDao {
         return usersDao;
     }
 
-    private User dbToUser(int idUser, LinkedList<com.ucp.cookwithease.model.User> friends, LinkedList<Recipe> bookmarks) {
+    private User dbToUser(int idUser, LinkedList<Integer> friends, LinkedList<Integer> bookmarks) {
         SimpleUser user = new SimpleUser();
 
         QueryCategory queryCategory = new QueryCategory();
@@ -50,16 +50,16 @@ public class DbUserDao implements UserDao {
         // Friends of the user
         HashMap<Integer, String> friendsDao = new HashMap<Integer, String>();
         int indexFriend = 0;
-        for (com.ucp.cookwithease.model.User userModel : friends) {
-            friendsDao.put(indexFriend, String.valueOf(userModel.getId()));
+        for (Integer friendID : friends) {
+            friendsDao.put(indexFriend, String.valueOf(friendID));
             indexFriend++;
         }
         user.setFriends(friendsDao);
         // Bookmarks of the user
         HashMap<Integer, String> bookmarksDao = new HashMap<Integer, String>();
         int indexBookmarks = 0;
-        for (Recipe recipe : bookmarks) {
-            bookmarksDao.put(indexBookmarks, String.valueOf(recipe.getId()));
+        for (Integer recipeId : bookmarks) {
+            bookmarksDao.put(indexBookmarks, String.valueOf(recipeId));
             indexBookmarks++;
         }
         user.setBookmarks(bookmarksDao);
