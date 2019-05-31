@@ -227,4 +227,35 @@ public class QuerySimpleUser {
         }
         return catList;
     }
+
+    /*
+     *Function to return recipe
+     */
+    public ArrayList<Integer> getNearRecipe(int idUser, String type, int nbResult) {
+        ArrayList<Integer> recipe = new ArrayList<>();
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("(let $cats := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category " +
+                    "for $cat in $cats " +
+                    "order by $cat/@proba " +
+                    "for $recipe in //categories/category[@id_c = $cat/@id_c]/recipes/recipe " +
+                    "order by $recipe/@dist_r " +
+                    "return $recipe/@id_r/string())[position() = 0 to " + nbResult + "]");
+            ResourceIterator i = result.getIterator();
+
+
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                recipe.add(Integer.parseInt((String) r.getContent()));
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : getFirstCategory]");
+            e.printStackTrace();
+        }
+        return recipe;
+
+    }
 }
+
