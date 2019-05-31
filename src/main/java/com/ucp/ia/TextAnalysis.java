@@ -1,10 +1,12 @@
 
 package com.ucp.ia;
 
+import com.ucp.ai_experiments.Constants;
 import com.ucp.cookwithease.model.*;
 import com.ucp.cleaners.AITools;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -46,6 +48,7 @@ public class TextAnalysis {
 
                 }
             }
+            /*
             for(Ingredient ingredient : recipes.get(index).getIngredients() ){
                 double quantities = ingredient.getQuantity()/recipes.get(index).getPersons();
                 quantities=AITools.normalizeQuantity(quantities,ingredient.getUnit());
@@ -56,6 +59,7 @@ public class TextAnalysis {
                     }
                 }
             }
+            */
             Entry en = new Entry(iwlist,twlist, recipes.get(index).getName());
             entry.add(en);
         }
@@ -109,7 +113,7 @@ public class TextAnalysis {
             */
 LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     /*Initialise Weight on Title */
-
+    HashMap<String, Double> maxIngredientsQuantities = Constants.getMaxIngredientsQuantities();
     for(Entry en : entry) {
          /*Search title for Initialisation*/
         int test=0;
@@ -131,12 +135,12 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
                     boolean validunit = AITools.isUnitValid(ing.getUnit());
                     if(validunit){
                         double weight=0;
-                         weight = quantities/(MaxIngredients.get(index2).getWeight()+1);
+                         weight = quantities/(maxIngredientsQuantities.get(ing.getCleanedName())+1);
                         entry.get(index).getData().get(index2).setWeight(weight);
                     }
                     else {
                         double weight=0;
-                        weight  = quantities/(MaxIngredients.get(index2).getWeight()+1);
+                        weight  = quantities/(maxIngredientsQuantities.get(ing.getCleanedName())+1);
 
                         entry.get(index).getData().get(index2).setWeight(weight);
                     }
