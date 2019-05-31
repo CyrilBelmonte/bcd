@@ -22,7 +22,7 @@ public class TextAnalysis {
     private LinkedList<IngredientsWeight> titleweight = new LinkedList<>();
     private LinkedList<IngredientsWeight> MaxIngredients = new LinkedList<>();
     String type = "";
-     TextAnalysis(LinkedList<String> ingredients,LinkedList<Recipe> recipes,LinkedList<String> TitleList){
+    public TextAnalysis(LinkedList<String> ingredients,LinkedList<Recipe> recipes,LinkedList<String> TitleList){
          this.type=type;
          for (String ing : ingredients) {
              if(!ing.equals("poivre") && !ing.equals("sel")) {
@@ -111,7 +111,7 @@ public class TextAnalysis {
      * @param recipes : list of Recipes
      * @return all Recipes with each
             */
-LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
+public LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     /*Initialise Weight on Title */
     HashMap<String, Double> maxIngredientsQuantities = Constants.getMaxIngredientsQuantities();
     for(Entry en : entry) {
