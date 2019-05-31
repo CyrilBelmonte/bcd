@@ -251,7 +251,7 @@ public class QuerySimpleUser {
                 recipe.add(Integer.parseInt((String) r.getContent()));
             }
         } catch (Exception e) {
-            System.err.println("[ERROR][class : QuerySimpleUser] [method : getFirstCategory]");
+            System.err.println("[ERROR][class : QuerySimpleUser] [method : getNearRecipe]");
             e.printStackTrace();
         }
         return recipe;
