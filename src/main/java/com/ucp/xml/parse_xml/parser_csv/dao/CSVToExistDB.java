@@ -1,5 +1,6 @@
 package com.ucp.xml.parse_xml.parser_csv.dao;
 
+import com.ucp.xml.exist.query.QueryCategory;
 import com.ucp.xml.parse_xml.parser_csv.dao.category.CategorieDao;
 import com.ucp.xml.parse_xml.parser_csv.dao.category.Category;
 import com.ucp.xml.parse_xml.parser_csv.dao.category.CsvCatergoryDao;
@@ -23,7 +24,7 @@ public class CSVToExistDB {
 
         categoriesList = categorieDao.findAllCategorie();
         System.out.println("--------------- START ---------------");
-/*
+
         QueryCategory queryCategory = new QueryCategory();
         System.out.println("--------------- ERASE ---------------");
         queryCategory.removeAll();
@@ -35,7 +36,7 @@ public class CSVToExistDB {
         boolean res = queryCategory.addCategories(categoriesList);
         if (res) {
             System.out.println(categoriesList.size() + " have been added");
-        }*/
+        }
         int recipeSum = 0;
         System.out.println("--> Category : " + "Starter");
         for (int index = 0; index < categoriesList.size(); index++) {

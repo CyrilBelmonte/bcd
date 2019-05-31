@@ -14,14 +14,14 @@ public class CsvFile implements CsvFileInt{
     private List<String > lines;
     private List<String[] > data;
 
-    private CsvFile(){
+    private CsvFile() {}
 
-    }
     public CsvFile(File file){
         this.file= file;
 
         init();
     }
+
     private void init(){
         lines = CsvFileHelper.readFile(file);
         int i = 0;
@@ -29,13 +29,8 @@ public class CsvFile implements CsvFileInt{
 
         String sep = new Character(SEPARATOR).toString();
         for (String line : lines){
-            if(i==0){
-                i++;
-                continue;
-            }else {
-                String[] oneData = line.split(sep);
-                data.add(oneData);
-            }
+            String[] oneData = line.split(sep);
+            data.add(oneData);
         }
     }
 
