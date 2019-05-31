@@ -15,12 +15,13 @@ import java.util.Map;
 import static java.lang.Class.forName;
 
 public class QueryUser {
+    private static String driver = "org.exist.xmldb.DatabaseImpl";
     private Collection collection;
 
     public QueryUser(){
         try {
-            InitConnection connection = new InitConnection();
-            collection = connection.getCollection();
+                InitConnection connection = new InitConnection();
+                collection = connection.getCollection();
         }catch (Exception e){
             System.err.println("[ERROR] : "+e);
             collection = null;
@@ -41,19 +42,19 @@ public class QueryUser {
 
             query += "<categories><type value='starter' sum='" + starterCount + "'>";
 
-            for (Map.Entry<String, Float> entry: user.getEntreeCategories().entrySet()) {
+            for (Map.Entry<Integer, Float> entry: user.getEntreeCategories().entrySet()) {
                 query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/starterCount + "'/>";
             }
 
             query += "</type><type value='main_Courses' sum='" + mainCount + "'>";
 
-            for (Map.Entry<String, Float> entry : user.getPlatCategories().entrySet()) {
+            for (Map.Entry<Integer, Float> entry : user.getPlatCategories().entrySet()) {
                 query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/mainCount + "'/>";
             }
 
             query += "</type><type value='dessert' sum='" + dessertCount + "'>";
 
-            for (Map.Entry<String, Float> entry : user.getDessertCategories().entrySet()) {
+            for (Map.Entry<Integer, Float> entry : user.getDessertCategories().entrySet()) {
                 query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/dessertCount + "'/>";
             }
 
@@ -132,7 +133,6 @@ public class QueryUser {
                 user.setPlatCategories(getCategories(Integer.parseInt(r.getContent().toString()), "main_Courses"));
                 user.setDessertCategories(getCategories(Integer.parseInt(r.getContent().toString()), "dessert"));
                 users.add(user);
-                System.out.println("User " + user.getIdUser());
             }
         } catch (Exception e) {
             System.err.println("[ERROR] [Query getUsers] "+e);
@@ -141,13 +141,48 @@ public class QueryUser {
         return users;
     }
 
-    public void setSimpleUserStaters(){
+    public List<User> getAllCompleteUsers() {
+        List<User> users = new ArrayList<>();
+        int threshold = 2; // Nombre de catégorie limite pour être dans un profil
+
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("for $users in /users/user\n" +
+                    "let $starter_cat := $users/categories/type[@value='starter']/category\n" +
+                    "let $main_Courses_cat := $users/categories/type[@value='main_Courses']/category\n" +
+                    "let $dessert_cat := $users/categories/type[@value='dessert']/category\n" +
+                    "where count($starter_cat) > " + threshold +
+                    "and count($main_Courses_cat) > " + threshold +
+                    "and count($dessert_cat) > " + threshold +
+                    "return $users/@id_u/string()");
+            ResourceIterator i = result.getIterator();
+
+            while(i.hasMoreResources()) {
+                Resource r = i.nextResource();
+
+                // Create User and add him
+                User user = new SimpleUser(Integer.parseInt(r.getContent().toString()));
+                user.setEntreeCategories(getCategories(Integer.parseInt(r.getContent().toString()), "starter"));
+                user.setPlatCategories(getCategories(Integer.parseInt(r.getContent().toString()), "main_Courses"));
+                user.setDessertCategories(getCategories(Integer.parseInt(r.getContent().toString()), "dessert"));
+                users.add(user);
+                System.out.println("User " + user.toString());
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR] [Query getAllCompleteUsers] " + e);
+        }
+        return users;
+    }
+
+    public void setSimpleUserStaters(Integer idUser, HashMap<String, Float> categories){
 
     }
-    public void setSimpleUserMainCourses(){
+    public void setSimpleUserMainCourses(Integer idUser, HashMap<String, Float> categories){
 
     }
-    public void setSimpleUserDesserts(){
+    public void setSimpleUserDesserts(Integer idUser, HashMap<String, Float> categories){
 
     }
     public void printAllUser() {
@@ -179,8 +214,8 @@ public class QueryUser {
         }
     }
 
-    public HashMap<String, Float> getCategories(Integer idUser, String type){
-        HashMap<String, Float> categories =  new HashMap<>();
+    public HashMap<Integer, Float> getCategories(Integer idUser, String type){
+        HashMap<Integer, Float> categories =  new HashMap<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -190,7 +225,7 @@ public class QueryUser {
             while(i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 String tab[] = ((String) r.getContent()).split(";");
-                categories.put(tab[0], Float.parseFloat(tab[1]));
+                categories.put(Integer.parseInt(tab[0]), Float.parseFloat(tab[1]));
             }
 
         } catch (Exception e) {

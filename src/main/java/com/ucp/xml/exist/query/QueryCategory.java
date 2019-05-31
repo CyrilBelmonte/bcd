@@ -167,8 +167,8 @@ public class QueryCategory {
     /*
      * Function to return the list of categories' with a type
      */
-    public HashMap<String, Float> findCategoriesByType(String type) {
-        HashMap<String, Float> categories = new HashMap<>();
+    public HashMap<Integer, Float> findCategoriesByType(String type) {
+        HashMap<Integer, Float> categories = new HashMap<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
@@ -178,7 +178,7 @@ public class QueryCategory {
             int count = countCategoriesByType(type);
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                categories.put(r.getContent().toString(), 1f / count);
+                categories.put(Integer.parseInt(r.getContent().toString()), 1f / count);
             }
 
         } catch (Exception e) {
