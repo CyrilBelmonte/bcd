@@ -24,8 +24,9 @@ public class TextAnalysis {
     private LinkedList<Entry> entry = new LinkedList<>();
     private LinkedList<IngredientsWeight> titleweight = new LinkedList<>();
     private LinkedList<IngredientsWeight> MaxIngredients = new LinkedList<>();
-
+    String type = "";
      TextAnalysis(LinkedList<String> ingredients,LinkedList<Recipe> recipes,LinkedList<String> TitleList){
+         this.type=type;
          for (String ing : ingredients) {
              if(!ing.equals("poivre") && !ing.equals("sel")) {
                  IngredientsWeight iw2 = new IngredientsWeight(ing);
@@ -152,7 +153,7 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     /*
     try {
         String disp = "";
-        BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Entry.csv"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Entry_Ingredient_"+type+".csv"));
         for (int index5 = 0; index5 < entry.size(); index5++) {
             disp=disp+entry.get(index5).getRecipeName()+";";
             for (int index6 = 0; index6 < entry.get(0).getData().size(); index6++) {
@@ -165,7 +166,24 @@ LinkedList<Entry> Analyse(LinkedList<Recipe> recipes){
     }catch (IOException e){
 
     }
-*/
+
+    try {
+        String disp = "";
+        BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Entry_Title_"+type+".csv"));
+        for (int index5 = 0; index5 < entry.size(); index5++) {
+            disp=disp+entry.get(index5).getRecipeName()+";";
+            for (int index6 = 0; index6 < entry.get(0).getDatatitle().size(); index6++) {
+                disp = disp + entry.get(index5).getDatatitle().get(index6).getName() + ";"+ entry.get(index5).getDatatitle().get(index6).getWeight() + ";";
+            }
+            disp = disp + "\n";
+        }
+        writer.write(disp);
+        writer.close();
+    }catch (IOException e){
+
+    }
+    */
+
     return entry;
 }
 

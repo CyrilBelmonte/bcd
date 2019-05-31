@@ -30,7 +30,7 @@ public class Kohonen {
         private static double epsilon = 0.5;
         private static double ALPHA = 0.125;
         private static double BETA = 0.125;
-        private static int NEURONSIZE = 200;
+        private static int NEURONSIZE = 100;
         private static int LEARNINGSIZE =10;
         private LinkedList<Integer> Entrychoosen;
 
@@ -54,9 +54,10 @@ public class Kohonen {
         }
 
         int pickedIndex = (int) (Math.random() * (Entrychoosen.size()-1));
+        int out = Entrychoosen.get(pickedIndex);
         Entrychoosen.remove(pickedIndex);
 
-        return pickedIndex;
+        return out;
     }
 
 
@@ -280,7 +281,7 @@ Double voisinage(int index){
             cluster.get(winner).getRecipes().add(recipes.get(index3));
             cluster.get(winner).getDistance().add(kohonen.get(winner).getPotential());
         }
-
+        /*
         try {
             String disp2 = "";
             BufferedWriter writer2 = new BufferedWriter(new FileWriter("./src/main/java/com/ucp/ia/csv/Recette"+recipes.get(0).getType()+".csv"));
@@ -295,7 +296,7 @@ Double voisinage(int index){
         }catch (IOException e){
 
         }
-
+        */
 
     }
 
