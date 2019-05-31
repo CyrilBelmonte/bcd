@@ -11,6 +11,14 @@ public class SimpleUser implements User {
     private HashMap<Integer, String> friends;
     private HashMap<Integer, String> bookmarks;
 
+    public SimpleUser(Integer idUser) {
+        this.idUser = idUser;
+        this.entreeCategories = new HashMap<>();
+        this.platCategories = new HashMap<>();
+        this.dessertCategories = new HashMap<>();
+        this.friends = new HashMap<>();
+        this.bookmarks = new HashMap<>();
+    }
     @Override
     public Integer getIdUser() {
         return idUser;

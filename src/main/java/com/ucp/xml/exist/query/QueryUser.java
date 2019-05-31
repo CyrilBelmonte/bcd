@@ -98,8 +98,7 @@ public class QueryUser {
                 Resource r = i.nextResource();
 
                 // Create User and add him
-                User user = new SimpleUser();
-                user.setIdUser(Integer.parseInt(r.getContent().toString()));
+                User user = new SimpleUser(Integer.parseInt(r.getContent().toString()));
                 user.setEntreeCategories(getCategories(Integer.parseInt(r.getContent().toString()), "starter"));
                 user.setPlatCategories(getCategories(Integer.parseInt(r.getContent().toString()), "main_Courses"));
                 user.setDessertCategories(getCategories(Integer.parseInt(r.getContent().toString()), "dessert"));

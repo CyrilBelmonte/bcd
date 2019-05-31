@@ -34,11 +34,9 @@ public class DbUserDao implements UserDao {
     }
 
     private User dbToUser(int idUser, LinkedList<Integer> friends, LinkedList<Integer> bookmarks) {
-        SimpleUser user = new SimpleUser();
+        SimpleUser user = new SimpleUser(idUser);
 
         QueryCategory queryCategory = new QueryCategory();
-        // Id of the user
-        user.setIdUser(idUser);
         // Categories of the user
         try {
             user.setEntreeCategories(queryCategory.findCategoriesByType("starter"));
