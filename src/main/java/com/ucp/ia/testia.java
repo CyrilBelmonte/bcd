@@ -82,38 +82,35 @@ public class testia {
                  data = data + "\n";
                  indexcat++;
              }
-             String data2 ="";
+
              for(Categorie cat : kohonen2.getCluster()) {
-                 data2=data2+indexcat+";main_Courses;";
+                 data=data+indexcat+";main_Courses;";
                  for (int indexdisp = 0; indexdisp < kohonen2.getCluster().size(); indexdisp++) {
-                     data2 = data2 + cat.getDistanceCat(indexdisp) + ";";
+                     data = data + cat.getDistanceCat(indexdisp) + ";";
                  }
                  if (!cat.getRecipes().isEmpty()) {
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
-                         data2 = data2 + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
+                         data = data + cat.getRecipes().get(indexdisp).getId() + ";" + cat.getDistance().get(indexdisp) + ";";
                      }
                  }
-
-                 data2 = data2 + "\n";
+                 data = data + "\n";
                  indexcat++;
              }
-             String data3 ="";
+
              for(Categorie cat : kohonen3.getCluster()) {
-                 data3 = data3 + indexcat + ";dessert;";
+                 data = data + indexcat + ";dessert;";
                  for (int indexdisp = 0; indexdisp < kohonen2.getCluster().size(); indexdisp++) {
-                     data3 = data3 + cat.getDistanceCat(indexdisp) + ";";
+                     data = data + cat.getDistanceCat(indexdisp) + ";";
                  }
                  if (!cat.getRecipes().isEmpty()) {
                      for (int indexdisp = 0; indexdisp < cat.getRecipes().size(); indexdisp++) {
-                         data3 = data3 + cat.getRecipes().get(indexdisp).getId()+ ";" + cat.getDistance().get(indexdisp) + ";";
+                         data = data + cat.getRecipes().get(indexdisp).getId()+ ";" + cat.getDistance().get(indexdisp) + ";";
                      }
                  }
-                 data3 = data3 + "\n";
+                 data = data + "\n";
                  indexcat++;
              }
              print.write(data);
-             print.println(data2);
-             print.println(data3);
              writer3.close();
          } catch (IOException ex) {
              ex.printStackTrace();
