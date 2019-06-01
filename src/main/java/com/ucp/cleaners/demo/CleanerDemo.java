@@ -2,12 +2,16 @@ package com.ucp.cleaners.demo;
 
 import com.ucp.ai_experiments.AIEntries;
 import com.ucp.cleaners.AITools;
+import com.ucp.cleaners.RecipeCleaner;
+import com.ucp.cookwithease.model.Recipe;
 
 import java.util.LinkedList;
 
 
 public class CleanerDemo {
     public static void main(String[] args) throws InterruptedException {
+        RecipeCleaner cleaner = new RecipeCleaner();
+
         LinkedList<String> startersName = AIEntries.getPartsOfStartersName();
         LinkedList<String> mainCoursesName = AIEntries.getPartsOfMainCoursesName();
         LinkedList<String> dessertsName = AIEntries.getPartsOfDessertsName();
@@ -16,10 +20,14 @@ public class CleanerDemo {
         LinkedList<String> mainCoursesIngredients = AIEntries.getAllMainCoursesIngredients();
         LinkedList<String> dessertsIngredients = AIEntries.getAllDessertsIngredients();
 
+        
+        System.out.println(cleaner.getCleanedRecipeName("Soupe aux oignons et à l'ail"));
 
         System.out.println(AITools.contains("Tarte au poulet!", "poulet"));
+
         System.out.println(AITools.normalizeQuantity(5, "ml"));
         System.out.println(AITools.normalizeQuantity(5, "tasses"));
+
         System.out.println(AITools.isUnitValid("ml"));
         System.out.println(AITools.isUnitValid("cuillères à soupe"));
         System.out.println(AITools.isUnitValid("tasses"));

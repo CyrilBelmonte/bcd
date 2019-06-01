@@ -186,8 +186,9 @@ public class RecipeCleaner {
 
     public void initIngredientsPattern() {
         LinkedList<String> excludedIngredients = DAOFactory.getIngredientDAO().getAllIngredients();
+        excludedIngredients.remove("");
 
-        String regex = "(^|\\b)({TERMS})(\\b|$)";
+        String regex = "(^|\\b)({TERMS})([ea]u[x]?|l[l]?[e]?[s]?|[s]?)?(\\b|$)";
 
         ingredientsPattern = buildPattern(regex, excludedIngredients);
     }
@@ -287,12 +288,12 @@ public class RecipeCleaner {
 
         String standardizedRecipeName =
             reduceWhiteSpacesFromString(
+            deleteIngredientsFromString(
             deleteNumbersFromString(
             deleteAccentsFromString(
             deleteUnwantedNamesFromString(
             deleteUnwantedWordsFromString(
             deleteUnwantedUnitsFromString(
-            deleteIngredientsFromString(
             deleteAdjectivesFromString(
             deleteShortWordsFromString(
             deleteStopWordsFromString(
