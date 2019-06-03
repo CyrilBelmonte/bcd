@@ -170,7 +170,7 @@ public class RecipeCleaner {
             "spécial[e]?[s]?", "coloré[e]?[s]?", "moutardé[e]?[s]?", "roulé[e]?[s]?", "rond[e]?[s]?",
             "méli", "mélo", "matin[é]?[e]?[s]?", "midi[s]?", "soir[é]?[e]?[s]?", "bras", "jardin[s]?",
             "préparation[s]?", "dur[s]?", "improvisé[e]?[s]?", "papillot[t]?e[s]?", "all", "mode[s]?",
-            "mamma[s]?", "micro[s]?", "accompagné[e]?[s]?", "accompagnement[s]?", "lit[s]?"
+            "mamma[s]?", "micro[s]?", "accompagné[e]?[s]?", "accompagnement[s]?", "lit[s]?", "sauce[s]?"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
