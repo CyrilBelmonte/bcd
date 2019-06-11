@@ -257,5 +257,47 @@ public class QuerySimpleUser {
         return recipe;
 
     }
+    public ArrayList<Integer> getUserList(){
+    ArrayList<Integer> userList = new ArrayList<>();
+        try {
+        XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+        service.setProperty("indent", "yes");
+
+        ResourceSet result = service.query("//users/user/@id_u/string()");
+        ResourceIterator i = result.getIterator();
+
+
+        while (i.hasMoreResources()) {
+            Resource r = i.nextResource();
+            userList.add(Integer.parseInt((String) r.getContent()));
+        }
+    } catch (Exception e) {
+        System.err.println("[ERROR][class : QueryUserList] [method : getUserList]");
+        e.printStackTrace();
+    }
+        return userList;
+    }
+
+    public ArrayList<Double> getAllProbByCatByType(int idUser, String type){
+        ArrayList<Double> catList = new ArrayList<>();
+        try {
+
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("//users/user[@id_u='"+idUser+"']/categories/type[@value='"+type+"']/category/@proba/string()");
+            ResourceIterator i = result.getIterator();
+
+
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                catList.add(Double.parseDouble((String) r.getContent()));
+            }
+        }catch (Exception e) {
+            System.err.println("[ERROR][class : QueryCatListByUser] [method : getAllCatByType]");
+            e.printStackTrace();
+        }
+        return catList;
+    }
 }
 
