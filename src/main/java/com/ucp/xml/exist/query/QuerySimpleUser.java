@@ -161,7 +161,7 @@ public class QuerySimpleUser {
         HashMap<Integer, Float> tCategories = new HashMap<>();
         HashMap<Integer, Float> tP1Categories = new HashMap<>();
 
-        int err = 1 / (6 - mark);
+        Float err = 1 / (6.0f - mark);
         System.out.println("Id user = " + idUser + " Id Category " + idCategory + " Type = " + typeCategory);
 
 
