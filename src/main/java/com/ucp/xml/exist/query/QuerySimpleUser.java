@@ -161,15 +161,19 @@ public class QuerySimpleUser {
         HashMap<Integer, Float> tCategories = new HashMap<>();
         HashMap<Integer, Float> tP1Categories = new HashMap<>();
 
-        Float err = 1 / (6.0f - mark);
+        float err = 1 / (6 - mark);
         System.out.println("Id user = " + idUser + " Id Category " + idCategory + " Type = " + typeCategory);
 
 
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
+            if (typeCategory.equals("main_Courses") || typeCategory.equals("main_course")){
+                typeCategory = "main_course";
+            }
             ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category return  $category/@id_c/string() ||\";\"|| $category/@proba/string()");
             ResourceIterator i = result.getIterator();
+
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 String tab[] = ((String) r.getContent()).split(";");
@@ -194,7 +198,7 @@ public class QuerySimpleUser {
             }
 
             for (Map.Entry<Integer, Float> entry : tP1Categories.entrySet()) {
-                service.query("let $doc := //users/user/categories/type[@value='" + typeCategory + "']/category[@id_c='" + entry.getKey() + "'] return update value $doc/@proba with '" + entry.getValue() + "'");
+                service.query("let $doc := //users/user[@id_u='"+idUser+"']/categories/type[@value='" + typeCategory + "']/category[@id_c='" + entry.getKey() + "'] return update value $doc/@proba with '" + entry.getValue() + "'");
             }
             return true;
         } catch (Exception e) {

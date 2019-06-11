@@ -39,7 +39,6 @@ public class Profiles {
                 double distanceDessert = distance(user.getCatDessert(), user4Prof.getCatDessert());
 
                 Boolean bool = similar(d, distanceStarter, distanceMainCourse, distanceDessert);
-
                 if (bool) {
                     profile.add(user4Prof.getUser());
                     usersList.getUser4Profs().remove(indexList);
@@ -56,16 +55,15 @@ public class Profiles {
 
         for (int index = 0; index < user1.size(); index++) {
             double delta = user2.get(index) - user1.get(index);
-            delta *= delta;
-            distance += delta;
+            delta = delta*delta;
+            distance = distance + delta;
         }
         return sqrt(distance);
     }
 
     private boolean similar(double percent, double distanceStarter, double distanceMainCourse, double distanceDessert) {
 
-        double per = percent / 100;
-
+        double per = 1-(percent / 100);
         double distRefStarter = distanceStarter / sqrt(2);
         double distRefMainCourse = distanceMainCourse / sqrt(2);
         double distRefDessert = distanceDessert / sqrt(2);

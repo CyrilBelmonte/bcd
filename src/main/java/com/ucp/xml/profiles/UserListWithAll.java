@@ -14,7 +14,9 @@ public class UserListWithAll {
 
     private void generateList() {
         QuerySimpleUser querySimpleUser = new QuerySimpleUser();
+
         ArrayList<Integer> userList = querySimpleUser.getUserList();
+
         for (Integer idUser : userList) {
             User4Prof user4Prof = new User4Prof(idUser);
             this.user4Profs.add(user4Prof);
