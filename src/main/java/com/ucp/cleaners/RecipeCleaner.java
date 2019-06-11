@@ -124,7 +124,7 @@ public class RecipeCleaner {
     private void initUnwantedWordsPattern() {
         LinkedList<String> excludedWords = new LinkedList<>(Arrays.asList(
             "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix",
-            "bleu[e]?[s]?", "blanc[s]?", "rouge[s]?", "noir[e]?[s]?", "violet[e]?[s]?",
+            "bleu[e]?[s]?", "blanc(?:he)?[s]?", "rouge[s]?", "noir[e]?[s]?", "violet(?:te)?[s]?",
             "jaune[s]?", "vert[e]?[s]?", "gris[e]?[s]?", "marron[s]?", "rose[s]?", "brun[e]?[s]?",
             "lundi[s]?", "mardi[s]?", "mercredi[s]?", "jeudi[s]?", "vendredi[s]?", "samedi[s]?",
             "dimanche[s]?", "jour[s]?", "assortiment[s]?", "autocuiseur[s]?", "aérienne[s]?",
@@ -133,7 +133,7 @@ public class RecipeCleaner {
             "cuillère[s]?", "cuisson[s]?", "différent[e]?[s]?", "doré[e]?[s]?", "double[s]?",
             "egg[s]?", "fa[çc]on[s]?", "fagot[s]?", "fer[s]?", "folle[s]?", "food", "four[s]?",
             "garniture[s]?", "goût[s]?", "idée[s]?", "lion[s]?", "mag[s]?", "graisse[s]?",
-            "maison[s]?", "maman[s]?", "mamitou[s]?", "manger", "mcmuffin[s]?", "monté[e]?[s]?",
+            "maison[s]?", "lune[s]?", "r[aâ]ble[s]?", "mamitou[s]?", "mcmuffin[s]?", "monté[e]?[s]?",
             "multicolore[s]?", "mystère[s]?", "mère[s]?", "noire[s]?", "nul[s]?", "partager",
             "partage[s]?", "pièce[s]?", "pépite[s]?", "rit", "roi[s]?", "rondelle[s]?", "rose[s]?",
             "saint[s]?", "saveur[s]?", "souhait[s]?", "sphère[s]?", "spirale[s]?", "sucré[e]?[s]?",
@@ -142,9 +142,9 @@ public class RecipeCleaner {
             "mélange[s]?", "concentré[e]?[s]?", "fermenté[e]?[s]?", "r[aâ]pé[e]?[s]?", "reste[s]?",
             "coulis", "poudre[s]?", "fumé[e]?[s]?", "cru[e]?[s]?", "liquide[s]?", "amère[s]?",
             "brassé[e]?[s]?", "chair[s]?", "sec[s]?", "pelé[e]?[s]?", "pulpe[s]?", "sauvage[s]?",
-            "entrée[s]?", "plat[s]?", "dessert[s]?", "authentique[s]?", "fouetté[e]?[s]?",
+            "entrée[s]?", "plat[s]?", "dessert[s]?", "authentique[s]?", "fouetté[e]?[s]?", "mie[s]?",
             "minute[s]?", "heure[s]?", "diabolique[s]?", "assiette[s]?", "couleur[s]?", "machine[s]?",
-            "duo", "trio", "panier[s]?", "mamie[s]?", "autonome[s]?", "faire", "preparer", "sel",
+            "duo", "trio", "panier[s]?", "autonome[s]?", "faire", "preparer", "sel", "manger",
             "salé[e]?[s]?", "poivr[ée][e]?[s]?", "sucr[ée][e]?[s]?", "blonde[s]?", "bouchée[s]?",
             "copeau[x]?", "couteau[x]?", "dé[s]?", "rase", "nature[s]?", "concassé[e]?[s]?",
             "étoile[s]?", "autre[s]?", "confit[e]?[s]?", "collier[s]?", "alimentaire[s]?", "mmm",
@@ -158,12 +158,19 @@ public class RecipeCleaner {
             "gazeuse[s]?", "gazéifié[e]?[s]?", "pétillant[e]?[s]?", "essence[s]?", "fermentante[s]?",
             "gonflé[e]?[s]?", "aérien(?:ne)?[s]?", "and", "apériti(?:f|ve)[s]?", "vie[s]?", "miam",
             "terrain[s]?", "version[s]?", "miroir[s]?", "classique[s]?", "coeur[s]?", "croute[s]?",
-            "peau[x]?", "eclat[s]?", "ecorse[s]?", "damier[s]?", "new", "ans", "année[s]?",
+            "peau[x]?", "eclat[s]?", "ecorse[s]?", "damier[s]?", "new", "ans", "année[s]?", "dos",
             "forme[s]?", "meilleur[e]?[s]?", "cuiller[s]?", "effet[s]?", "fleur[s]?", "pet[s]?",
-            "pur[s]?", "multi[s]?", "bien", "m[eé]ga[s]?", "style[s]?", "doigt[s]?", "dej", "dit",
+            "pur[s]?", "multi[s]?", "bien", "m[eé]ga[s]?", "style[s]?", "doigt[s]?", "dit",
             "succès", "made", "merveille[u]?[sx]?[e]?[s]?", "tradition[s]", "levé[e]?[s]?",
             "riche[s]?", "tata", "tomber", "mix[s]?", "intérieur[e]?[s]?", "onde[s]?", "trou[s]?",
-            "type[s]?", "mort[e]?[s]?", "edulcorant[s]?", "bombe[s]?", "fond[s]?"
+            "type[s]?", "mort[e]?[s]?", "edulcorant[s]?", "bombe[s]?", "fond[s]?", "divin[e]?[s]?",
+            "d[ée]j(?:euner)?[s]?", "mic", "mac", "mou[s]?", "choc[s]?", "amour[s]?", "ste",
+            "nappé[e]?[s]?", "mamie[s]?", "mémé[s]?", "maman[s]?", "papi[s]?", "pépé[s]?", "papa[s]?",
+            "fruité[e]?[s]?", "bois", "éclat[s]?", "cocotte[s]?", "tatie[s]?", "oncle[s]?", "club[s]?",
+            "spécial[e]?[s]?", "coloré[e]?[s]?", "moutardé[e]?[s]?", "roulé[e]?[s]?", "rond[e]?[s]?",
+            "méli", "mélo", "matin[é]?[e]?[s]?", "midi[s]?", "soir[é]?[e]?[s]?", "bras", "jardin[s]?",
+            "préparation[s]?", "dur[s]?", "improvisé[e]?[s]?", "papillot[t]?e[s]?", "all", "mode[s]?",
+            "mamma[s]?", "micro[s]?", "accompagné[e]?[s]?", "accompagnement[s]?", "lit[s]?", "sauce[s]?"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
@@ -176,7 +183,7 @@ public class RecipeCleaner {
             "jacqueline", "jeanne", "brigitte", "marielle", "mike", "mag", "nadine(?:tte)", "lili",
             "hélène", "sophie", "sylvie", "tom", "momo", "marie", "valentin", "chris", "denis",
             "julie", "josé", "marcel", "anne", "christine", "clémentine", "valérie", "eug[eé]nie",
-            "jean", "elvire"
+            "jean", "elvire", "claude", "flo", "nat", "hilda", "mich[èe]l[e]?"
         ));
 
         String regex = "(^|\\b)({TERMS})(\\b|$)";
@@ -186,8 +193,9 @@ public class RecipeCleaner {
 
     public void initIngredientsPattern() {
         LinkedList<String> excludedIngredients = DAOFactory.getIngredientDAO().getAllIngredients();
+        excludedIngredients.remove("");
 
-        String regex = "(^|\\b)({TERMS})(\\b|$)";
+        String regex = "(^|\\b)({TERMS})([ea]u[x]?|l[l]?[e]?[s]?|[s]?)?(\\b|$)";
 
         ingredientsPattern = buildPattern(regex, excludedIngredients);
     }
@@ -287,12 +295,12 @@ public class RecipeCleaner {
 
         String standardizedRecipeName =
             reduceWhiteSpacesFromString(
+            deleteIngredientsFromString(
             deleteNumbersFromString(
             deleteAccentsFromString(
             deleteUnwantedNamesFromString(
             deleteUnwantedWordsFromString(
             deleteUnwantedUnitsFromString(
-            deleteIngredientsFromString(
             deleteAdjectivesFromString(
             deleteShortWordsFromString(
             deleteStopWordsFromString(

@@ -27,8 +27,8 @@ public class DbUserDao implements UserDao {
         final List<User> usersDao = new ArrayList<User>();
 
         for (com.ucp.cookwithease.model.User user : users) {
-            User userDao = dbToUser(user.getId(), user.getFriends(), user.getBookmarks());
-            usersDao.add(userDao);
+           // User userDao = dbToUser(user.getId(), user.getFriends(), user.getBookmarks());
+           // usersDao.add(userDao);
         }
         return usersDao;
     }

@@ -1,35 +1,28 @@
-
-package com.ucp.ia;
-
-import com.ucp.cookwithease.model.*;
+package com.ucp.ai;
 
 
 public class IngredientsWeight {
-    private Double Weight;
-    private String Name;
+    private Double weight;
+    private String name;
 
     public IngredientsWeight(String name) {
-        Weight = 0.0;
-        Name = name;
+        weight = 0.0;
+        this.name = name;
     }
 
     public Double getWeight() {
-        return Weight;
+        return weight;
     }
 
     public void setWeight(Double weight) {
-        Weight = weight;
+        this.weight = weight;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
-
-
-
 }
-
