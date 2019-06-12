@@ -1,15 +1,15 @@
 package com.ucp.xml.exist.query;
 
 import com.ucp.cookwithease.model.Recipe;
-import com.ucp.xml.parse_xml.prof_xml.profile.dao.profile.Profile;
+import com.ucp.xml.parse_xml.user_xml.dao.user.SimpleUser;
 import com.ucp.xml.parse_xml.user_xml.dao.user.User;
 import org.apache.log4j.BasicConfigurator;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static java.lang.Class.forName;
 
@@ -33,15 +33,15 @@ public class QueryProfile {
         }
     }
 
-    public void addProfile(Profile profile) {
+    public void addProfile(ArrayList<Integer> profile, int index) {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            String query = "<profile id='" + profile.getIdProfile() + "'>";
+            String query = "<profile id_p='" + index + "'>";
 
-            for (User profileUser : profile.getUsers()) {
-                query += "<users id='"+ profileUser.getIdUser() +"'/>";
+            for (Integer idUser : profile) {
+                query += "<user id_u='"+ idUser +"'/>";
             }
 
             query += "</profile>";
@@ -53,9 +53,10 @@ public class QueryProfile {
         }
     }
 
-    public void addProfiles(List<Profile> profiles) {
-        for (Profile profile : profiles) {
-            addProfile(profile);
+    public void addProfiles(ArrayList<ArrayList<Integer>> profiles) {
+        int index;
+        for (index = 0; index < profiles.size(); index++) {
+            addProfile(profiles.get(index), index);
         }
     }
     public void printAllProfile() {
@@ -86,15 +87,58 @@ public class QueryProfile {
         }
     }
 
-    public List<Profile> getProfile(int idUser) {
-        return null;
+    public Integer getIdProfileByIdUser(int idUser) {
+        Integer idProfile = 0;
+
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+            ResourceSet result = service.query("/profiles/profile[user/@id_u='"+idUser+"']/@id_p/string()");
+            ResourceIterator i = result.getIterator();
+
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                idProfile = Integer.parseInt(r.getContent().toString());
+
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR] [class: Query Profile] [method: suggestProfileByUser]");
+            e.printStackTrace();
+        }
+        return idProfile;
+    }
+
+    public List<Integer> getIdUsersByIdProfile(int idProfile) {
+        List<Integer> isUsers = new ArrayList<>();
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+            ResourceSet result = service.query("/profiles/profile[@id_p='"+idProfile+"']/user/@id_u/string()");
+            ResourceIterator i = result.getIterator();
+
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                isUsers.add(Integer.parseInt(r.getContent().toString()));
+
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR] [class: Query Profile] [method: suggestProfileByUser]");
+            e.printStackTrace();
+        }
+        return isUsers;
+
     }
 
     public boolean updateProfile() {
-        return false;
-    }
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+            ResourceSet result = service.query("");
 
-    public List<Recipe> suggestRecipesByProfile(int idUser, String type) {
-        return null;
+        } catch (Exception e) {
+            System.err.println("[ERROR] [class: Query Profile] [method: updateProfile]");
+            e.printStackTrace();
+        }
+        return false;
     }
 }

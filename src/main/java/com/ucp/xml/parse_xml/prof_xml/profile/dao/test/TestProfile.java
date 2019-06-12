@@ -4,6 +4,7 @@ import com.ucp.xml.exist.query.QueryProfile;
 import com.ucp.xml.parse_xml.prof_xml.profile.dao.profile.DbProfileDao;
 import com.ucp.xml.parse_xml.prof_xml.profile.dao.profile.Profile;
 import com.ucp.xml.parse_xml.prof_xml.profile.dao.profile.ProfileDao;
+import com.ucp.xml.profiles.Profiles;
 
 import java.util.List;
 
@@ -11,24 +12,19 @@ public class TestProfile {
     private static ProfileDao profileDao;
 
     public static void main(String[] args) {
-        Float precision = 1f;
-        Integer idUser = 1;
-        String type = "starter";
-
-        profileDao = new DbProfileDao();
-        List<Profile> profiles = profileDao.findAllProfile(precision);
+        Profiles profiles = new Profiles(100.0);
         QueryProfile queryProfile = new QueryProfile();
         System.out.println("ERASE");
         queryProfile.removeAll();
+
         System.out.println("PRINT");
         queryProfile.printAllProfile();
+
         System.out.println("ADD");
-        queryProfile.addProfiles(profiles);
+        queryProfile.addProfiles(profiles.getProfilesList());
 
-        queryProfile.getProfile(idUser);
+        System.out.println("Profil pour User 5 : " + queryProfile.getIdProfileByIdUser(5));
 
-        queryProfile.updateProfile();
-
-        queryProfile.suggestRecipesByProfile(idUser, type);
+        System.out.println("Profil 0 contient les users : " + queryProfile.getIdUsersByIdProfile(0).toString());
     }
 }
