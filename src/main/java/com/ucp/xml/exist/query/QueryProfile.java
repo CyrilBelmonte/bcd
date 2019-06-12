@@ -126,19 +126,25 @@ public class QueryProfile {
             e.printStackTrace();
         }
         return isUsers;
-
     }
 
-    public boolean updateProfile() {
+    public List<Integer> getIdUsersByIdUser(int idUser) {
+        List<Integer> isUsers = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            ResourceSet result = service.query("");
+            ResourceSet result = service.query("/profiles/profile[user/@id_u='"+idUser+"']/user/@id_u/string()");
+            ResourceIterator i = result.getIterator();
 
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                isUsers.add(Integer.parseInt(r.getContent().toString()));
+
+            }
         } catch (Exception e) {
-            System.err.println("[ERROR] [class: Query Profile] [method: updateProfile]");
+            System.err.println("[ERROR] [class: Query Profile] [method: suggestProfileByUser]");
             e.printStackTrace();
         }
-        return false;
+        return isUsers;
     }
 }

@@ -26,5 +26,7 @@ public class TestProfile {
         System.out.println("Profil pour User 5 : " + queryProfile.getIdProfileByIdUser(5));
 
         System.out.println("Profil 0 contient les users : " + queryProfile.getIdUsersByIdProfile(0).toString());
+        
+        System.out.println("Users du user 5 : " + queryProfile.getIdUsersByIdUser(5).toString());
     }
 }
