@@ -1,4 +1,4 @@
-package com.ucp.scraper_updated.preprocessing.csv;
+package com.ucp.scraper.preprocessing.csv;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.ucp.scraper_updated.engine;
+package com.ucp.scraper.engine;
 
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.model.DishType;

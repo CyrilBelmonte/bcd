@@ -1,4 +1,4 @@
-package com.ucp.scraper_updated.preprocessing.urlscrape;
+package com.ucp.scraper.preprocessing.urlscrape;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

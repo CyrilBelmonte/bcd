@@ -3,11 +3,10 @@ package com.ucp.initproject;
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.dao.general.Index;
 import com.ucp.cookwithease.model.Recipe;
-import com.ucp.scraper_updated.engine.ScrapeToDatabase;
-import com.ucp.scraper_updated.preprocessing.csv.ReaderCsv;
+import com.ucp.scraper.engine.ScrapeToDatabase;
+import com.ucp.scraper.preprocessing.csv.ReaderCsv;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 

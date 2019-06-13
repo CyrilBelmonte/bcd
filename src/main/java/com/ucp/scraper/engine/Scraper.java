@@ -1,4 +1,4 @@
-package com.ucp.scraper_updated.engine;
+package com.ucp.scraper.engine;
 
 import lombok.Data;
 import org.jsoup.nodes.Document;

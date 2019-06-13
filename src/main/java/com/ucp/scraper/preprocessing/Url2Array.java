@@ -1,6 +1,6 @@
-package com.ucp.scraper_updated.preprocessing;
+package com.ucp.scraper.preprocessing;
 
-import com.ucp.scraper_updated.preprocessing.csv.ReaderCsv;
+import com.ucp.scraper.preprocessing.csv.ReaderCsv;
 
 import java.io.File;
 import java.util.List;
