@@ -55,7 +55,7 @@ public class Profiles {
 
         for (int index = 0; index < user1.size(); index++) {
             double delta = user2.get(index) - user1.get(index);
-            delta = delta*delta;
+            delta = delta * delta;
             distance = distance + delta;
         }
         return sqrt(distance);
@@ -63,7 +63,7 @@ public class Profiles {
 
     private boolean similar(double percent, double distanceStarter, double distanceMainCourse, double distanceDessert) {
 
-        double per = 1-(percent / 100);
+        double per = 1 - (percent / 100);
         double distRefStarter = distanceStarter / sqrt(2);
         double distRefMainCourse = distanceMainCourse / sqrt(2);
         double distRefDessert = distanceDessert / sqrt(2);
