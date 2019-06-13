@@ -40,7 +40,7 @@ public class DbUserDao implements UserDao {
         // Categories of the user
         try {
             user.setEntreeCategories(queryCategory.findCategoriesByType("starter"));
-            user.setPlatCategories(queryCategory.findCategoriesByType("main_Courses"));
+            user.setPlatCategories(queryCategory.findCategoriesByType("main_course"));
             user.setDessertCategories(queryCategory.findCategoriesByType("dessert"));
         } catch (Exception e) {
             e.printStackTrace();

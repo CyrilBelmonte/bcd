@@ -239,7 +239,7 @@ public class QueryCategory {
     /*
      * Function to return recipes's list for a category
      */
-    public ArrayList<Integer> getRecipeByCat(int idCategory){
+    public ArrayList<Integer> getRecipeByCat(int idCategory) {
         ArrayList<Integer> recipes = new ArrayList<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
@@ -250,7 +250,7 @@ public class QueryCategory {
 
             while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
-                recipes.add(Integer.parseInt ((String)r.getContent()));
+                recipes.add(Integer.parseInt((String) r.getContent()));
             }
         } catch (Exception e) {
             System.err.println("[ERROR][class : QueryCategory] [method : getRecipeByCat] with arg idCategory [" + idCategory + "] ");
