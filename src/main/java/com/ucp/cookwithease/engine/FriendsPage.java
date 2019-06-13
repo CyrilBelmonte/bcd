@@ -3,7 +3,6 @@ package com.ucp.cookwithease.engine;
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.forms.FriendsForm;
 import com.ucp.cookwithease.model.User;
-import com.ucp.xml.exist.query.QueryProfile;
 import com.ucp.xml.exist.query.QuerySimpleUser;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,19 +39,13 @@ public class FriendsPage extends Page<FriendsForm> {
     public boolean loadSuggestions() {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("userSession");
+        LinkedList<User> suggestedFriends = SuggestionEngine.getFriendsSuggestion(user);
 
-        QueryProfile query = new QueryProfile();
-        LinkedList<Integer> usersID = new LinkedList<>(query.getIdUsersByIdUser(user.getId()));
-        usersID.remove((Integer) user.getId());
-        usersID.removeAll(user.getFriends());
-
-        LinkedList<User> suggestedUsers = DAOFactory.getUserDAO().findAll(usersID);
-
-        if (suggestedUsers.size() == 0) {
+        if (suggestedFriends.size() == 0) {
             return false;
 
         } else {
-            request.setAttribute("suggestedUsers", suggestedUsers);
+            request.setAttribute("suggestedFriends", suggestedFriends);
 
             return true;
         }

@@ -1,16 +1,15 @@
 package com.ucp.cookwithease.engine;
 
-import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.forms.DiscoverForm;
-import com.ucp.cookwithease.model.Recipe;
+import com.ucp.cookwithease.model.DiscoverSuggestions;
+import com.ucp.cookwithease.model.DishType;
+import com.ucp.cookwithease.model.User;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedList;
+import javax.servlet.http.HttpSession;
 
 
 public class DiscoverPage extends Page<DiscoverForm> {
-    private static final int SEARCH_MAX_RESULTS = 24;
-
     public DiscoverPage(HttpServletRequest request) {
         super(request);
 
@@ -18,47 +17,24 @@ public class DiscoverPage extends Page<DiscoverForm> {
     }
 
     public boolean loadStarters() {
-        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
-
-        if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher");
-
-            return false;
-
-        } else {
-            request.setAttribute("recipes", recipes);
-
-            return true;
-        }
+        return loadSuggestions(DishType.STARTER);
     }
 
     public boolean loadMainCourses() {
-        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
-
-        if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher");
-
-            return false;
-
-        } else {
-            request.setAttribute("recipes", recipes);
-
-            return true;
-        }
+        return loadSuggestions(DishType.MAIN_COURSE);
     }
 
     public boolean loadDesserts() {
-        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
+        return loadSuggestions(DishType.DESSERT);
+    }
 
-        if (recipes.size() == 0) {
-            form.addGlobalError("Aucune recette à afficher");
+    private boolean loadSuggestions(DishType type) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("userSession");
 
-            return false;
+        DiscoverSuggestions discoverSuggestions = SuggestionEngine.getDiscoverSuggestion(user, type);
+        request.setAttribute("suggestions", discoverSuggestions);
 
-        } else {
-            request.setAttribute("recipes", recipes);
-
-            return true;
-        }
+        return true;
     }
 }

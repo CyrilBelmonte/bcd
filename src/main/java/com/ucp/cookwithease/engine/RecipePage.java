@@ -5,7 +5,6 @@ import com.ucp.cookwithease.forms.RecipeForm;
 import com.ucp.cookwithease.model.Comment;
 import com.ucp.cookwithease.model.Recipe;
 import com.ucp.cookwithease.model.User;
-import com.ucp.xml.exist.query.QueryCategory;
 import com.ucp.xml.exist.query.QuerySimpleUser;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,12 +121,7 @@ public class RecipePage extends Page<RecipeForm> {
 
     public boolean loadSuggestions() {
         recipeID = form.getRecipeIDFromParameter();
-
-        QueryCategory query = new QueryCategory();
-        LinkedList<Integer> recipesID = new LinkedList<>(query.findRecipe(recipeID));
-        recipesID.remove((Integer) recipeID);
-
-        LinkedList<Recipe> suggestedRecipes = DAOFactory.getRecipeDAO().findAll(recipesID);
+        LinkedList<Recipe> suggestedRecipes = SuggestionEngine.getRecipesSuggestion(recipeID);
 
         if (suggestedRecipes.size() == 0) {
             form.addGlobalError("Aucune suggestion.");
