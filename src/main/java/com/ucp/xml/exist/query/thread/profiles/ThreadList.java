@@ -8,7 +8,7 @@ public class ThreadList {
     private int idUser;
     private String type;
 
-    private HashMap<String, List<Integer>> category;
+    private HashMap<String, List<Integer>> category = new HashMap<>();
 
     public ThreadList(int idUser, String type) {
         this.idUser = idUser;
@@ -22,20 +22,20 @@ public class ThreadList {
 
     public void findCat() {
         ThreadFriends friends = new ThreadFriends(idUser, type);
-        //ThreadProfiles profiles = new ThreadProfiles(idUser, type);
+        ThreadProfiles profiles = new ThreadProfiles(idUser, type);
         ThreadUser users = new ThreadUser(idUser, type);
 
         friends.start();
-        //profiles.start();
+        profiles.start();
         users.start();
         try {
             friends.join();
-           // profiles.join();
+            profiles.join();
             users.join();
 
             category.put("user", users.getList());
             category.put("friend", friends.getList());
-            //category.put("profile", friends.getList());
+            category.put("profile", profiles.getList());
 
         } catch (Exception e) {
             System.err.println("[ERROR] join");

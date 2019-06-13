@@ -45,6 +45,7 @@ public class CsvCategoryDao implements CategoryDao {
         HashMap<Integer, Float> recDist = new HashMap<Integer, Float>();
 
         String str = "";
+
         category.setIdOfCat(tab[0]);
         category.setTypeOfCat(tab[1]);
 

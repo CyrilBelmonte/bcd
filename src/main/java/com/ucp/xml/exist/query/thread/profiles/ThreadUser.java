@@ -2,6 +2,7 @@ package com.ucp.xml.exist.query.thread.profiles;
 
 import com.ucp.xml.exist.query.QuerySimpleUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ThreadUser extends Thread {
@@ -13,7 +14,7 @@ public class ThreadUser extends Thread {
         return list;
     }
 
-    private List<Integer> list;
+    private ArrayList<Integer> list;
 
     public ThreadUser(int idUser, String type) {
         this.idUser = idUser;
@@ -23,7 +24,13 @@ public class ThreadUser extends Thread {
     @Override
     public void run() {
         QuerySimpleUser querySimpleUser = new QuerySimpleUser();
-        list = querySimpleUser.findAllCatByOrder(idUser, type);
+        List<Integer> listUser = querySimpleUser.findAllCatByOrder(idUser, type);
+        if (listUser.size() != 0) {
+            list = querySimpleUser.findAllCatByOrder(idUser, type);
+        }else {
+            list = new ArrayList<>();
+        }
+
     }
 
 }

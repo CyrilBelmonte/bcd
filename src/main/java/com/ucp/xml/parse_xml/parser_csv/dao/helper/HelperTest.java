@@ -10,10 +10,10 @@ import java.util.List;
 public class HelperTest{
     private final static String FILE_NAME ="src/main/resources/test.csv";
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) {
         final String fileName =  FILE_NAME;
 
-        List<String> test = new ArrayList<String>();
+        List<String> test ;
 
         try {
             final File file = CsvFileHelper.getRessource(fileName);

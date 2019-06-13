@@ -3,6 +3,7 @@ package com.ucp.xml.exist.query.thread.profiles;
 
 import com.ucp.xml.exist.query.QuerySimpleUser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ public class ThreadFriends extends Thread {
     private int idUser;
     private String type;
 
-    private List<Integer> list;
+    public ArrayList<Integer> list;
 
 
     public ThreadFriends(int idUser, String type) {
@@ -24,8 +25,10 @@ public class ThreadFriends extends Thread {
         Random r = new Random();
         QuerySimpleUser querySimpleUser = new QuerySimpleUser();
         List<Integer> listFriend = querySimpleUser.friendsList(idUser);
-        if (list.size() != 0) {
+        if (listFriend.size() != 0) {
             findCat(listFriend.get(r.nextInt(listFriend.size())));
+        } else {
+            list = new ArrayList<>();
         }
     }
 
