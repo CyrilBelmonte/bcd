@@ -40,7 +40,7 @@ public class QueryUser {
             for (int i=0; i<starterCount; i++) {
                 query += "<category id_c='"+i+"' prob='"+(1f/200)+"' />";
             }
-            query += "</type><type value='main_course'>\"";
+            query += "</type><type value='main_course'>";
             for (int i=starterCount; i<mainCount; i++) {
                 query += "<category id_c='"+i+"' prob='"+(1f/200)+"' />";
             }
