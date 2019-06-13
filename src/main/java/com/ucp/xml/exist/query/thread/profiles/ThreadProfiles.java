@@ -22,10 +22,10 @@ public class ThreadProfiles extends Thread {
     public void run() {
         Random r = new Random();
         QueryProfile queryProfile = new QueryProfile();
-        List<Integer> listProfiles = queryProfile.getIdUsersByIdProfile(idUser);
+        List<Integer> listProfiles = queryProfile.getIdUsersByIdUser(idUser);
         if (listProfiles.size() != 0) {
             findCat(listProfiles.get(r.nextInt(listProfiles.size())));
-        }else {
+        } else {
             list = new ArrayList<>();
         }
     }
