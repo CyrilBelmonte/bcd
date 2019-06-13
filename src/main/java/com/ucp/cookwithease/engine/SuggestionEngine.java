@@ -23,7 +23,7 @@ public class SuggestionEngine {
 
     public static LinkedList<Recipe> getRecipesSuggestion(int recipeID) {
         LinkedList<Integer> recipesID = new LinkedList<>(
-                queryCategory.findRecipe(recipeID));
+            queryCategory.findRecipe(recipeID));
 
         recipesID.remove((Integer) recipeID);
 

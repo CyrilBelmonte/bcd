@@ -6,7 +6,8 @@ import lombok.*;
 import java.util.LinkedList;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recipe {
