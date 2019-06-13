@@ -182,16 +182,15 @@ public class QuerySimpleUser {
 
             Float sum = 0.0f;
 
-            for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
-                sum = sum + entry.getValue();
+            for (Float value : tCategories.values()) {
+                sum += value;
             }
+
             for (Map.Entry<Integer, Float> entry : tCategories.entrySet()) {
-                Float prob = entry.getValue();
-                Integer id_c = entry.getKey();
-                if (prob == 0.0) {
-                    prob = 0.000000001f;
+                if (entry.getValue() == 0.0) {
+                    entry.setValue(0.000000001f);
                 }
-                tP1Categories.put(id_c, prob / sum);
+                tP1Categories.put(entry.getKey(), entry.getValue() / sum);
             }
 
             for (Map.Entry<Integer, Float> entry : tP1Categories.entrySet()) {
