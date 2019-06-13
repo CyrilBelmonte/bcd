@@ -27,75 +27,27 @@ public class QueryUser {
         }
     }
 
-    public void addUser(User user) {
-
-        int starterCount = user.getEntreeCategories().size();
-        int mainCount = user.getPlatCategories().size();
-        int dessertCount = user.getDessertCategories().size();
-
-        try {
-            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-            service.setProperty("indent", "yes");
-
-            String query = "<user id_u='" + user.getIdUser() + "'>";
-
-            query += "<categories><type value='starter' sum='" + starterCount + "'>";
-
-            for (Map.Entry<Integer, Float> entry : user.getEntreeCategories().entrySet()) {
-                query += "<category id_c='" + entry.getKey() + "' prob='" + 1f / starterCount + "'/>";
-            }
-
-            query += "</type><type value='main_course' sum='" + mainCount + "'>";
-
-            for (Map.Entry<Integer, Float> entry : user.getPlatCategories().entrySet()) {
-                query += "<category id_c='" + entry.getKey() + "' prob='" + 1f / mainCount + "'/>";
-            }
-
-            query += "</type><type value='dessert' sum='" + dessertCount + "'>";
-
-            for (Map.Entry<Integer, Float> entry : user.getDessertCategories().entrySet()) {
-                query += "<category id_c='" + entry.getKey() + "' prob='" + 1f / dessertCount + "'/>";
-            }
-
-            query += "</type></categories><friends>";
-
-            for (Map.Entry<Integer, String> entryFriend : user.getFriends().entrySet()) {
-                query += "<user id_ref='" + entryFriend.getValue() + "'/>";
-            }
-
-            query += "</friends><bookmarks>";
-
-            for (Map.Entry<Integer, String> entryBookmarks : user.getBookmarks().entrySet()) {
-                query += "<recipe id_r='" + entryBookmarks.getValue() + "'/>";
-            }
-
-            query += "</bookmarks></user>";
-
-            service.query("update insert " + query + "into //users");
-
-        } catch (Exception e) {
-            System.err.println("[ERROR] [Query addUsers] " + e);
-        }
-    }
-
     public void addSimpleUser(Integer idUser) {
+        int starterCount = 200;
+        int mainCount = 400;
+        int dessertCount = 600;
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
             String query = "<user id_u='" + idUser + "'>";
             query += "<categories><type value='starter'>";
-            query += "<category id_c='0' prob='0.5' />";
-            query += "<category id_c='1' prob='0.5' />";
-
-            query += "</type><type value='main_course'>";
-            query += "<category id_c='2' prob='0.5' />";
-            query += "<category id_c='3' prob='0.5' />";
-
+            for (int i=0; i<starterCount; i++) {
+                query += "<category id_c='"+i+"' prob='"+(1f/200)+"' />";
+            }
+            query += "</type><type value='main_course'>\"";
+            for (int i=starterCount; i<mainCount; i++) {
+                query += "<category id_c='"+i+"' prob='"+(1f/200)+"' />";
+            }
             query += "</type><type value='dessert'>";
-            query += "<category id_c='4' prob='0.5' />";
-            query += "<category id_c='5' prob='0.5' />";
-
+            for (int i=mainCount; i<dessertCount; i++) {
+                query += "<category id_c='"+i+"' prob='"+(1f/200)+"' />";
+            }
             query += "</type></categories><friends>";
             query += "</friends><bookmarks>";
             query += "</bookmarks></user>";
@@ -104,12 +56,6 @@ public class QueryUser {
 
         } catch (Exception e) {
             System.err.println("[ERROR] [Query addSimpleUser] " + e);
-        }
-    }
-
-    public void addUsers(List<User> users) {
-        for (User user : users) {
-            addUser(user);
         }
     }
 
@@ -173,18 +119,6 @@ public class QueryUser {
             System.err.println("[ERROR] [Query getAllCompleteUsers] " + e);
         }
         return users;
-    }
-
-    public void setSimpleUserStaters(Integer idUser, HashMap<String, Float> categories) {
-
-    }
-
-    public void setSimpleUserMainCourses(Integer idUser, HashMap<String, Float> categories) {
-
-    }
-
-    public void setSimpleUserDesserts(Integer idUser, HashMap<String, Float> categories) {
-
     }
 
     public void printAllUser() {
