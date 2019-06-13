@@ -309,7 +309,7 @@ public class QuerySimpleUser {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category order by $category/@prob return $category/@id_c/string()");
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category order by $category/@prob descending return $category/@id_c/string()");
             ResourceIterator i = result.getIterator();
 
 
