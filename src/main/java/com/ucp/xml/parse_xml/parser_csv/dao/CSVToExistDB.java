@@ -1,9 +1,9 @@
 package com.ucp.xml.parse_xml.parser_csv.dao;
 
 import com.ucp.xml.exist.query.QueryCategory;
-import com.ucp.xml.parse_xml.parser_csv.dao.category.CategorieDao;
 import com.ucp.xml.parse_xml.parser_csv.dao.category.Category;
-import com.ucp.xml.parse_xml.parser_csv.dao.category.CsvCatergoryDao;
+import com.ucp.xml.parse_xml.parser_csv.dao.category.CategoryDao;
+import com.ucp.xml.parse_xml.parser_csv.dao.category.CsvCategoryDao;
 import com.ucp.xml.parse_xml.parser_csv.dao.helper.CsvFileHelper;
 
 import java.io.File;
@@ -16,9 +16,9 @@ public class CSVToExistDB {
         String FILE_NAME = "src/main/resources/SortiIA.csv";
 
         File file;
-        CategorieDao categorieDao;
+        CategoryDao categorieDao;
         file = CsvFileHelper.getRessource(FILE_NAME);
-        categorieDao = new CsvCatergoryDao(file);
+        categorieDao = new CsvCategoryDao(file);
 
         List<Category> categoriesList;
 
