@@ -24,13 +24,7 @@ public class ThreadUser extends Thread {
     @Override
     public void run() {
         QuerySimpleUser querySimpleUser = new QuerySimpleUser();
-        List<Integer> listUser = querySimpleUser.findAllCatByOrder(idUser, type);
-        if (listUser.size() != 0) {
-            list = querySimpleUser.findAllCatByOrder(idUser, type);
-        }else {
-            list = new ArrayList<>();
-        }
-
+        list = querySimpleUser.findAllCatByOrder(idUser, type);
     }
 
 }
