@@ -64,9 +64,11 @@ public class RecipePage extends Page<RecipeForm> {
         User user = (User) session.getAttribute("userSession");
         user.addBookmark(recipeID);
 
-        QuerySimpleUser query = new QuerySimpleUser();
-        query.addBookmark(user.getId(), recipeID);
-        query.majCat(user.getId(), recipeID, 5);
+        new Thread(() -> {
+            QuerySimpleUser query = new QuerySimpleUser();
+            query.addBookmark(user.getId(), recipeID);
+            query.majCat(user.getId(), recipeID, 5);
+        }).start();
 
         return true;
     }
@@ -109,8 +111,10 @@ public class RecipePage extends Page<RecipeForm> {
         } else {
             user.addComment(comment);
 
-            QuerySimpleUser query = new QuerySimpleUser();
-            query.majCat(user.getId(), recipeID, rating);
+            new Thread(() -> {
+                QuerySimpleUser query = new QuerySimpleUser();
+                query.majCat(user.getId(), recipeID, rating);
+            }).start();
 
             return true;
         }

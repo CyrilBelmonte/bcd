@@ -21,6 +21,8 @@ public class FriendsServlet extends HttpServlet {
             request.setAttribute("error", page.getFormErrors().getFirst());
         }
 
+        page.loadSuggestions();
+
         this.getServletContext().getRequestDispatcher(
             References.INTERNAL_VIEW_FRIENDS).forward(request, response);
     }

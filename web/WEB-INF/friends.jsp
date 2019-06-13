@@ -39,6 +39,17 @@
                 </div>
             </c:forEach>
 
+            <c:if test="${not empty suggestedUsers}">
+                <p class="help">Profils similaires</p>
+
+                <c:forEach items="${suggestedUsers}" var="suggestedUser">
+                    <div class="card card-body card-hover friend">
+                        <p class="friend-name"><span class="icon" data-feather="user"></span><c:out value="${suggestedUser.firstName} ${suggestedUser.lastName}" /></p>
+                        <a class="btn btn-display" href="<c:url value="/profile"><c:param name="id" value="${suggestedUser.id}" /></c:url>"><span class="icon" data-feather="home"></span>Profil</a>
+                    </div>
+                </c:forEach>
+            </c:if>
+
         </form>
     </div>
 </section>

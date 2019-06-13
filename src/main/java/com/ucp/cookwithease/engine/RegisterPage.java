@@ -4,6 +4,7 @@ import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.forms.RegisterForm;
 import com.ucp.cookwithease.model.User;
 import com.ucp.cookwithease.tools.Tools;
+import com.ucp.xml.exist.query.QueryUser;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -52,6 +53,9 @@ public class RegisterPage extends Page<RegisterForm> {
             return false;
 
         } else {
+            QueryUser queryUser = new QueryUser();
+            queryUser.addSimpleUser(user.getId());
+
             return true;
         }
     }
