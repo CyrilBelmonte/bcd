@@ -12,9 +12,9 @@ public class TestSimpleUser {
         QuerySimpleUser querySimpleUser = new QuerySimpleUser();
         QueryCategory queryCategory = new QueryCategory();
 
-        System.out.println(querySimpleUser.getFirstCategory(1, "main_Courses"));
+        System.out.println(querySimpleUser.getFirstCategory(1, "main_course"));
         querySimpleUser.majCat(1, 22, 5);
-        System.out.println(querySimpleUser.getFirstCategory(1, "main_Courses"));
+        System.out.println(querySimpleUser.getFirstCategory(1, "main_course"));
         //System.out.println(queryCategory.findCatByRecipe(22));
     }
 }

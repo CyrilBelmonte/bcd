@@ -168,10 +168,7 @@ public class QuerySimpleUser {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-            if (typeCategory.equals("main_Courses") || typeCategory.equals("main_course")){
-                typeCategory = "main_course";
-            }
-            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category return  $category/@id_c/string() ||\";\"|| $category/@proba/string()");
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category return  $category/@id_c/string() ||\";\"|| $category/@prob/string()");
             ResourceIterator i = result.getIterator();
 
             while (i.hasMoreResources()) {
@@ -198,7 +195,7 @@ public class QuerySimpleUser {
             }
 
             for (Map.Entry<Integer, Float> entry : tP1Categories.entrySet()) {
-                service.query("let $doc := //users/user[@id_u='"+idUser+"']/categories/type[@value='" + typeCategory + "']/category[@id_c='" + entry.getKey() + "'] return update value $doc/@proba with '" + entry.getValue() + "'");
+                service.query("let $doc := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + typeCategory + "']/category[@id_c='" + entry.getKey() + "'] return update value $doc/@prob with '" + entry.getValue() + "'");
             }
             return true;
         } catch (Exception e) {
@@ -217,7 +214,7 @@ public class QuerySimpleUser {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@proba) for $category in $path where $category/@proba = $maxU return $category/@id_c/string()");
+            ResourceSet result = service.query("let $path := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category let $maxU := max($path/@prob) for $category in $path where $category/@prob = $maxU return $category/@id_c/string()");
             ResourceIterator i = result.getIterator();
 
 
@@ -243,7 +240,7 @@ public class QuerySimpleUser {
 
             ResourceSet result = service.query("(let $cats := //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category " +
                     "for $cat in $cats " +
-                    "order by $cat/@proba " +
+                    "order by $cat/@prob " +
                     "for $recipe in //categories/category[@id_c = $cat/@id_c]/recipes/recipe " +
                     "order by $recipe/@dist_r " +
                     "return $recipe/@id_r/string())[position() = 0 to " + nbResult + "]");
@@ -261,35 +258,36 @@ public class QuerySimpleUser {
         return recipe;
 
     }
-    public ArrayList<Integer> getUserList(){
-    ArrayList<Integer> userList = new ArrayList<>();
+
+    public ArrayList<Integer> getUserList() {
+        ArrayList<Integer> userList = new ArrayList<>();
         try {
-        XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-        service.setProperty("indent", "yes");
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
 
-        ResourceSet result = service.query("//users/user/@id_u/string()");
-        ResourceIterator i = result.getIterator();
+            ResourceSet result = service.query("//users/user/@id_u/string()");
+            ResourceIterator i = result.getIterator();
 
 
-        while (i.hasMoreResources()) {
-            Resource r = i.nextResource();
-            userList.add(Integer.parseInt((String) r.getContent()));
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                userList.add(Integer.parseInt((String) r.getContent()));
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR][class : QueryUserList] [method : getUserList]");
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        System.err.println("[ERROR][class : QueryUserList] [method : getUserList]");
-        e.printStackTrace();
-    }
         return userList;
     }
 
-    public ArrayList<Double> getAllProbByCatByType(int idUser, String type){
+    public ArrayList<Double> getAllProbByCatByType(int idUser, String type) {
         ArrayList<Double> catList = new ArrayList<>();
         try {
 
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("//users/user[@id_u='"+idUser+"']/categories/type[@value='"+type+"']/category/@proba/string()");
+            ResourceSet result = service.query("//users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category/@prob/string()");
             ResourceIterator i = result.getIterator();
 
 
@@ -297,11 +295,35 @@ public class QuerySimpleUser {
                 Resource r = i.nextResource();
                 catList.add(Double.parseDouble((String) r.getContent()));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("[ERROR][class : QueryCatListByUser] [method : getAllCatByType]");
             e.printStackTrace();
         }
         return catList;
     }
+
+    public ArrayList<Integer> findAllCatByOrder(int idUser, String type) {
+        ArrayList<Integer> catList = new ArrayList<>();
+        try {
+
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category order by $category/@prob return $category/@id_c/string()");
+            ResourceIterator i = result.getIterator();
+
+
+            while (i.hasMoreResources()) {
+                Resource r = i.nextResource();
+                catList.add(Integer.parseInt((String) r.getContent()));
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR][class : QueryFindAllCatByOrder] [method : findAllCatByOrder]");
+            e.printStackTrace();
+        }
+        return catList;
+    }
+
 }
+
 

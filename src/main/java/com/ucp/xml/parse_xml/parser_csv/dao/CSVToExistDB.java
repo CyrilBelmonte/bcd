@@ -22,7 +22,7 @@ public class CSVToExistDB {
 
         List<Category> categoriesList;
 
-        categoriesList = categorieDao.findAllCategorie();
+        categoriesList = categorieDao.findAllCategory();
         System.out.println("--------------- START ---------------");
 
         QueryCategory queryCategory = new QueryCategory();
@@ -50,7 +50,7 @@ public class CSVToExistDB {
         }
         System.out.println("--> Category : " + "Main Courses");
         for (int index = 0; index < categoriesList.size(); index++) {
-            if (categoriesList.get(index).getTypeOfCat().equals("main_Courses")) {
+            if (categoriesList.get(index).getTypeOfCat().equals("main_course")) {
                 System.out.println("----> Category id: " + categoriesList.get(index).getIdOfCat() + " type : " + categoriesList.get(index).getTypeOfCat() + " Nb recipe :" + categoriesList.get(index).getRecDist().size());
                 for (Map.Entry<Integer, Float> e : categoriesList.get(index).getRecDist().entrySet()) {
                     System.out.println("\t|---------> id_r :" + e.getKey() + " dist :" + e.getValue());

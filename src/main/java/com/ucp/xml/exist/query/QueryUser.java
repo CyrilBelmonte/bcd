@@ -2,9 +2,10 @@ package com.ucp.xml.exist.query;
 
 import com.ucp.xml.parse_xml.user_xml.dao.user.SimpleUser;
 import com.ucp.xml.parse_xml.user_xml.dao.user.User;
-import org.apache.log4j.BasicConfigurator;
-import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.*;
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XPathQueryService;
 
 import java.util.ArrayList;
@@ -12,18 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.Class.forName;
-
 public class QueryUser {
     private static String driver = "org.exist.xmldb.DatabaseImpl";
     private Collection collection;
 
-    public QueryUser(){
+    public QueryUser() {
         try {
-                InitConnection connection = new InitConnection();
-                collection = connection.getCollection();
-        }catch (Exception e){
-            System.err.println("[ERROR] : "+e);
+            InitConnection connection = new InitConnection();
+            collection = connection.getCollection();
+        } catch (Exception e) {
+            System.err.println("[ERROR] : " + e);
             collection = null;
         }
     }
@@ -42,20 +41,20 @@ public class QueryUser {
 
             query += "<categories><type value='starter' sum='" + starterCount + "'>";
 
-            for (Map.Entry<Integer, Float> entry: user.getEntreeCategories().entrySet()) {
-                query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/starterCount + "'/>";
+            for (Map.Entry<Integer, Float> entry : user.getEntreeCategories().entrySet()) {
+                query += "<category id_c='" + entry.getKey() + "' prob='" + 1f / starterCount + "'/>";
             }
 
-            query += "</type><type value='main_Courses' sum='" + mainCount + "'>";
+            query += "</type><type value='main_course' sum='" + mainCount + "'>";
 
             for (Map.Entry<Integer, Float> entry : user.getPlatCategories().entrySet()) {
-                query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/mainCount + "'/>";
+                query += "<category id_c='" + entry.getKey() + "' prob='" + 1f / mainCount + "'/>";
             }
 
             query += "</type><type value='dessert' sum='" + dessertCount + "'>";
 
             for (Map.Entry<Integer, Float> entry : user.getDessertCategories().entrySet()) {
-                query += "<category id_c='" + entry.getKey() + "' proba='" + 1f/dessertCount + "'/>";
+                query += "<category id_c='" + entry.getKey() + "' prob='" + 1f / dessertCount + "'/>";
             }
 
             query += "</type></categories><friends>";
@@ -86,16 +85,16 @@ public class QueryUser {
 
             String query = "<user id_u='" + idUser + "'>";
             query += "<categories><type value='starter'>";
-            query += "<category id_c='0' proba='0.5' />";
-            query += "<category id_c='1' proba='0.5' />";
+            query += "<category id_c='0' prob='0.5' />";
+            query += "<category id_c='1' prob='0.5' />";
 
-            query += "</type><type value='main_Courses'>";
-            query += "<category id_c='2' proba='0.5' />";
-            query += "<category id_c='3' proba='0.5' />";
+            query += "</type><type value='main_course'>";
+            query += "<category id_c='2' prob='0.5' />";
+            query += "<category id_c='3' prob='0.5' />";
 
             query += "</type><type value='dessert'>";
-            query += "<category id_c='4' proba='0.5' />";
-            query += "<category id_c='5' proba='0.5' />";
+            query += "<category id_c='4' prob='0.5' />";
+            query += "<category id_c='5' prob='0.5' />";
 
             query += "</type></categories><friends>";
             query += "</friends><bookmarks>";
@@ -124,18 +123,18 @@ public class QueryUser {
             ResourceSet result = service.query("/users/user/@id_u/string()");
             ResourceIterator i = result.getIterator();
 
-            while(i.hasMoreResources()) {
+            while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
 
                 // Create User and add him
                 User user = new SimpleUser(Integer.parseInt(r.getContent().toString()));
                 user.setEntreeCategories(getCategories(Integer.parseInt(r.getContent().toString()), "starter"));
-                user.setPlatCategories(getCategories(Integer.parseInt(r.getContent().toString()), "main_Courses"));
+                user.setPlatCategories(getCategories(Integer.parseInt(r.getContent().toString()), "main_course"));
                 user.setDessertCategories(getCategories(Integer.parseInt(r.getContent().toString()), "dessert"));
                 users.add(user);
             }
         } catch (Exception e) {
-            System.err.println("[ERROR] [Query getUsers] "+e);
+            System.err.println("[ERROR] [Query getUsers] " + e);
             e.printStackTrace();
         }
         return users;
@@ -151,15 +150,15 @@ public class QueryUser {
 
             ResourceSet result = service.query("for $users in /users/user\n" +
                     "let $starter_cat := $users/categories/type[@value='starter']/category\n" +
-                    "let $main_Courses_cat := $users/categories/type[@value='main_Courses']/category\n" +
+                    "let $main_Courses_cat := $users/categories/type[@value='main_course']/category\n" +
                     "let $dessert_cat := $users/categories/type[@value='dessert']/category\n" +
                     "where count($starter_cat) > " + threshold +
-                    "and count($main_Courses_cat) > " + threshold +
+                    "and count($main_course_cat) > " + threshold +
                     "and count($dessert_cat) > " + threshold +
                     "return $users/@id_u/string()");
             ResourceIterator i = result.getIterator();
 
-            while(i.hasMoreResources()) {
+            while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
 
                 // Create User and add him
@@ -176,15 +175,18 @@ public class QueryUser {
         return users;
     }
 
-    public void setSimpleUserStaters(Integer idUser, HashMap<String, Float> categories){
+    public void setSimpleUserStaters(Integer idUser, HashMap<String, Float> categories) {
 
     }
-    public void setSimpleUserMainCourses(Integer idUser, HashMap<String, Float> categories){
+
+    public void setSimpleUserMainCourses(Integer idUser, HashMap<String, Float> categories) {
 
     }
-    public void setSimpleUserDesserts(Integer idUser, HashMap<String, Float> categories){
+
+    public void setSimpleUserDesserts(Integer idUser, HashMap<String, Float> categories) {
 
     }
+
     public void printAllUser() {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
@@ -192,37 +194,37 @@ public class QueryUser {
 
             ResourceSet result = service.query("//users");
             ResourceIterator i = result.getIterator();
-            while(i.hasMoreResources()) {
+            while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 System.out.println(r.getContent().toString());
             }
 
-        }catch (Exception e){
-            System.err.println("[ERROR][Query addUsers] "+e);
+        } catch (Exception e) {
+            System.err.println("[ERROR][Query addUsers] " + e);
         }
     }
 
-    public void removeAll(){
+    public void removeAll() {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
             /**/
             service.query("for $users in //users/user return update delete $users");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println("[ERROR][Query removeAll] ");
             e.printStackTrace();
         }
     }
 
-    public HashMap<Integer, Float> getCategories(Integer idUser, String type){
-        HashMap<Integer, Float> categories =  new HashMap<>();
+    public HashMap<Integer, Float> getCategories(Integer idUser, String type) {
+        HashMap<Integer, Float> categories = new HashMap<>();
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
-            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category return  $category/@id_c/string()||';'||$category/@proba/string()");
+            ResourceSet result = service.query("for $category in //users/user[@id_u='" + idUser + "']/categories/type[@value='" + type + "']/category return  $category/@id_c/string()||';'||$category/@prob/string()");
             ResourceIterator i = result.getIterator();
-            while(i.hasMoreResources()) {
+            while (i.hasMoreResources()) {
                 Resource r = i.nextResource();
                 String tab[] = ((String) r.getContent()).split(";");
                 categories.put(Integer.parseInt(tab[0]), Float.parseFloat(tab[1]));
