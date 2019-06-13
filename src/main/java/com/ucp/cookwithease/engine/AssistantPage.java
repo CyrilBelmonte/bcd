@@ -1,11 +1,13 @@
 package com.ucp.cookwithease.engine;
 
-import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.forms.AssistantForm;
 import com.ucp.cookwithease.model.Day;
+import com.ucp.cookwithease.model.DishType;
 import com.ucp.cookwithease.model.Recipe;
+import com.ucp.cookwithease.model.User;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -34,16 +36,29 @@ public class AssistantPage extends Page<AssistantForm> {
             days.addLast(day);
         }
 
-        // ------------------- A REMPLACER -------------------
-        // ... récupérer entrées suggérées
-        LinkedList<Recipe> suggestedStarters = DAOFactory.getRecipeDAO().findAllStarters();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("userSession");
 
-        // ... récupérer plats suggérés
-        LinkedList<Recipe> suggestedMainCourses = DAOFactory.getRecipeDAO().findAllMainCourses();
+        MenuThread suggestedStartersThread = new MenuThread(user, DishType.STARTER);
+        MenuThread suggestedMainCoursesThread = new MenuThread(user, DishType.MAIN_COURSE);
+        MenuThread suggestedDessertsThread = new MenuThread(user, DishType.DESSERT);
 
-        // ... récupérer desserts suggérés
-        LinkedList<Recipe> suggestedDesserts = DAOFactory.getRecipeDAO().findAllDesserts();
-        // ----------------------------------------------------
+        try {
+            suggestedStartersThread.start();
+            suggestedMainCoursesThread.start();
+            suggestedDessertsThread.start();
+
+            suggestedStartersThread.join();
+            suggestedMainCoursesThread.join();
+            suggestedDessertsThread.join();
+
+        } catch (InterruptedException e) {
+            // Nothing
+        }
+
+        LinkedList<Recipe> suggestedStarters = suggestedStartersThread.getSuggestedRecipes();
+        LinkedList<Recipe> suggestedMainCourses = suggestedMainCoursesThread.getSuggestedRecipes();
+        LinkedList<Recipe> suggestedDesserts = suggestedDessertsThread.getSuggestedRecipes();
 
         if (suggestedStarters.size() < maxDays * 2 ||
             suggestedMainCourses.size() < maxDays * 2 ||

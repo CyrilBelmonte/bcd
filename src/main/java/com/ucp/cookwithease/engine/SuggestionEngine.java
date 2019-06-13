@@ -9,6 +9,8 @@ import com.ucp.xml.exist.query.QueryCategory;
 import com.ucp.xml.exist.query.QueryProfile;
 import com.ucp.xml.exist.query.thread.profiles.ThreadList;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +21,15 @@ public class SuggestionEngine {
 
     private SuggestionEngine() {}
 
+    public static LinkedList<Recipe> getRecipesSuggestion(int recipeID) {
+        LinkedList<Integer> recipesID = new LinkedList<>(
+                queryCategory.findRecipe(recipeID));
+
+        recipesID.remove((Integer) recipeID);
+
+        return DAOFactory.getRecipeDAO().findAll(recipesID);
+    }
+
     public static LinkedList<User> getFriendsSuggestion(User user) {
         LinkedList<Integer> usersID = new LinkedList<>(
             queryProfile.getIdUsersByIdUser(user.getId()));
@@ -27,15 +38,6 @@ public class SuggestionEngine {
         usersID.removeAll(user.getFriends());
 
         return DAOFactory.getUserDAO().findAll(usersID);
-    }
-
-    public static LinkedList<Recipe> getRecipesSuggestion(int recipeID) {
-        LinkedList<Integer> recipesID = new LinkedList<>(
-                queryCategory.findRecipe(recipeID));
-
-        recipesID.remove((Integer) recipeID);
-
-        return DAOFactory.getRecipeDAO().findAll(recipesID);
     }
 
     public static DiscoverSuggestions getDiscoverSuggestion(User user, DishType type) {
@@ -60,6 +62,47 @@ public class SuggestionEngine {
         return discoverSuggestions;
     }
 
+    public static LinkedList<Recipe> getMenuSuggestion(User user, DishType type) {
+        ThreadList profile = new ThreadList(user.getId(), type.toString().toLowerCase());
+
+        List<Integer> recipesCatFromUser = profile.getCategory().get("user");
+        List<Integer> recipesCatFromFriends = profile.getCategory().get("friend");
+        List<Integer> recipesCatFromProfiles = profile.getCategory().get("profile");
+
+        LinkedList<Recipe> recipesBasedOnUser = getRecipesFromCategories(
+            new LinkedList<>(recipesCatFromUser), 3, 14);
+
+        LinkedList<Recipe> recipesBasedOnFriends = getRecipesFromCategories(
+            new LinkedList<>(recipesCatFromFriends), 2, 4);
+
+        LinkedList<Recipe> recipesBasedOnProfiles = getRecipesFromCategories(
+            new LinkedList<>(recipesCatFromProfiles), 2, 4);
+
+        if (recipesBasedOnFriends.size() > 0 && recipesBasedOnProfiles.size() > 0) {
+            while (recipesBasedOnFriends.size() > 2) {
+                recipesBasedOnFriends.removeLast();
+            }
+
+            while (recipesBasedOnProfiles.size() > 2) {
+                recipesBasedOnProfiles.removeLast();
+            }
+        }
+
+        LinkedHashSet<Recipe> uniqueSuggestions = new LinkedHashSet<>();
+        uniqueSuggestions.addAll(recipesBasedOnUser);
+        uniqueSuggestions.addAll(recipesBasedOnFriends);
+        uniqueSuggestions.addAll(recipesBasedOnProfiles);
+
+        LinkedList<Recipe> suggestions = new LinkedList<>(uniqueSuggestions);
+        Collections.shuffle(suggestions);
+
+        while (recipesBasedOnProfiles.size() > 14) {
+            suggestions.removeLast();
+        }
+
+        return suggestions;
+    }
+
     private static LinkedList<Recipe> getRecipesFromCategories(
             LinkedList<Integer> categoriesID, int maxRecipesByCategory, int maxRecipes) {
 
@@ -80,6 +123,8 @@ public class SuggestionEngine {
             randomizedRecipesID = randomizeList(recipesID, maxResults);
             suggestedRecipesID.addAll(randomizedRecipesID);
         }
+
+        Collections.shuffle(suggestedRecipesID);
 
         return DAOFactory.getRecipeDAO().findAll(suggestedRecipesID);
     }

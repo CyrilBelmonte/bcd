@@ -79,6 +79,16 @@ public class Recipe {
     }
 
     @Override
+    public boolean equals(Object object) {
+        if (object instanceof Recipe) {
+            return id == ((Recipe) object).getId();
+
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public String toString() {
         StringBuffer ingredientsDescription = new StringBuffer();
         StringBuffer stepsDescription = new StringBuffer();
