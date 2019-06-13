@@ -13,8 +13,10 @@ public class AutoProfiles extends TimerTask {
 
     @Override
     public void run() {
+        System.out.println("START TASK PROFILE");
         Profiles profiles = new Profiles(d);
         QueryProfile queryProfile = new QueryProfile();
         queryProfile.addProfiles(profiles.getProfilesList());
+        System.out.println("END TASK PROFILE");
     }
 }
