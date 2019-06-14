@@ -23,6 +23,7 @@ public class ThreadProfiles extends Thread {
         Random r = new Random();
         QueryProfile queryProfile = new QueryProfile();
         List<Integer> listProfiles = queryProfile.getIdUsersByIdUser(idUser);
+        listProfiles.remove(idUser);
         if (listProfiles.size() != 0) {
             findCat(listProfiles.get(r.nextInt(listProfiles.size())));
         } else {
