@@ -5,6 +5,7 @@ import com.ucp.cookwithease.forms.SearchForm;
 import com.ucp.cookwithease.model.Recipe;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.LinkedList;
 
 
@@ -19,6 +20,7 @@ public class SearchPage extends Page<SearchForm> {
 
     public boolean loadRecipes() {
         LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
+        Collections.shuffle(recipes);
 
         if (recipes.size() == 0) {
             form.addGlobalError("Aucune recette à afficher");
