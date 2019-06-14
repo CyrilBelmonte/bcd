@@ -6,7 +6,8 @@ import lombok.*;
 import java.util.LinkedList;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recipe {
@@ -76,6 +77,16 @@ public class Recipe {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Recipe) {
+            return id == ((Recipe) object).getId();
+
+        } else {
+            return false;
+        }
     }
 
     @Override

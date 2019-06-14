@@ -8,6 +8,11 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
+  <!-- Listeners -->
+  <listener>
+    <listener-class>com.ucp.daemons.ProfilesDaemon</listener-class>
+  </listener>
+
   <!-- Filters -->
   <filter>
     <filter-name>LoginFilter</filter-name>
