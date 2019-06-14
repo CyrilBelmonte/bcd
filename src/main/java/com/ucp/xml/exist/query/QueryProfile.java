@@ -54,9 +54,18 @@ public class QueryProfile {
     }
 
     public void addProfiles(ArrayList<ArrayList<Integer>> profiles) {
-        int index;
-        for (index = 0; index < profiles.size(); index++) {
-            addProfile(profiles.get(index), index);
+        try {
+            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            service.setProperty("indent", "yes");
+            service.query("for $profiles in //profiles/profile return update delete $profiles");
+
+            int index;
+            for (index = 0; index < profiles.size(); index++) {
+                addProfile(profiles.get(index), index);
+            }
+        } catch (Exception e) {
+            System.err.println("[Error] [Query addProfiles] " + e);
+            e.printStackTrace();
         }
     }
     public void printAllProfile() {
