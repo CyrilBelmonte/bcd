@@ -37,7 +37,7 @@ public class QueryProfile {
         try {
             XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
-
+            service.query("for $profiles in //profiles/profile return update delete $profiles");
             String query = "<profile id_p='" + index + "'>";
 
             for (Integer idUser : profile) {
@@ -73,17 +73,6 @@ public class QueryProfile {
 
         } catch (Exception e) {
             System.err.println("[ERROR][Query printProfiles] " + e);
-        }
-    }
-
-    public void removeAll() {
-        try {
-            XPathQueryService service = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-            service.setProperty("indent", "yes");
-            service.query("for $profiles in //profiles/profile return update delete $profiles");
-        } catch (Exception e) {
-            System.err.println("[ERROR][Query removeAll] ");
-            e.printStackTrace();
         }
     }
 

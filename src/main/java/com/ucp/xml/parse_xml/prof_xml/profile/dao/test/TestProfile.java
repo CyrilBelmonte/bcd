@@ -14,8 +14,6 @@ public class TestProfile {
     public static void main(String[] args) {
         Profiles profiles = new Profiles(100.0);
         QueryProfile queryProfile = new QueryProfile();
-        System.out.println("ERASE");
-        queryProfile.removeAll();
 
         System.out.println("PRINT");
         queryProfile.printAllProfile();
