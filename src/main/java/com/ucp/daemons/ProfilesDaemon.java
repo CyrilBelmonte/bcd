@@ -9,7 +9,7 @@ import javax.servlet.ServletContextListener;
 public class ProfilesDaemon implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        TimerProfiles timerProfiles = new TimerProfiles(50.0, 20000);
+        TimerProfiles timerProfiles = new TimerProfiles(98.5, 20000);
     }
 
     @Override

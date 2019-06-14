@@ -26,7 +26,9 @@ public class InitializeProject {
         Index index = DAOFactory.getIndex();
         index.create();
 
-        LinkedList<Recipe> recipesToIndex = DAOFactory.getRecipeDAO().findAll();
+        LinkedList<Recipe> recipesToIndex = DAOFactory.getRecipeDAO().findAll(
+            Configuration.getRecipesToIndex());
+
         index.addRecipes(recipesToIndex);
         index.close();
 
