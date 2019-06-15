@@ -4,7 +4,6 @@ import com.ucp.cookwithease.model.DishType;
 import com.ucp.cookwithease.model.Ingredient;
 import com.ucp.cookwithease.model.Level;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,24 +31,8 @@ public class RecipeFormatter {
             "(?:(?<unit>#UNITS#)\\s)?(?:demi|moitié)?\\s*" +
             "(?:[a-z]{0,2} |[a-z]')?\\s*(?<name>.*)";
 
-        LinkedList<String> allowedUnits = new LinkedList<>(Arrays.asList(
-            "ml", "cl", "dl", "l", "mg", "g", "kg",
-            "cuillère[s]?(?: à (?:soupe|café))?", "tasse[s]?(?: à café)?", "bol",
-            "tranche", "branche", "feuille", "bouquet", "brin", "botte", "fleur",
-            "gousse", "bûche", "bâton", "verre", "brique", "briquette", "part", "bloc",
-            "barquette", "pot", "boîte", "sachet", "paquet", "rouleau", "graine",
-            "poignée", "pincée", "zeste", "portion", "morceau", "filet", "cuisse",
-            "pointe", "bouteille", "dose", "quartier", "goutte", "extrait", "flocon",
-            "tablette", "plaque", "cube", "carré", "blanc", "jaune", "boule", "bocal",
-            "brisure", "pavé", "pilon", "coeur", "épaule", "escalope", "aiguillette",
-            "rondelle", "louche", "bûchette"
-        ));
-
-        LinkedList<String> excludedAdjectives = new LinkedList<>(Arrays.asList(
-            "petit(?:e)?", "grand(?:e)?", "gros(?:se)?", "bon(?:ne)?", "fin(?:e)?",
-            "beau", "belle"
-        ));
-
+        LinkedList<String> allowedUnits = DictionaryReader.getUnitsDict();
+        LinkedList<String> excludedAdjectives = DictionaryReader.getAdjectivesDict();
 
         StringBuilder unitsRegex = new StringBuilder();
         String pipe = "";

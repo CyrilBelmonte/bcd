@@ -26,12 +26,11 @@ public class GenerateProfiles {
         LinkedList<String> favoriteMainCourses;
         LinkedList<String> favoriteDesserts;
 
-        InputStream inputStream;
         HashMap<String, Object> profile;
         HashMap<String, HashMap<String, Object>> allProfiles;
 
         try {
-            inputStream = new FileInputStream(new File(usersFile));
+            InputStream inputStream = new FileInputStream(new File(usersFile));
             allProfiles = yaml.load(inputStream);
 
         } catch (FileNotFoundException e) {

@@ -7,14 +7,11 @@ import com.ucp.cookwithease.tools.Tools;
 import com.ucp.xml.exist.query.QueryCategory;
 import com.ucp.xml.exist.query.QuerySimpleUser;
 import com.ucp.xml.exist.query.QueryUser;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 
 public class ProfileGenerator {
@@ -44,35 +41,26 @@ public class ProfileGenerator {
         loadComments();
     }
 
-    private void loadComments() {
-        String dictionary = "./src/main/java/com/ucp/initproject/profiles/dictionaries/comments.dic";
+    public void loadComments() {
+        String dictionary = "./src/main/java/com/ucp/initproject/profiles/dictionaries/comments.yaml";
+
+        Yaml yaml = new Yaml();
+        HashMap<Integer, List<String>> commentsDict;
+
+        try {
+            InputStream inputStream = new FileInputStream(new File(dictionary));
+            commentsDict = yaml.load(inputStream);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("[ERROR] loadComments : " + e.getMessage());
+            return;
+        }
 
         commentsFiveStars = new LinkedList<>();
+        commentsFiveStars.addAll(commentsDict.get(5));
+
         commentsFourStars = new LinkedList<>();
-        LinkedList<String> comments = commentsFiveStars;
-
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(dictionary))) {
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.isEmpty()) {
-                    continue;
-                }
-
-                if (line.equals("RATING: 4")) {
-                    comments = commentsFourStars;
-                }
-
-                if (line.contains("RATING")) {
-                    continue;
-                }
-
-                comments.add(line);
-            }
-
-        } catch (IOException e) {
-            System.out.println("[ERROR] loadComments : " + e.getMessage());
-        }
+        commentsFourStars.addAll(commentsDict.get(4));
     }
 
     public boolean generate() {
