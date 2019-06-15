@@ -1,0 +1,44 @@
+# -----------------------------------------------------------------------------
+# DEFAULT USER PROFILES
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# EXAMPLE
+# -----------------------------------------------------------------------------
+# pseudo:
+#  firstName: "..."
+#  lastName: "..."
+#
+#  favoriteStarters:
+#    - "type of recipe 1"
+#    - "type of recipe 2"
+#    - "..."
+#
+#  favoriteMainCourses:
+#    - "type of recipe 1"
+#    - "type of recipe 2"
+#    - "..."
+#
+#  favoriteDesserts:
+#    - "type of recipe 1"
+#    - "type of recipe 2"
+#    - "..."
+# -----------------------------------------------------------------------------
+
+
+jnems:
+  firstName: "Jem"
+  lastName: "LesNems"
+
+  favoriteStarters:
+    - "salade"
+    - "nems à la vietnamienne"
+    - "raviolis chinois"
+
+  favoriteMainCourses:
+    - "nems"
+    - "chinois"
+
+  favoriteDesserts:
+    - "perles de coco saké"
+

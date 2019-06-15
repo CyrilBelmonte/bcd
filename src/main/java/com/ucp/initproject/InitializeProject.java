@@ -3,8 +3,7 @@ package com.ucp.initproject;
 import com.ucp.cookwithease.dao.DAOFactory;
 import com.ucp.cookwithease.dao.general.Index;
 import com.ucp.cookwithease.model.Recipe;
-import com.ucp.scraper.engine.ScrapeToDatabase;
-import com.ucp.scraper.preprocessing.csv.ReaderCsv;
+import com.ucp.initproject.indexer.IndexerTools;
 import com.ucp.xml.exist.conf.InitExistDB;
 
 import java.io.File;
@@ -27,7 +26,7 @@ public class InitializeProject {
         index.create();
 
         LinkedList<Recipe> recipesToIndex = DAOFactory.getRecipeDAO().findAll(
-            Configuration.getRecipesToIndex());
+            IndexerTools.getRecipesToIndex());
 
         index.addRecipes(recipesToIndex);
         index.close();

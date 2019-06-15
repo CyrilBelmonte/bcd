@@ -1,4 +1,4 @@
-package com.ucp.initproject;
+package com.ucp.initproject.indexer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 
-public class Configuration {
-    private Configuration() {}
+public class IndexerTools {
+    private IndexerTools() {}
 
     public static LinkedList<Integer> getRecipesToIndex() {
-        String fileName = "./src/main/java/com/ucp/initproject/RecipesToIndex";
+        String fileName = "./src/main/java/com/ucp/initproject/indexer/RecipesToIndex";
 
         LinkedList<Integer> recipesToIndex = new LinkedList<>();
 

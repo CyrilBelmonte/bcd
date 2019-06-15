@@ -50,7 +50,6 @@
             <version>1.2.17</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
@@ -108,6 +107,13 @@
             <version>7.7.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.24</version>
+        </dependency>
+
         <!-- xml driver -->
         <!-- https://mvnrepository.com/artifact/net.sf.xmldb-org/xmldb-api -->
         <dependency>
@@ -115,61 +121,73 @@
             <artifactId>xmldb-api</artifactId>
             <version>1.7.0</version>
         </dependency>
+
         <dependency>
             <groupId>exist</groupId>
             <artifactId>exist-xmldb</artifactId>
             <version>0.9.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-core</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-optional</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-start</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-index-lucene</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-index-ngram</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-index-range</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-index-sort</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-fluent</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-restxq</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-expath</artifactId>
             <version>${exist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -177,12 +195,14 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
     <repositories>
         <repository>
             <id>exist</id>
             <url>https://raw.github.com/eXist-db/mvn-repo/master/</url>
         </repository>
     </repositories>
+    
     <build>
         <finalName>cookwithease</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -191,30 +211,44 @@
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
+
                 <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
                 </plugin>
+
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                 </plugin>
+
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.1</version>
                 </plugin>
+
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.2</version>
                 </plugin>
+
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>2.5.2</version>
                 </plugin>
+
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <configuration>
+                        <warSourceDirectory>web</warSourceDirectory>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
