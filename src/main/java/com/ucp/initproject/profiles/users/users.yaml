@@ -27,18 +27,294 @@
 # -----------------------------------------------------------------------------
 ---
 
-jnems:
-  firstName: "Jem"
-  lastName: "LesNems"
+tjn:
+  firstName: "Ines"
+  lastName: "Taj"
 
   favoriteStarters:
-    - "salade"
-    - "nems à la vietnamienne"
-    - "raviolis chinois"
+    - "Trio d'entrées des fêtes"
+    - "Chausson de chèvre aux poires"
 
   favoriteMainCourses:
-    - "nems"
-    - "chinois"
+    - "Tajine de saumon"
+    - "Couscous antillais"
+    - "Tajine façon couscous"
 
   favoriteDesserts:
-    - "perles de coco saké"
+    - "Balwza (Tunisie)"
+    - "Mousse aux trois chocolats facile"
+
+
+taj:
+  firstName: "Taj"
+  lastName: "le potage"
+
+  favoriteStarters:
+    - "Potage aux carottes"
+    - "Samossas de chèvre au miel"
+
+  favoriteMainCourses:
+    - "Tajine façon couscous"
+    - "Tajine de saumon"
+    - "Couscous antillais"
+
+  favoriteDesserts:
+    - "Mousse aux trois chocolats facile"
+    - "Balwza (Tunisie)"
+
+
+gloups:
+  firstName: "Yellow"
+  lastName: "Submarine"
+
+  favoriteStarters:
+    - "Mousse de saumon fumé"
+    - "Avocat farci au thon"
+    - "Tartare Saumon-Avocat"
+
+  favoriteMainCourses:
+    - "Tagliatelles aux fruits de mer"
+    - "Darnes de saumon à la moutarde"
+    - "Thon grillé"
+    - "Coquille st jacques au pineau"
+
+  favoriteDesserts:
+    - "Cupcakes à la vanille"
+    - "Gâteau fraises - chocolat blanc"
+
+
+heins:
+  firstName: "Mr"
+  lastName: "Patate"
+
+  favoriteStarters:
+    - "Salade de pommes de terre au saumon fumé"
+    - "Thon"
+    - "saumon"
+
+  favoriteMainCourses:
+    - "Salade de pommes de terre et de haddock"
+    - "Pomme de terre au four"
+    - "Tartiflette"
+
+  favoriteDesserts:
+    - "Clafoutis à la framboise"
+    - "Tiramisu"
+    - "Muffins moelleux aux framboises"
+
+
+patate:
+  firstName: "Mme"
+  lastName: "Patate"
+
+  favoriteStarters:
+    - "Tartare Saumon-Avocat"
+    - "Mousse de thon simple"
+
+  favoriteMainCourses:
+    - "Salade de pommes de terre et de haddock"
+    - "Pomme de terre au four"
+    - "Tartiflette"
+
+  favoriteDesserts:
+    - "Tiramisu"
+    - "Clafoutis à la framboise"
+
+
+lapetitelisa:
+  firstName: "Lisa"
+  lastName: "Simpson"
+
+  favoriteStarters:
+    - "Velouté d'épinards au boursin"
+    - "Verrines aux asperges"
+    - "Soupe de blettes"
+
+  favoriteMainCourses:
+    - "Steaks végétariens"
+    - "Ratatouille"
+
+  favoriteDesserts:
+    - "Crumble facile"
+    - "Tiramisu"
+    - "Macarons à la framboise"
+
+
+chocobo:
+  firstName: "Chicken"
+  lastName: "Little"
+
+  favoriteStarters:
+    - "Verrine pomme chèvre"
+    - "Tatin de magret de canard au foie gras"
+
+  favoriteMainCourses:
+    - "Poulet rôti simple"
+    - "Steak de poulet pané"
+    - "Brochettes de poulet tandoori"
+
+  favoriteDesserts:
+    - "Clafoutis à la framboise"
+    - "Fraise melba"
+
+
+francky:
+  firstName: "On dirait"
+  lastName: "le sud"
+
+  favoriteStarters:
+    - "Verrine pomme chèvre"
+    - "Mousse de saumon fumé"
+
+  favoriteMainCourses:
+    - "Poulet Basquaise"
+    - "Magrets de canard au miel"
+    - "Brochettes de poulet tandoori"
+
+  favoriteDesserts:
+    - "Mousse au chocolat suisse"
+    - "Charlotte au chocolat et au café"
+
+
+donald:
+  firstName: "Happy"
+  lastName: "Meal"
+
+  favoriteStarters:
+    - "Tatin de coeurs d'artichauts aux gésiers"
+    - "Petit soufflé de pommes de terre"
+
+  favoriteMainCourses:
+    - "Pizza facile"
+    - "Burger au Poulet"
+    - "Brochettes de poulet tandoori"
+
+  favoriteDesserts:
+    - "Gateau breton"
+    - "Crumble au chocolat"
+
+
+nemo:
+  firstName: "Rackam"
+  lastName: "Le Rouge"
+
+  favoriteStarters:
+    - "Tartare Saumon-Avocat"
+    - "Avocat farci au thon"
+    - "Mousse de saumon fumé"
+
+  favoriteMainCourses:
+    - "Coquille st jacques au pineau"
+    - "Tagliatelles aux fruits de mer"
+    - "Darnes de saumon à la moutarde"
+
+  favoriteDesserts:
+    - "Cupcakes à la vanille"
+    - "Crumble au chocolat"
+
+
+colonelKFC:
+  firstName: "Big"
+  lastName: "Chicken"
+
+  favoriteStarters:
+    - "Tatin de magret de canard au foie gras"
+    - "Verrine pomme chèvre"
+
+  favoriteMainCourses:
+    - "Brochettes de poulet tandoori"
+    - "Steak de poulet pané"
+    - "Poulet rôti simple"
+
+  favoriteDesserts:
+    - "Fraise melba"
+    - "Clafoutis à la framboise"
+
+
+kytheon:
+  firstName: "Gideon"
+  lastName: "Jura"
+
+  favoriteStarters:
+    - "Avocat farci au thon"
+    - "Verrines aux asperges"
+
+  favoriteMainCourses:
+    - "Brochettes de poulet tandoori"
+    - "Burger au Poulet"
+    - "Pizza facile"
+
+  favoriteDesserts:
+    - "Clafoutis à la framboise"
+    - "Crumble au chocolat"
+
+
+# -- Indien
+apu:
+  firstName: "Apu"
+  lastName: "Nahasapeemapetilon"
+
+  favoriteStarters:
+    - "Soupe Dhal adaptée (indien)"
+    - "Samoussas d'agneau au gingembre"
+
+  favoriteMainCourses:
+    - "Salade de riz à l'indienne"
+    - "Ailes de dinde au curry"
+
+  favoriteDesserts:
+    - "Chocolat"
+    - "Tiramisu"
+
+
+# -- Chinois
+menxingli:
+  firstName: "Mengxing"
+  lastName: "Li"
+
+  favoriteStarters:
+    - "Salade de chou chinois"
+    - "Cassolette de ravioles"
+
+  favoriteMainCourses:
+    - "Riz à la chinoise"
+    - "Poulet au curry et chou chinois"
+
+  favoriteDesserts:
+    - "Perles de coco saké"
+
+
+# -- Gras
+chiefwiggum:
+  firstName: "Clancy"
+  lastName: "Wiggum"
+
+  favoriteStarters:
+    - "Soufflés au fromage et à la ciboulette"
+    - "Friands aux champignons de Paris"
+
+  favoriteMainCourses:
+    - "Fromage pané"
+    - "Magret de canard pané"
+
+  favoriteDesserts:
+    - "Gauffres chocolat"
+    - "Beignets"
+
+
+# -- Epicé
+lou:
+  firstName: "Just"
+  lastName: "Lou"
+
+  favoriteStarters:
+    - "Trio d'entrées des fêtes"
+    - "Crevettes sautées aux épices et flambées au pastis"
+
+  favoriteMainCourses:
+    - "Magret de canard au miel et quatre épices"
+    - "Crevettes sautées aux épices et flambées au pastis"
+
+  favoriteDesserts:
+    - "Chocolat"
+    - "Café"

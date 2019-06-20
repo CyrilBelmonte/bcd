@@ -126,6 +126,14 @@ public class ProfileGenerator {
 
         for (int i = 0; i < maxRecipes && i < maxComments; i++) {
             currentRecipeID = recipesID.get(i);
+
+            boolean isAlreadyCommented = DAOFactory.getCommentDAO().find(
+                user.getId(), currentRecipeID) != null;
+
+            if (isAlreadyCommented) {
+                continue;
+            }
+
             comment = getRandomComment(user, currentRecipeID);
             insertComment(comment);
         }

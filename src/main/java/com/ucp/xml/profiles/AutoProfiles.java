@@ -4,6 +4,7 @@ import com.ucp.xml.exist.query.QueryProfile;
 
 import java.util.TimerTask;
 
+
 public class AutoProfiles extends TimerTask {
     private double d;
 
@@ -13,10 +14,12 @@ public class AutoProfiles extends TimerTask {
 
     @Override
     public void run() {
-        System.out.println("START TASK PROFILE");
+        System.out.println("[PROFILES] Updating...");
+
         Profiles profiles = new Profiles(d);
         QueryProfile queryProfile = new QueryProfile();
         queryProfile.addProfiles(profiles.getProfilesList());
-        System.out.println("END TASK PROFILE");
+
+        System.out.println("[PROFILES] OK!");
     }
 }
