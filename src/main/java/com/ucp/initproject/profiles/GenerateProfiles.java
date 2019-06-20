@@ -16,7 +16,9 @@ public class GenerateProfiles {
 
     public static boolean generate() {
         Yaml yaml = new Yaml();
-        ProfileGenerator profileGenerator = new ProfileGenerator();
+
+        ProfileGenerator profileGenerator;
+        LinkedList<ProfileGenerator> profileGenerators = new LinkedList<>();
 
         String pseudo;
         String firstName;
@@ -64,7 +66,7 @@ public class GenerateProfiles {
             favoriteDesserts = new LinkedList<>(
                 (List<String>) profile.get("favoriteDesserts"));
 
-            profileGenerator.newProfile();
+            profileGenerator = new ProfileGenerator();
 
             profileGenerator.setFirstName(firstName);
             profileGenerator.setLastName(lastName);
@@ -74,7 +76,31 @@ public class GenerateProfiles {
             profileGenerator.setFavoriteMainCourses(favoriteMainCourses);
             profileGenerator.setFavoriteDesserts(favoriteDesserts);
 
-            profileGenerator.generate();
+            profileGenerators.add(profileGenerator);
+        }
+
+        Thread thread;
+        LinkedList<Thread> threads = new LinkedList<>();
+
+        for (int i = 0; i < profileGenerators.size(); i++) {
+            profileGenerator = profileGenerators.get(i);
+
+            thread = new Thread(profileGenerator::generate);
+            thread.start();
+            threads.add(thread);
+
+            if (threads.size() == 4 || i == profileGenerators.size() - 1) {
+                while (threads.size() > 0) {
+                    thread = threads.remove(0);
+
+                    try {
+                        thread.join();
+
+                    } catch (InterruptedException e) {
+                        // Nothing
+                    }
+                }
+            }
         }
 
         return true;

@@ -64,27 +64,26 @@ public class ProfileGenerator {
     }
 
     public boolean generate() {
-        System.out.println("[PROFILE] Creating a new profile...");
-        System.out.println("[PROFILE] " + firstName + " " + lastName + " (" + pseudo + ")");
+        System.out.println("[PROFILE] Creating the profile " + firstName + " " + lastName + " (" + pseudo + ")");
 
         User user = getUser();
         boolean hasSucceeded = insertUser(user);
 
         if (!hasSucceeded) {
-            System.out.println("[PROFILE] Failed.");
+            System.out.println("[PROFILE] " + firstName + " " + lastName + ": Failed");
             return false;
         }
 
-        System.out.println("[PROFILE] Adding comments on starters...");
+        System.out.println("[PROFILE] " + firstName + " " + lastName + ": adding comments on starters...");
         generateCommentsOnDishType(user, favoriteStarters, "entrée");
 
-        System.out.println("[PROFILE] Adding comments on main courses...");
+        System.out.println("[PROFILE] " + firstName + " " + lastName + ": adding comments on main courses...");
         generateCommentsOnDishType(user, favoriteMainCourses, "plat");
 
-        System.out.println("[PROFILE] Adding comments on desserts...");
+        System.out.println("[PROFILE] " + firstName + " " + lastName + ": adding comments on desserts...");
         generateCommentsOnDishType(user, favoriteDesserts, "dessert");
 
-        System.out.println("[PROFILE] OK.\n");
+        System.out.println("[PROFILE] " + firstName + " " + lastName + ": OK");
 
         return true;
     }
@@ -114,6 +113,8 @@ public class ProfileGenerator {
 
         LinkedList<Integer> recipesID = new LinkedList<>(
             queryCategory.findRecipe(recipeID));
+
+        Collections.shuffle(recipesID);
 
         Comment comment;
         int currentRecipeID;
