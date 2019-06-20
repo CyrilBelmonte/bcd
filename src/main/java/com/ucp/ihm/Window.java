@@ -4,26 +4,40 @@ import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements ActionListener {
 
-    public Window() {
-        this.setTitle("Monitoring Web Site");
+    public Window(int idUser) {
+        this.setTitle("Monitoring User " + idUser);
 
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel jPanel = new JPanel(new GridLayout(0, 2));
+        JPanel graphs = new JPanel(new GridLayout(0, 2));
 
-        jPanel.add(new Panels(5, "starter"));
-        jPanel.add(new Panels(5, "main_course"));
-        jPanel.add(new Panels(5, "dessert"));
+        JPanel info = new JPanel(new GridLayout(0, 2));
 
-        this.setContentPane(jPanel);
+        JButton close = new JButton("Refresh");
+
+        JPanel panel = new PanelUser(idUser);
+        panel.add(close);
+
+        graphs.add(new PanelsPieChart(idUser, "starter"));
+        graphs.add(new PanelsPieChart(idUser, "main_course"));
+        graphs.add(new PanelsPieChart(idUser, "dessert"));
+        graphs.add(panel);
+
+        this.setContentPane(graphs);
 
         this.pack();
         RefineryUtilities.centerFrameOnScreen(this);
         this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.repaint();
     }
 }
 

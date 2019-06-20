@@ -1,0 +1,40 @@
+package com.ucp.ihm;
+
+import com.ucp.xml.exist.query.QuerySimpleUser;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+
+public class PanelsBarChart extends JPanel {
+
+
+    public PanelsBarChart(Integer idUser, String type) {
+        JPanel pnl = new JPanel(new BorderLayout());
+        setSize(600, 600);
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        QuerySimpleUser querySimpleUser = new QuerySimpleUser();
+        ArrayList<Double> test = querySimpleUser.getAllProbByCatByType(idUser, type);
+        System.out.println(test.size());
+        for (int index = 0; index < test.size(); index++) {
+            if (test.get(index) > 0.0005) {
+                dataset.addValue((test.get(index)), type, "Cat " + index);
+            } else {
+                dataset.addValue(0, type, "");
+            }
+
+        }
+
+        JFreeChart barChart = ChartFactory.createBarChart("Type : " + type, "Categories", "Prob", dataset, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel cPanel = new ChartPanel(barChart);
+        pnl.add(cPanel);
+        this.add(pnl);
+    }
+}
