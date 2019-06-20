@@ -72,6 +72,8 @@ public class SuggestionEngine {
         LinkedList<Recipe> recipesBasedOnUser = getRecipesFromCategories(
             new LinkedList<>(recipesCatFromUser), 3, 14);
 
+        System.out.println(recipesBasedOnUser.size());
+
         LinkedList<Recipe> recipesBasedOnFriends = getRecipesFromCategories(
             new LinkedList<>(recipesCatFromFriends), 2, 4);
 
@@ -96,7 +98,7 @@ public class SuggestionEngine {
         LinkedList<Recipe> suggestions = new LinkedList<>(uniqueSuggestions);
         Collections.shuffle(suggestions);
 
-        while (recipesBasedOnProfiles.size() > 14) {
+        while (suggestions.size() > 14) {
             suggestions.removeLast();
         }
 
@@ -110,8 +112,6 @@ public class SuggestionEngine {
         int maxResults;
 
         LinkedList<Integer> recipesID;
-        LinkedList<Integer> randomizedRecipesID;
-
         LinkedList<Integer> suggestedRecipesID = new LinkedList<>();
 
         for (int i = 0; i < categoriesID.size() && suggestedRecipesID.size() < maxRecipes; i++) {
@@ -119,9 +119,9 @@ public class SuggestionEngine {
 
             categoryID = categoriesID.get(i);
             recipesID = new LinkedList<>(queryCategory.getRecipeByCat(categoryID));
+            recipesID = reduceList(recipesID, maxResults);
 
-            randomizedRecipesID = randomizeList(recipesID, maxResults);
-            suggestedRecipesID.addAll(randomizedRecipesID);
+            suggestedRecipesID.addAll(recipesID);
         }
 
         Collections.shuffle(suggestedRecipesID);
@@ -129,19 +129,16 @@ public class SuggestionEngine {
         return DAOFactory.getRecipeDAO().findAll(suggestedRecipesID);
     }
 
-    private static LinkedList<Integer> randomizeList(LinkedList<Integer> sourceList, int maxResults) {
-        int pickedIndex;
-        int pickedElement;
+    private static LinkedList<Integer> reduceList(LinkedList<Integer> sourceList, int maxResults) {
+        LinkedList<Integer> randomizedList = new LinkedList<>(sourceList);
+        Collections.shuffle(randomizedList);
 
-        LinkedList<Integer> randomizedList = new LinkedList<>();
-        LinkedList<Integer> unpickedElements = new LinkedList<>(sourceList);
+        LinkedList<Integer> reducedList = new LinkedList<>();
 
-        for (int i = 0; i < unpickedElements.size() && i < maxResults; i++) {
-            pickedIndex = (int) (Math.random() * (unpickedElements.size() - 1));
-            pickedElement = unpickedElements.remove(pickedIndex);
-            randomizedList.addLast(pickedElement);
+        for (int i = 0; i < maxResults && i < randomizedList.size(); i++) {
+            reducedList.addLast(randomizedList.get(i));
         }
 
-        return randomizedList;
+        return reducedList;
     }
 }
