@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Ihm extends JFrame implements ActionListener {
 
     private Object item;
+    private JComboBox jComboBox;
 
     public Ihm() {
         this.setTitle("Monitoring Users ");
@@ -56,11 +57,11 @@ public class Ihm extends JFrame implements ActionListener {
             elements[index] = users.get(index);
         }
 
-        JComboBox jComboBox = new JComboBox(elements);
+        jComboBox = new JComboBox(elements);
 
         JButton jButton = new JButton("find");
 
-        jPanel.add(label,BorderLayout.NORTH);
+        jPanel.add(label, BorderLayout.NORTH);
 
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
@@ -68,19 +69,14 @@ public class Ihm extends JFrame implements ActionListener {
         panel2.add(new Label("Select user "));
         panel2.add(jComboBox);
         panel2.add(jButton);
-        jPanel.add(panel2,BorderLayout.AFTER_LINE_ENDS);
+        jPanel.add(panel2, BorderLayout.AFTER_LINE_ENDS);
 
-        this.item = jComboBox.getSelectedItem();
+
         jButton.addActionListener(this);
         return jPanel;
     }
 
     public void actionPerformed(ActionEvent arg0) {
-        Window window = new Window((int) this.item);
-    }
-
-    public static void main(String[] args) {
-        Ihm ihm = new Ihm();
-
+        Window window = new Window((int) this.jComboBox.getSelectedItem());
     }
 }

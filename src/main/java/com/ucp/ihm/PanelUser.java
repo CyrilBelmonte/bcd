@@ -21,16 +21,16 @@ public class PanelUser extends JPanel {
 
         Label friendsL = new Label("User's friends");
 
-        String friendsList = "";
+        String friendsList = " : ";
 
-        String profilesList = "";
+        String profilesList = " : ";
 
         for (Integer friend : friends){
-            friendsList = friendsList +";"+friend;
+            friendsList = friendsList +friend+";";
         }
 
         for (Integer profile : profiles){
-            profilesList = profilesList +";"+profile;
+            profilesList = profilesList + profile +";";
         }
 
         Label profilesL = new Label("User with same profiles");
