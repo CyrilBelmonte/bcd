@@ -19,7 +19,9 @@ public class SearchPage extends Page<SearchForm> {
     }
 
     public boolean loadRecipes() {
-        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
+        LinkedList<Recipe> recipes = DAOFactory.getRecipeDAO().findAll(
+            DAOFactory.getIndex().findRecipesId("*:*", SEARCH_MAX_RESULTS));
+
         Collections.shuffle(recipes);
 
         if (recipes.size() == 0) {
@@ -41,12 +43,11 @@ public class SearchPage extends Page<SearchForm> {
         LinkedList<Recipe> recipes;
 
         if (keywords == null) {
-            recipes = DAOFactory.getRecipeDAO().findAll(SEARCH_MAX_RESULTS);
-
-        } else {
-            recipesID = DAOFactory.getIndex().findRecipesId(keywords, SEARCH_MAX_RESULTS);
-            recipes = DAOFactory.getRecipeDAO().findAll(recipesID);
+            return loadRecipes();
         }
+
+        recipesID = DAOFactory.getIndex().findRecipesId(keywords, SEARCH_MAX_RESULTS);
+        recipes = DAOFactory.getRecipeDAO().findAll(recipesID);
 
         if (recipes.size() == 0) {
             form.addGlobalError("Aucune recette ne correspond à vos critères de recherche");

@@ -70,9 +70,7 @@ public class SuggestionEngine {
         List<Integer> recipesCatFromProfiles = profile.getCategory().get("profile");
 
         LinkedList<Recipe> recipesBasedOnUser = getRecipesFromCategories(
-            new LinkedList<>(recipesCatFromUser), 3, 14);
-
-        System.out.println(recipesBasedOnUser.size());
+            new LinkedList<>(recipesCatFromUser), 4, 20);
 
         LinkedList<Recipe> recipesBasedOnFriends = getRecipesFromCategories(
             new LinkedList<>(recipesCatFromFriends), 2, 4);
@@ -131,8 +129,6 @@ public class SuggestionEngine {
 
     private static LinkedList<Integer> reduceList(LinkedList<Integer> sourceList, int maxResults) {
         LinkedList<Integer> randomizedList = new LinkedList<>(sourceList);
-        Collections.shuffle(randomizedList);
-
         LinkedList<Integer> reducedList = new LinkedList<>();
 
         for (int i = 0; i < maxResults && i < randomizedList.size(); i++) {
