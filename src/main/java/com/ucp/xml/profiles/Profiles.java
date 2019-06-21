@@ -18,12 +18,12 @@ public class Profiles {
 
         while (usersList.getUser4Profs().size() != 0) {
 
-            Random random = new Random();
-            int index = random.nextInt(usersList.getUser4Profs().size());
+           // Random random = new Random();
+            //int index = random.nextInt(usersList.getUser4Profs().size());
 
-            User4Prof user = usersList.getUser4Profs().get(index);
+            User4Prof user = usersList.getUser4Profs().get(0);
 
-            usersList.getUser4Profs().remove(index);
+            usersList.getUser4Profs().remove(0);
 
             ArrayList<Integer> profile = new ArrayList<>();
             profile.add(user.getUser());
