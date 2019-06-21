@@ -2,7 +2,6 @@ package com.ucp.ihm;
 
 import com.ucp.xml.exist.query.QueryProfile;
 import com.ucp.xml.exist.query.QuerySimpleUser;
-import sun.font.GlyphLayout;
 
 import javax.swing.*;
 import java.awt.*;

@@ -8,17 +8,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Window extends JFrame implements ActionListener {
-
+    private int idUser;
     public Window(int idUser) {
+
+        this.idUser=idUser;
         this.setTitle("Monitoring User " + idUser);
 
         this.setLocationRelativeTo(null);
 
         JPanel graphs = new JPanel(new GridLayout(0, 2));
 
-        JPanel info = new JPanel(new GridLayout(0, 2));
-
         JButton close = new JButton("Refresh");
+        close.addActionListener(this);
+
 
         JPanel panel = new PanelUser(idUser);
         panel.add(close);
@@ -37,7 +39,23 @@ public class Window extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.repaint();
+        this.setVisible(false);
+        this.getContentPane().removeAll();
+        JPanel graphs = new JPanel(new GridLayout(0, 2));
+
+        JButton close = new JButton("Refresh");
+        close.addActionListener(this);
+
+
+        JPanel panel = new PanelUser(idUser);
+        panel.add(close);
+
+        graphs.add(new PanelsPieChart(idUser, "starter"));
+        graphs.add(new PanelsPieChart(idUser, "main_course"));
+        graphs.add(new PanelsPieChart(idUser, "dessert"));
+        graphs.add(panel);
+        this.setContentPane(graphs);
+        this.setVisible(true);
     }
 }
 
